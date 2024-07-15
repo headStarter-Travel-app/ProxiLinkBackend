@@ -1,16 +1,12 @@
 # app.py
-
-from flask import Flask
 from dotenv import load_dotenv
 import os
 
-app = Flask(__name__)
+from fastapi import FastAPI
+
+app = FastAPI()
 
 
-@app.route('/')
-def hello():
-    return "Hello, World!"
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
