@@ -1,6 +1,8 @@
 from dotenv import load_dotenv
 import os
 import googlemaps
+import torch
+import torch.nn as nn
 
 # Load environment variables
 load_dotenv()
@@ -22,34 +24,37 @@ interests = [
     ['pizza', 'italian', 'pasta']
 ]
 
+# Load the trained PyTorch model
+class RecommendationModel(nn.Module):
+    def __init__(self):
+        super(RecommendationModel, self).__init__()
+        # Define your model architecture here
+        self.fc = nn.Linear(10, 3)  # Example architecture
+
+    def forward(self, x):
+        return self.fc(x)
+
+model = RecommendationModel()
+model.load_state_dict(torch.load('model.pth'))
+model.eval()
+
 # Function to get nearby restaurants based on interests
+def get_recommendations(addresses, interests):
+    recommendations = []
+    for address, interest in zip(addresses, interests):
+        # Convert interests to tensor
+        interest_tensor = torch.tensor([interest], dtype=torch.float32)
+        
+        # Get model predictions
+        with torch.no_grad():
+            predicted_interests = model(interest_tensor).numpy().tolist()
+        
+        # Use Google Maps API to find places based on predicted interests
+        places = gmaps.places_nearby(location=address, keyword=predicted_interests, radius=5000)
+        recommendations.append(places)
+    
+    return recommendations
 
-
-def get_nearby_restaurants(location, interest_keywords):
-    places_result = gmaps.places_nearby(
-        location=location, radius=5000, type='restaurant')
-    filtered_restaurants = []
-    for place in places_result['results']:
-        if any(interest in place['name'].lower() or interest in place.get('types', []) for interest in interest_keywords):
-            filtered_restaurants.append(place)
-    return filtered_restaurants[:5]
-
-
-# Process each address and interest
-for i, address in enumerate(addresses):
-    # Geocode the address to get the latitude and longitude
-    geocode_result = gmaps.geocode(address)
-    location = geocode_result[0]['geometry']['location']
-    lat_lng = (location['lat'], location['lng'])
-
-    # Get nearby restaurants based on interests
-    nearby_restaurants = get_nearby_restaurants(lat_lng, interests[i])
-
-    # Print the address and nearby restaurants
-    print(f"Restaurants near {address} based on interests {interests[i]}:")
-    for restaurant in nearby_restaurants:
-        name = restaurant['name']
-        address = restaurant.get('vicinity', 'No address available')
-        rating = restaurant.get('rating', 'No rating available')
-        print(f"- {name}, {address}, Rating: {rating}")
-    print("\n")
+# Example usage
+recommendations = get_recommendations(addresses, interests)
+print(recommendations)
