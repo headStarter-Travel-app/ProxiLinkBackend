@@ -1,14 +1,4 @@
 # import requests
-# requests.get("https://maps-api.apple.com/v1/token", headers={
-#     "alg": "ES256",
-#     "kid": "65L67XZAD9",
-#     "typ": "JWT",
-#     "iss": "DR8M2Z7LQW",
-#     "iat": 1437179036,
-#     "exp": 1493298100,
-#     "origin": "*.example.com"
-
-# })
 
 import jwt
 import time
