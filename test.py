@@ -1,60 +1,85 @@
-from dotenv import load_dotenv
-import os
-import googlemaps
 import torch
 import torch.nn as nn
+import torch.optim as optim
+from torch.utils.data import DataLoader, Dataset
 
-# Load environment variables
-load_dotenv()
+# Define the dataset
+class LocationDataset(Dataset):
+    def __init__(self, data):
+        self.data = data
 
-# Initialize the Google Maps client with the API key from .env file
-api_key = os.getenv('MAPS_API')  # Securely load the API key
-gmaps = googlemaps.Client(key=api_key)
+    def __len__(self):
+        return len(self.data)
 
-# Define the addresses and interests
-addresses = [
-    '1600 Amphitheatre Parkway, Mountain View, CA',
-    'One Apple Park Way, Cupertino, CA',
-    '1 Infinite Loop, Cupertino, CA'
-]
+    def __getitem__(self, idx):
+        features = self.data[idx]['features']
+        rating = self.data[idx]['rating']
+        return torch.tensor(features, dtype=torch.float32), torch.tensor(rating, dtype=torch.float32)
 
-interests = [
-    ['sushi', 'japanese', 'seafood'],
-    ['vegan', 'organic', 'healthy'],
-    ['pizza', 'italian', 'pasta']
-]
-
-# Load the trained PyTorch model
-class RecommendationModel(nn.Module):
-    def __init__(self):
-        super(RecommendationModel, self).__init__()
-        # Define your model architecture here
-        self.fc = nn.Linear(10, 3)  # Example architecture
+# Define the model
+class LocationRatingModel(nn.Module):
+    def __init__(self, input_size):
+        super(LocationRatingModel, self).__init__()
+        self.fc1 = nn.Linear(input_size, 128)
+        self.fc2 = nn.Linear(128, 64)
+        self.fc3 = nn.Linear(64, 1)
 
     def forward(self, x):
-        return self.fc(x)
+        x = torch.relu(self.fc1(x))
+        x = torch.relu(self.fc2(x))
+        x = self.fc3(x)
+        return x
 
-model = RecommendationModel()
-model.load_state_dict(torch.load('model.pth'))
-model.eval()
+# Prepare the data
+data = [
+    {'features': [37.7749, -122.4194, 1, 0, 0, 0, 1, 0], 'rating': 4.5},  # Example data point
+    # Add more data points as needed
+]
 
-# Function to get nearby restaurants based on interests
-def get_recommendations(addresses, interests):
-    recommendations = []
-    for address, interest in zip(addresses, interests):
-        # Convert interests to tensor
-        interest_tensor = torch.tensor([interest], dtype=torch.float32)
-        
-        # Get model predictions
-        with torch.no_grad():
-            predicted_interests = model(interest_tensor).numpy().tolist()
-        
-        # Use Google Maps API to find places based on predicted interests
-        places = gmaps.places_nearby(location=address, keyword=predicted_interests, radius=5000)
-        recommendations.append(places)
+dataset = LocationDataset(data)
+dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
+
+# Initialize the model, loss function, and optimizer
+input_size = len(data[0]['features'])
+model = LocationRatingModel(input_size)
+criterion = nn.MSELoss()
+optimizer = optim.Adam(model.parameters(), lr=0.001)
+
+# Train the model
+num_epochs = 10
+for epoch in range(num_epochs):
+    for features, rating in dataloader:
+        optimizer.zero_grad()
+        outputs = model(features)
+        loss = criterion(outputs, rating.unsqueeze(1))
+        loss.backward()
+        optimizer.step()
+    print(f'Epoch [{epoch+1}/{num_epochs}], Loss: {loss.item():.4f}')
+
+# Function to get recommendations
+def get_recommendations(locations, themes, interests):
+    model.eval()
+    # Preprocess locations, themes, interests into feature vectors
+    input_features = []
+    for location in locations:
+        feature_vector = location + themes + interests  # Example of combining features
+        input_features.append(feature_vector)
     
-    return recommendations
+    input_tensor = torch.tensor(input_features, dtype=torch.float32)
+    with torch.no_grad():
+        scores = model(input_tensor)
+    sorted_indices = torch.argsort(scores, descending=True)
+    sorted_locations = [locations[i] for i in sorted_indices]
+    return sorted_locations
 
 # Example usage
-recommendations = get_recommendations(addresses, interests)
+locations = [
+    [37.7749, -122.4194],  # Example coordinates for San Francisco
+    [34.0522, -118.2437],  # Example coordinates for Los Angeles
+    # Add more locations as needed
+]
+themes = [1, 0, 0]  # Example themes vector
+interests = [0, 1, 0]  # Example interests vector
+
+recommendations = get_recommendations(locations, themes, interests)
 print(recommendations)
