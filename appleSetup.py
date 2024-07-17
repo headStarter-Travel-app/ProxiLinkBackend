@@ -60,6 +60,3 @@ class AppleAuth:
         except Exception as e:
             print("Failed to generate JWT:", e)
             return None
-
-
-print(AppleAuth.generate_apple_token())
