@@ -41,15 +41,18 @@ app = FastAPI(
 
 # Global variable for Apple Maps token
 # TODO: In production, initialize this as None
-# global_maps_token = None
-global_maps_token = os.getenv('TOKEN_TEMP')
+
+if (os.getenv('DEV')):
+    global_maps_token = os.getenv('TOKEN_TEMP')
+else:
+    global_maps_token = None
 
 # Function to update Apple Maps token
 
 
 def update_apple_token():
     global global_maps_token
-    # global_maps_token = AppleAuth.generate_apple_token()
+    global_maps_token = AppleAuth.generate_apple_token()
     print(f"Token updated at {datetime.now()}")
 
 
@@ -143,14 +146,15 @@ async def get_recommendations(user_id: str):
 
     return {"recommendations": places['results']}
 
-if __name__ == "__main__":
-    # For development use only
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
 
-
-# Production use
-# if __name__ == "__main__":
-#     # update_apple_token() # TODO IN PRODUncomment this line to update the token on startup ON DEV DONT DO IT USE ENV TEST TOKEN
-#     import uvicorn
-#     uvicorn.run(app, host="0.0.0.0", port=8000)
+if (os.getenv('DEV')):
+    if __name__ == "__main__":
+        # For development use only
+        import uvicorn
+        uvicorn.run(app, host="0.0.0.0", port=8000)
+else:
+    # Production use
+    if __name__ == "__main__":
+        update_apple_token()
+        import uvicorn
+        uvicorn.run(app, host="0.0.0.0", port=8000)
