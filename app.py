@@ -126,6 +126,15 @@ class Preferences(BaseModel):
     sports: List[str]
 
 
+
+
+class AccountInfo(BaseModel):
+    user_id: str
+    firstName: str
+    lastName: str
+    address: str
+
+
 @app.get("/", summary="Root")
 async def root():
     return {"message": "Welcome to the Proxi Link API"}
@@ -141,6 +150,26 @@ async def get_apple_token():
         update_apple_token()
     return {"apple_token": global_maps_token}
 
+
+@app.post("update-account", summary="Update Account")
+async def update_account(account: AccountInfo):
+    """
+    Update user account in the database
+    """
+    try:
+        account_dict = account.model_dump()
+
+        result = database.update_account(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['user_collection_id'],
+            document_id=unique_id,
+            data=account_dict
+        )
+
+        return {"message": "User account updated successfully", "document_id": result['$id']}
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, detail=f"Error updating user account: {str(e)}")
 
 @app.post("/submit-preferences", summary="Submit User Preferences")
 async def submit_preferences(preferences: Preferences):
