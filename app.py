@@ -183,7 +183,7 @@ async def get_recommendations(user_id: str):
     database.create_document(
         database_id=appwrite_config['database_id'],
         collection_id='recommendations',
-        document_id=user_id,
+        document_id=ID.unique(),
         data={'places': places['results']}
     )
 
