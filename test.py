@@ -4,6 +4,8 @@ import torch.optim as optim
 from torch.utils.data import DataLoader, Dataset
 
 # Define the dataset
+
+
 class LocationDataset(Dataset):
     def __init__(self, data):
         self.data = data
@@ -17,6 +19,8 @@ class LocationDataset(Dataset):
         return torch.tensor(features, dtype=torch.float32), torch.tensor(rating, dtype=torch.float32)
 
 # Define the model
+
+
 class LocationRatingModel(nn.Module):
     def __init__(self, input_size):
         super(LocationRatingModel, self).__init__()
@@ -30,9 +34,11 @@ class LocationRatingModel(nn.Module):
         x = self.fc3(x)
         return x
 
+
 # Prepare the data
 data = [
-    {'features': [37.7749, -122.4194, 1, 0, 0, 0, 1, 0], 'rating': 4.5},  # Example data point
+    {'features': [37.7749, -122.4194, 1, 0, 0, 0, 1, 0],
+        'rating': 4.5},  # Example data point
     # Add more data points as needed
 ]
 
@@ -57,6 +63,8 @@ for epoch in range(num_epochs):
     print(f'Epoch [{epoch+1}/{num_epochs}], Loss: {loss.item():.4f}')
 
 # Function to get recommendations
+
+
 def get_recommendations(locations, themes, interests):
     model.eval()
     # Preprocess locations, themes, interests into feature vectors
@@ -64,13 +72,14 @@ def get_recommendations(locations, themes, interests):
     for location in locations:
         feature_vector = location + themes + interests  # Example of combining features
         input_features.append(feature_vector)
-    
+
     input_tensor = torch.tensor(input_features, dtype=torch.float32)
     with torch.no_grad():
         scores = model(input_tensor)
     sorted_indices = torch.argsort(scores, descending=True)
     sorted_locations = [locations[i] for i in sorted_indices]
     return sorted_locations
+
 
 # Example usage
 locations = [

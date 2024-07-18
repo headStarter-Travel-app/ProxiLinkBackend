@@ -3,9 +3,9 @@ from dotenv import load_dotenv
 import os
 from enum import Enum
 from appleSetup import AppleAuth
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, HTTPException
 from pydantic import BaseModel
-from typing import List
+from typing import List, Any
 import appwrite
 from appwrite.client import Client
 from appwrite.services.users import Users
@@ -77,37 +77,56 @@ gmaps = googlemaps.Client(key=os.getenv('GOOGLE_MAPS_API'))
 # Pydantic model for user preferences
 
 
-class SocialInteraction(Enum):
-    ENERGETIC = "Energetic"
-    RELAXED = "Relaxed"
-    BOTH = "Both"
+class SocialInteraction(str, Enum):
+    ENERGETIC = "ENERGETIC"
+    RELAXED = "RELAXED"
+    BOTH = "BOTH"
 
 
-class Time(Enum):
-    MORNING = "Morning"
-    AFTERNOON = "Afternoon"
-    EVENING = "Evening"
-    NIGHT = "Night"
+class Time(str, Enum):
+    MORNING = "MORNING"
+    AFTERNOON = "AFTERNOON"
+    EVENING = "EVENING"
+    NIGHT = "NIGHT"
 
 
-class Shopping(Enum):
-    YES = "Yes"
-    SOMETIME = "Sometime"
-    NO = "No"
+class Shopping(str, Enum):
+    YES = "YES"
+    SOMETIME = "SOMETIME"
+    NO = "NO"
 
 
+# {
+#   "user_id": "66943f0900123a1015ee",
+#   "users": "66943f0900123a1015ee",
+#   "cuisine": ["Italian", "Japanese", "Mexican"],
+#   "atmosphere": ["Cozy", "Modern"],
+#   "entertainment": ["Live Music", "Sports Screening"],
+#   "socializing": "BOTH",
+#   "Time": ["EVENING", "NIGHT"],
+#   "shopping": "SOMETIME",
+#   "family_friendly": true,
+#   "learning": ["History", "Art"]
+# }
+
+# NOTE: MAKE SURE IN FRKONT END ENUSM ARE PROPERLY USED
 class Preferences(BaseModel):
     # Temp
     user_id: str
-    user: str  # This is the relaitnsihp one
+    users: Any
     cuisine: List[str]
     atmosphere: List[str]
     entertainment: List[str]
-    social_interaction: SocialInteraction.BOTH
-    time_of_day: List[Time]
-    shopping: Shopping.SOMETIME
+    socializing: SocialInteraction = SocialInteraction.BOTH
+    Time: List[Time]
+    shopping: Shopping = Shopping.SOMETIME
     family_friendly: bool
     learning: List[str]
+
+
+@app.get("/", summary="Root")
+async def root():
+    return {"message": "Welcome to the Proxi Link API"}
 
 
 @app.get("/get-apple-token", summary="Get Apple Maps Token")
@@ -126,13 +145,20 @@ async def submit_preferences(preferences: Preferences):
     """
     Submit and store user preferences in the database.
     """
-    database.create_document(
-        database_id=appwrite_config['database_id'],
-        collection_id=appwrite_config['preferences_collection_id'],
-        document_id=ID.unique(),
-        data=preferences.model_dump()
-    )
-    return {"message": "Preferences submitted successfully"}
+    try:
+        preferences_dict = preferences.model_dump()
+
+        result = database.create_document(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['preferences_collection_id'],
+            document_id=ID.unique(),
+            data=preferences_dict
+        )
+
+        return {"message": "Preferences submitted successfully", "document_id": result['$id']}
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, detail=f"Error submitting preferences: {str(e)}")
 
 
 @app.get("/recommendations", summary="Get Restaurant Recommendations")
@@ -163,6 +189,8 @@ async def get_recommendations(user_id: str):
 
     return {"recommendations": places['results']}
 
+
+# uvicorn app:app --reload
 
 if (os.getenv('DEV')):
     if __name__ == "__main__":
