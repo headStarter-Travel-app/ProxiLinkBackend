@@ -81,10 +81,19 @@ class Preferences(BaseModel):
     user_id: str
     cuisine: List[str]
     entertainment: List[str]
+<<<<<<< Updated upstream
     atmosphere: str
     social_interaction: str
     time_of_day: str
     spontaneity: str
+=======
+    socializing: SocialInteraction = SocialInteraction.BOTH
+    Time: List[Time]
+    shopping: Shopping = Shopping.SOMETIME
+    family_friendly: bool
+    learning: List[str]
+    sports: List[str]
+>>>>>>> Stashed changes
 
 
     class Config:
