@@ -1,6 +1,7 @@
 # app.py
 from dotenv import load_dotenv
 import os
+from enum import Enum
 from appleSetup import AppleAuth
 from fastapi import FastAPI, Request
 from pydantic import BaseModel
@@ -76,29 +77,37 @@ gmaps = googlemaps.Client(key=os.getenv('GOOGLE_MAPS_API'))
 # Pydantic model for user preferences
 
 
+class SocialInteraction(Enum):
+    ENERGETIC = "Energetic"
+    RELAXED = "Relaxed"
+    BOTH = "Both"
+
+
+class Time(Enum):
+    MORNING = "Morning"
+    AFTERNOON = "Afternoon"
+    EVENING = "Evening"
+    NIGHT = "Night"
+
+
+class Shopping(Enum):
+    YES = "Yes"
+    SOMETIME = "Sometime"
+    NO = "No"
+
+
 class Preferences(BaseModel):
     # Temp
     user_id: str
+    user: str  # This is the relaitnsihp one
     cuisine: List[str]
+    atmosphere: List[str]
     entertainment: List[str]
-    atmosphere: str
-    social_interaction: str
-    time_of_day: str
-    spontaneity: str
-
-
-    class Config:
-        json_schema_extra = {
-            "example": {
-                "user_id": "user123",
-                "cuisine": ["Italian", "Japanese"],
-                "entertainment": ["Live Music", "Movies"],
-                "atmosphere": "Casual",
-                "social_interaction": "High",
-                "time_of_day": "Evening",
-                "spontaneity": "High"
-            }
-        }
+    social_interaction: SocialInteraction.BOTH
+    time_of_day: List[Time]
+    shopping: Shopping.SOMETIME
+    family_friendly: bool
+    learning: List[str]
 
 
 @app.get("/get-apple-token", summary="Get Apple Maps Token")
