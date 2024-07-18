@@ -36,8 +36,8 @@ appwrite_config = {
 
 # Initialize FastAPI app
 app = FastAPI(
-    title="Restaurant Recommendation API",
-    description="API for managing user preferences and generating restaurant recommendations",
+    title="Proxi Link AI API",
+    description="API for Proxi Link App",
     version="1.0.0",
 )
 
@@ -176,7 +176,7 @@ async def update_preferences(preferences: Preferences):
             database_id=appwrite_config['database_id'],
             collection_id=appwrite_config['preferences_collection_id'],
             document_id=preferences_dict['user_id'],
-            data=preferences_dict # data is being sent as a dict json
+            data=preferences_dict  # data is being sent as a dict json
         )
         return {"message": "Preferences updated successfully", "document_id": result['$id']}
     except Exception as e:
