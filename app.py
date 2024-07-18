@@ -8,6 +8,7 @@ from pydantic import BaseModel
 from typing import List, Any
 import appwrite
 from appwrite.client import Client
+from appwrite.query import Query
 from appwrite.services.users import Users
 from appwrite.services.databases import Databases
 from appwrite.id import ID
@@ -148,11 +149,12 @@ async def submit_preferences(preferences: Preferences):
     """
     try:
         preferences_dict = preferences.model_dump()
+        unique_id = preferences_dict['user_id']
 
         result = database.create_document(
             database_id=appwrite_config['database_id'],
             collection_id=appwrite_config['preferences_collection_id'],
-            document_id=ID.unique(),
+            document_id=unique_id,
             data=preferences_dict
         )
 
