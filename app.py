@@ -1,12 +1,14 @@
 # app.py
 from dotenv import load_dotenv
 import os
+from enum import Enum
 from appleSetup import AppleAuth
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, HTTPException
 from pydantic import BaseModel
-from typing import List
+from typing import List, Any, Optional
 import appwrite
 from appwrite.client import Client
+from appwrite.query import Query
 from appwrite.services.users import Users
 from appwrite.services.databases import Databases
 from appwrite.id import ID
@@ -34,8 +36,8 @@ appwrite_config = {
 
 # Initialize FastAPI app
 app = FastAPI(
-    title="Restaurant Recommendation API",
-    description="API for managing user preferences and generating restaurant recommendations",
+    title="Proxi Link AI API",
+    description="API for Proxi Link App",
     version="1.0.0",
 )
 
@@ -76,29 +78,57 @@ gmaps = googlemaps.Client(key=os.getenv('GOOGLE_MAPS_API'))
 # Pydantic model for user preferences
 
 
+class SocialInteraction(str, Enum):
+    ENERGETIC = "ENERGETIC"
+    RELAXED = "RELAXED"
+    BOTH = "BOTH"
+
+
+class Time(str, Enum):
+    MORNING = "MORNING"
+    AFTERNOON = "AFTERNOON"
+    EVENING = "EVENING"
+    NIGHT = "NIGHT"
+
+
+class Shopping(str, Enum):
+    YES = "YES"
+    SOMETIME = "SOMETIME"
+    NO = "NO"
+
+
+# {
+#   "user_id": "66943f0900123a1015ee",
+#   "users": "66943f0900123a1015ee",
+#   "cuisine": ["Italian", "Japanese", "Mexican"],
+#   "atmosphere": ["Cozy", "Modern"],
+#   "entertainment": ["Live Music", "Sports Screening"],
+#   "socializing": "BOTH",
+#   "Time": ["EVENING", "NIGHT"],
+#   "shopping": "SOMETIME",
+#   "family_friendly": true,
+#   "learning": ["History", "Art"]
+# }
+
+# NOTE: MAKE SURE IN FRKONT END ENUSM ARE PROPERLY USED
 class Preferences(BaseModel):
     # Temp
     user_id: str
+    users: Any
     cuisine: List[str]
+    atmosphere: List[str]
     entertainment: List[str]
-    atmosphere: str
-    social_interaction: str
-    time_of_day: str
-    spontaneity: str
+    socializing: SocialInteraction = SocialInteraction.BOTH
+    Time: List[Time]
+    shopping: Shopping = Shopping.SOMETIME
+    family_friendly: bool
+    learning: List[str]
+    sports: List[str]
 
 
-    class Config:
-        json_schema_extra = {
-            "example": {
-                "user_id": "user123",
-                "cuisine": ["Italian", "Japanese"],
-                "entertainment": ["Live Music", "Movies"],
-                "atmosphere": "Casual",
-                "social_interaction": "High",
-                "time_of_day": "Evening",
-                "spontaneity": "High"
-            }
-        }
+@app.get("/", summary="Root")
+async def root():
+    return {"message": "Welcome to the Proxi Link API"}
 
 
 @app.get("/get-apple-token", summary="Get Apple Maps Token")
@@ -112,18 +142,81 @@ async def get_apple_token():
     return {"apple_token": global_maps_token}
 
 
+class AccountInfo(BaseModel):
+    uid: str
+    firstName: str
+    lastName: str
+    address: Optional[str] = None
+
+
+@app.post("/update-account", summary="Update Account")
+async def update_account(account: AccountInfo):
+    """
+    Update user account in the database
+    """
+    try:
+        account_dict = account.model_dump()
+        existing_account = database.get_document(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['user_collection_id'],
+            document_id=account_dict['uid']
+        )
+        if account_dict['address'] is None:
+            account_dict['address'] = existing_account['address']
+
+        result = database.update_document(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['user_collection_id'],
+            document_id=account_dict['uid'],
+            data=account_dict
+        )
+
+        return {"message": "User account updated successfully", "document_id": result['$id']}
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, detail=f"Error updating user account: {str(e)}")
+
+
 @app.post("/submit-preferences", summary="Submit User Preferences")
 async def submit_preferences(preferences: Preferences):
     """
     Submit and store user preferences in the database.
     """
-    database.create_document(
-        database_id=appwrite_config['database_id'],
-        collection_id=appwrite_config['preferences_collection_id'],
-        document_id=ID.unique(),
-        data=preferences.model_dump()
-    )
-    return {"message": "Preferences submitted successfully"}
+    try:
+        preferences_dict = preferences.model_dump()
+        unique_id = preferences_dict['user_id']
+
+        result = database.create_document(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['preferences_collection_id'],
+            document_id=unique_id,
+            data=preferences_dict
+        )
+
+        return {"message": "Preferences submitted successfully", "document_id": result['$id']}
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, detail=f"Error submitting preferences: {str(e)}")
+
+
+@app.post("/update-preferences", summary="Update User Preferences")
+async def update_preferences(preferences: Preferences):
+    """
+    Update and store user preferences in the database.
+    """
+    try:
+        preferences_dict = preferences.model_dump()
+
+        result = database.update_document(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['preferences_collection_id'],
+            document_id=preferences_dict['user_id'],
+            data=preferences_dict  # data is being sent as a dict json
+        )
+        return {"message": "Preferences updated successfully", "document_id": result['$id']}
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, detail=f"Error updating preferences: {str(e)}")
 
 
 @app.get("/recommendations", summary="Get Restaurant Recommendations")
@@ -148,12 +241,14 @@ async def get_recommendations(user_id: str):
     database.create_document(
         database_id=appwrite_config['database_id'],
         collection_id='recommendations',
-        document_id=user_id,
+        document_id=ID.unique(),
         data={'places': places['results']}
     )
 
     return {"recommendations": places['results']}
 
+
+# uvicorn app:app --reload
 
 if (os.getenv('DEV')):
     if __name__ == "__main__":
