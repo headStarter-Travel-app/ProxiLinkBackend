@@ -77,14 +77,26 @@ gmaps = googlemaps.Client(key=os.getenv('GOOGLE_MAPS_API'))
 
 
 class Preferences(BaseModel):
+    # Temp
     user_id: str
     cuisine: List[str]
+    entertainment: List[str]
+    atmosphere: str
+    social_interaction: str
+    time_of_day: str
+    spontaneity: str
+
 
     class Config:
         json_schema_extra = {
             "example": {
                 "user_id": "user123",
-                "cuisine": ["Italian", "Japanese"]
+                "cuisine": ["Italian", "Japanese"],
+                "entertainment": ["Live Music", "Movies"],
+                "atmosphere": "Casual",
+                "social_interaction": "High",
+                "time_of_day": "Evening",
+                "spontaneity": "High"
             }
         }
 
@@ -109,11 +121,7 @@ async def submit_preferences(preferences: Preferences):
         database_id=appwrite_config['database_id'],
         collection_id=appwrite_config['preferences_collection_id'],
         document_id=ID.unique(),
-        data={
-            'users': preferences.user_id,
-            'user_id': preferences.user_id,
-            'cuisine': preferences.cuisine
-        }
+        data=preferences.model_dump()
     )
     return {"message": "Preferences submitted successfully"}
 
