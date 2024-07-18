@@ -164,6 +164,26 @@ async def submit_preferences(preferences: Preferences):
             status_code=500, detail=f"Error submitting preferences: {str(e)}")
 
 
+@app.post("/update-preferences", summary="Update User Preferences")
+async def update_preferences(preferences: Preferences):
+    """
+    Update and store user preferences in the database.
+    """
+    try:
+        preferences_dict = preferences.model_dump()
+
+        result = database.update_document(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['preferences_collection_id'],
+            document_id=preferences_dict['user_id'],
+            data=preferences_dict # data is being sent as a dict json
+        )
+        return {"message": "Preferences updated successfully", "document_id": result['$id']}
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, detail=f"Error updating preferences: {str(e)}")
+
+
 @app.get("/recommendations", summary="Get Restaurant Recommendations")
 async def get_recommendations(user_id: str):
     """
