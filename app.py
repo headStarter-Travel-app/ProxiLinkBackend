@@ -5,7 +5,7 @@ from enum import Enum
 from appleSetup import AppleAuth
 from fastapi import FastAPI, Request, HTTPException
 from pydantic import BaseModel
-from typing import List, Any
+from typing import List, Any, Optional
 import appwrite
 from appwrite.client import Client
 from appwrite.query import Query
@@ -126,15 +126,6 @@ class Preferences(BaseModel):
     sports: List[str]
 
 
-
-
-class AccountInfo(BaseModel):
-    user_id: str
-    firstName: str
-    lastName: str
-    address: str
-
-
 @app.get("/", summary="Root")
 async def root():
     return {"message": "Welcome to the Proxi Link API"}
@@ -151,18 +142,32 @@ async def get_apple_token():
     return {"apple_token": global_maps_token}
 
 
-@app.post("update-account", summary="Update Account")
+class AccountInfo(BaseModel):
+    uid: str
+    firstName: str
+    lastName: str
+    address: Optional[str] = None
+
+
+@app.post("/update-account", summary="Update Account")
 async def update_account(account: AccountInfo):
     """
     Update user account in the database
     """
     try:
         account_dict = account.model_dump()
-
-        result = database.update_account(
+        existing_account = database.get_document(
             database_id=appwrite_config['database_id'],
             collection_id=appwrite_config['user_collection_id'],
-            document_id=unique_id,
+            document_id=account_dict['uid']
+        )
+        if account_dict['address'] is None:
+            account_dict['address'] = existing_account['address']
+
+        result = database.update_document(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['user_collection_id'],
+            document_id=account_dict['uid'],
             data=account_dict
         )
 
@@ -170,6 +175,7 @@ async def update_account(account: AccountInfo):
     except Exception as e:
         raise HTTPException(
             status_code=500, detail=f"Error updating user account: {str(e)}")
+
 
 @app.post("/submit-preferences", summary="Submit User Preferences")
 async def submit_preferences(preferences: Preferences):
