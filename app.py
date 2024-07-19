@@ -338,10 +338,6 @@ async def get_proximity_recommendations(request: ProximityRecommendationRequest)
     Generate recommendations based on the centroid of provided user locations.
     """
     centroid = calculate_centroid(request.locations)
-    print(centroid)
-    print(centroid['lat'])
-    print(centroid['lon'])
-
     try:
         all_recommendations = []
         for interest in request.interests:

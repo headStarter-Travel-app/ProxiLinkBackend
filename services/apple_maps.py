@@ -15,7 +15,10 @@ SERVER_ENDPOINT: str = "https://maps-api.apple.com"
 
 class AppleMapsService:
     def __init__(self):
-        self.token = None
+        if (os.getenv("DEV")):
+            self.token = os.getenv("TOKEN_TEMP")
+        else:
+            self.token = AppleAuth.generate_apple_token()
         self.setup_token_update()
 
     def setup_token_update(self):
@@ -34,14 +37,27 @@ class AppleMapsService:
         print(f"Token updated at {datetime.now()}")
 
     async def get_access_token(self) -> str:
-        if not self.token:
-            self.update_token()
-        return self.token
+        """
+        Get an access token using the auth token.
+        """
+        try:
+            async with httpx.AsyncClient() as client:
+                response = await client.get(
+                    f"{SERVER_ENDPOINT}/v1/token",
+                    headers={
+                        "Authorization": f"Bearer {self.token}"
+                    }
+                )
+                response.raise_for_status()
+                token_data = response.json()
+                return token_data.get("accessToken")
+        except httpx.HTTPStatusError as e:
+            raise HTTPException(status_code=e.response.status_code,
+                                detail=f"Error getting access token: {str(e)}")
 
     async def search(self, query: str, lat: float, lon: float) -> List[Dict]:
         try:
             access_token = await self.get_access_token()
-
             async with httpx.AsyncClient() as client:
                 response = await client.get(
                     f"{SERVER_ENDPOINT}/v1/search",
