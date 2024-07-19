@@ -40,6 +40,9 @@ class AppleMapsService:
         """
         Get an access token using the auth token.
         """
+
+        if (os.getenv("DEV")):
+            return os.getenv("TOKEN_TEMP")
         try:
             async with httpx.AsyncClient() as client:
                 response = await client.get(

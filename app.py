@@ -132,7 +132,11 @@ async def get_apple_token():
     Retrieve the current Apple Maps token. If not available, generate a new one.
     """
     token = await apple_maps_service.get_access_token()
-    return {"apple_token": token}
+    print(token)
+    if token:
+        return {"apple_token generated successfully"}
+    else:
+        return {"message": "Error generating Apple Maps token"}
 
 
 class AccountInfo(BaseModel):
@@ -173,43 +177,39 @@ async def update_account(account: AccountInfo):
 @app.post("/submit-preferences", summary="Submit User Preferences")
 async def submit_preferences(preferences: Preferences):
     """
-    Submit and store user preferences in the database.
+    Submit and store or update user preferences in the database.
     """
     try:
         preferences_dict = preferences.model_dump()
         unique_id = preferences_dict['user_id']
 
-        result = database.create_document(
-            database_id=appwrite_config['database_id'],
-            collection_id=appwrite_config['preferences_collection_id'],
-            document_id=unique_id,
-            data=preferences_dict
-        )
+        # Check if the document exists
+        try:
+            existing_document = database.get_document(
+                database_id=appwrite_config['database_id'],
+                collection_id=appwrite_config['preferences_collection_id'],
+                document_id=unique_id
+            )
+            # If the document exists, update it
+            result = database.update_document(
+                database_id=appwrite_config['database_id'],
+                collection_id=appwrite_config['preferences_collection_id'],
+                document_id=unique_id,
+                data=preferences_dict
+            )
+        except Exception as e:
+            # If the document does not exist, create it
+            result = database.create_document(
+                database_id=appwrite_config['database_id'],
+                collection_id=appwrite_config['preferences_collection_id'],
+                document_id=unique_id,
+                data=preferences_dict
+            )
 
         return {"message": "Preferences submitted successfully", "document_id": result['$id']}
     except Exception as e:
         raise HTTPException(
             status_code=500, detail=f"Error submitting preferences: {str(e)}")
-
-
-@app.post("/update-preferences", summary="Update User Preferences")
-async def update_preferences(preferences: Preferences):
-    """
-    Update and store user preferences in the database.
-    """
-    try:
-        preferences_dict = preferences.model_dump()
-
-        result = database.update_document(
-            database_id=appwrite_config['database_id'],
-            collection_id=appwrite_config['preferences_collection_id'],
-            document_id=preferences_dict['user_id'],
-            data=preferences_dict  # data is being sent as a dict json
-        )
-        return {"message": "Preferences updated successfully", "document_id": result['$id']}
-    except Exception as e:
-        raise HTTPException(
-            status_code=500, detail=f"Error updating preferences: {str(e)}")
 
 
 # Recommendation using preferences in user collection and location use later
