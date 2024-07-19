@@ -2,7 +2,8 @@
 from dotenv import load_dotenv
 import os
 from enum import Enum
-from appleSetup import AppleAuth
+from services.appleSetup import AppleAuth
+from services.apple_maps import apple_maps_service
 from fastapi import FastAPI, Request, HTTPException
 from pydantic import BaseModel
 from typing import List, Any, Optional, Dict
@@ -18,53 +19,7 @@ from apscheduler.triggers.interval import IntervalTrigger
 from datetime import datetime
 import googlemaps
 import httpx
-categories = [
-    "Airport",
-    "AirportGate",
-    "AirportTerminal",
-    "AmusementPark",
-    "ATM",
-    "Aquarium",
-    "Bakery",
-    "Bank",
-    "Beach",
-    "Brewery",
-    "Cafe",
-    "Campground",
-    "CarRental",
-    "EVCharger",
-    "FireStation",
-    "FitnessCenter",
-    "FoodMarket",
-    "GasStation",
-    "Hospital",
-    "Hotel",
-    "Laundry",
-    "Library",
-    "Marina",
-    "MovieTheater",
-    "Museum",
-    "NationalPark",
-    "Nightlife",
-    "Park",
-    "Parking",
-    "Pharmacy",
-    "Playground",
-    "Police",
-    "PostOffice",
-    "PublicTransport",
-    "ReligiousSite",
-    "Restaurant",
-    "Restroom",
-    "School",
-    "Stadium",
-    "Store",
-    "Theater",
-    "University",
-    "Winery",
-    "Zoo"
-]
-# Load environment variables
+
 load_dotenv()
 
 SERVER_ENDPOINT = "https://maps-api.apple.com"
@@ -91,87 +46,6 @@ app = FastAPI(
 
 GOOGLE_API_KEY = os.getenv('GOOGLE_MAPS_API')
 
-# Global variable for Apple Maps token
-# TODO: In production, initialize this as None
-
-if (os.getenv('DEV')):
-    global_maps_token = os.getenv('TOKEN_TEMP')
-else:
-    global_maps_token = None
-
-# Function to update Apple Maps token
-
-
-class AppleMapsSearch:
-    @staticmethod
-    async def get_access_token(auth_token: str) -> str:
-        """
-        Get an access token using the auth token.
-        """
-        try:
-            async with httpx.AsyncClient() as client:
-                response = await client.get(
-                    f"{SERVER_ENDPOINT}/v1/token",
-                    headers={
-                        "Authorization": f"Bearer {auth_token}"
-                    }
-                )
-                response.raise_for_status()
-                token_data = response.json()
-                return token_data.get("accessToken")
-        except httpx.HTTPStatusError as e:
-            raise HTTPException(status_code=e.response.status_code,
-                                detail=f"Error getting access token: {str(e)}")
-
-    @staticmethod
-    async def search(query: str, lat: float, lon: float, radius: int = 5000) -> List[Dict]:
-        """
-        Perform a search using Apple Maps API.
-        """
-        global global_maps_token
-        try:
-            # Get access token
-            access_token = await AppleMapsSearch.get_access_token(global_maps_token)
-
-            async with httpx.AsyncClient() as client:
-                response = await client.get(
-                    f"{SERVER_ENDPOINT}/v1/search",
-                    params={
-                        "q": query,
-                        "searchLocation": f"{lat},{lon}",
-                    },
-                    headers={
-                        "Authorization": f"Bearer {access_token}"
-                    }
-                )
-                # url = f"{SERVER_ENDPOINT}/v1/search?q={query}&loc={lat},{lon}"
-                # print(url)
-                response.raise_for_status()
-                results = response.json()
-
-                # Format the results
-                locations = [
-                    {
-                        "name": place.get("name"),
-                        "address": ", ".join(place.get("formattedAddressLines", [])),
-                        "location": {
-                            "lat": place.get("coordinate", {}).get("latitude"),
-                            "lon": place.get("coordinate", {}).get("longitude")
-                        },
-                        "category": place.get("poiCategory")
-                    }
-                    for place in results.get("results", [])
-                ]
-
-                return locations
-
-        except httpx.HTTPStatusError as e:
-            raise HTTPException(status_code=e.response.status_code,
-                                detail=f"Apple Maps API error: {str(e)}")
-        except httpx.RequestError as e:
-            raise HTTPException(
-                status_code=500, detail=f"Request error: {str(e)}")
-
 
 def update_apple_token():
     global global_maps_token
@@ -189,6 +63,13 @@ scheduler.add_job(
     replace_existing=True
 )
 scheduler.start()
+
+
+if (os.getenv('DEV')):
+    global_maps_token = os.getenv('TOKEN_TEMP')
+else:
+    global_maps_token = None
+
 
 # Initialize Appwrite database service
 database = Databases(client)
@@ -225,7 +106,6 @@ class Shopping(str, Enum):
     NO = "NO"
 
 
-# NOTE: MAKE SURE IN FRKONT END ENUSM ARE PROPERLY USED
 class Preferences(BaseModel):
     # Temp
     user_id: str
@@ -251,10 +131,8 @@ async def get_apple_token():
     """
     Retrieve the current Apple Maps token. If not available, generate a new one.
     """
-    global global_maps_token
-    if global_maps_token is None:
-        update_apple_token()
-    return {"apple_token": global_maps_token}
+    token = await apple_maps_service.get_access_token()
+    return {"apple_token": token}
 
 
 class AccountInfo(BaseModel):
@@ -461,15 +339,16 @@ async def get_proximity_recommendations(request: ProximityRecommendationRequest)
     """
     centroid = calculate_centroid(request.locations)
     print(centroid)
+    print(centroid['lat'])
+    print(centroid['lon'])
 
     try:
         all_recommendations = []
         for interest in request.interests:
-            results = await AppleMapsSearch.search(interest, centroid['lat'], centroid['lon'], radius=5000)
+            results = await apple_maps_service.search(interest, centroid['lat'], centroid['lon'])
             all_recommendations.extend(results)
 
         # Sort recommendations by distance from centroid (if needed)
-        # This step is optional as Apple Maps might already return sorted results
         sorted_recommendations = sorted(
             all_recommendations,
             key=lambda x: ((x['location']['lat'] - centroid['lat'])**2 +
@@ -477,7 +356,6 @@ async def get_proximity_recommendations(request: ProximityRecommendationRequest)
         )
 
         # Limit to top N recommendations if needed
-        # Adjust the number as needed
         top_recommendations = sorted_recommendations[:20]
 
         return {"recommendations": sorted_recommendations}
