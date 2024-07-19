@@ -13,6 +13,7 @@ from appwrite.services.users import Users
 from appwrite.services.databases import Databases
 from appwrite.id import ID
 from apscheduler.schedulers.background import BackgroundScheduler
+from featureFunctions import calculate_centroid
 from apscheduler.triggers.interval import IntervalTrigger
 from datetime import datetime
 import googlemaps
@@ -318,6 +319,44 @@ async def get_recommendations(location: Location):
     #     raise HTTPException(status_code=500, detail=f"Request error: {str(e)}")
 
     return {"recommendations": dummy_recommendations}
+
+@app.post("/get-proximity-recommendations", summary="Get Recommendations Based on Proximity")
+async def get_proximity_recommendations(locations: List[Location]):
+    """
+    Generate recommendations based on the centroid of provided user locations.
+    """
+    # Calculate the centroid of the given locations
+    centroid = calculate_centroid(locations)
+    
+    # Use Google Maps API to find places near the centroid
+    try:
+        response = await httpx.AsyncClient().get(
+            "https://maps.googleapis.com/maps/api/place/nearbysearch/json",
+            params={
+                "location": f"{centroid['lat']},{centroid['lon']}",
+                "radius": 5000,  # Radius in meters
+                "key": GOOGLE_API_KEY
+            }
+        )
+        results = response.json().get("results", [])
+        
+        # Format the recommendations
+        recommendations = [
+            {
+                "name": place.get("name"),
+                "location": {
+                    "lat": place.get("geometry", {}).get("location", {}).get("lat"),
+                    "lon": place.get("geometry", {}).get("location", {}).get("lng")
+                }
+            }
+            for place in results
+        ]
+        
+        return {"recommendations": recommendations}
+    except httpx.HTTPStatusError as e:
+        raise HTTPException(status_code=e.response.status_code, detail=f"Google Maps API error: {str(e)}")
+    except httpx.RequestError as e:
+        raise HTTPException(status_code=500, detail=f"Request error: {str(e)}")
 
 
 # uvicorn app:app --reload
