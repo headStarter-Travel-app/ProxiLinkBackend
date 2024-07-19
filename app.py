@@ -19,10 +19,9 @@ from apscheduler.triggers.interval import IntervalTrigger
 from datetime import datetime
 import googlemaps
 import httpx
-
+from config import settings
 load_dotenv()
 
-SERVER_ENDPOINT = "https://maps-api.apple.com"
 # Initialize Appwrite client
 client = Client()
 client.set_endpoint('https://cloud.appwrite.io/v1')
@@ -34,7 +33,9 @@ client.set_self_signed()
 appwrite_config = {
     "database_id": "66930e1000087eb0d4bd",
     "user_collection_id": "66930e5900107bc194dc",
-    "preferences_collection_id": "6696016b00117bbf6352"
+    "preferences_collection_id": "6696016b00117bbf6352",
+    "friends_collection_id": "friends"
+
 }
 
 # Initialize FastAPI app
@@ -43,8 +44,6 @@ app = FastAPI(
     description="API for Proxi Link App",
     version="1.0.0",
 )
-
-GOOGLE_API_KEY = os.getenv('GOOGLE_MAPS_API')
 
 
 def update_apple_token():
@@ -64,22 +63,15 @@ scheduler.add_job(
 )
 scheduler.start()
 
-
 if (os.getenv('DEV')):
     global_maps_token = os.getenv('TOKEN_TEMP')
 else:
     global_maps_token = None
 
-
-# Initialize Appwrite database service
 database = Databases(client)
 
 # Initialize Google Maps client
 gmaps = googlemaps.Client(key=os.getenv('GOOGLE_MAPS_API'))
-
-# Pydantic model for user preferences
-
-# model for location google maps api call (recommendations)
 
 
 class Location(BaseModel):
