@@ -5,9 +5,10 @@ from enum import Enum
 from appleSetup import AppleAuth
 from fastapi import FastAPI, Request, HTTPException
 from pydantic import BaseModel
-from typing import List, Any
+from typing import List, Any, Optional
 import appwrite
 from appwrite.client import Client
+from appwrite.query import Query
 from appwrite.services.users import Users
 from appwrite.services.databases import Databases
 from appwrite.id import ID
@@ -35,8 +36,8 @@ appwrite_config = {
 
 # Initialize FastAPI app
 app = FastAPI(
-    title="Restaurant Recommendation API",
-    description="API for managing user preferences and generating restaurant recommendations",
+    title="Proxi Link AI API",
+    description="API for Proxi Link App",
     version="1.0.0",
 )
 
@@ -122,6 +123,7 @@ class Preferences(BaseModel):
     shopping: Shopping = Shopping.SOMETIME
     family_friendly: bool
     learning: List[str]
+    sports: List[str]
 
 
 @app.get("/", summary="Root")
@@ -140,6 +142,41 @@ async def get_apple_token():
     return {"apple_token": global_maps_token}
 
 
+class AccountInfo(BaseModel):
+    uid: str
+    firstName: str
+    lastName: str
+    address: Optional[str] = None
+
+
+@app.post("/update-account", summary="Update Account")
+async def update_account(account: AccountInfo):
+    """
+    Update user account in the database
+    """
+    try:
+        account_dict = account.model_dump()
+        existing_account = database.get_document(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['user_collection_id'],
+            document_id=account_dict['uid']
+        )
+        if account_dict['address'] is None:
+            account_dict['address'] = existing_account['address']
+
+        result = database.update_document(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['user_collection_id'],
+            document_id=account_dict['uid'],
+            data=account_dict
+        )
+
+        return {"message": "User account updated successfully", "document_id": result['$id']}
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, detail=f"Error updating user account: {str(e)}")
+
+
 @app.post("/submit-preferences", summary="Submit User Preferences")
 async def submit_preferences(preferences: Preferences):
     """
@@ -147,11 +184,12 @@ async def submit_preferences(preferences: Preferences):
     """
     try:
         preferences_dict = preferences.model_dump()
+        unique_id = preferences_dict['user_id']
 
         result = database.create_document(
             database_id=appwrite_config['database_id'],
             collection_id=appwrite_config['preferences_collection_id'],
-            document_id=ID.unique(),
+            document_id=unique_id,
             data=preferences_dict
         )
 
@@ -159,6 +197,26 @@ async def submit_preferences(preferences: Preferences):
     except Exception as e:
         raise HTTPException(
             status_code=500, detail=f"Error submitting preferences: {str(e)}")
+
+
+@app.post("/update-preferences", summary="Update User Preferences")
+async def update_preferences(preferences: Preferences):
+    """
+    Update and store user preferences in the database.
+    """
+    try:
+        preferences_dict = preferences.model_dump()
+
+        result = database.update_document(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['preferences_collection_id'],
+            document_id=preferences_dict['user_id'],
+            data=preferences_dict  # data is being sent as a dict json
+        )
+        return {"message": "Preferences updated successfully", "document_id": result['$id']}
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, detail=f"Error updating preferences: {str(e)}")
 
 
 @app.get("/recommendations", summary="Get Restaurant Recommendations")
