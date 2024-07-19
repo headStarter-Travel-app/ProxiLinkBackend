@@ -5,7 +5,7 @@ from enum import Enum
 from appleSetup import AppleAuth
 from fastapi import FastAPI, Request, HTTPException
 from pydantic import BaseModel
-from typing import List, Any, Optional
+from typing import List, Any, Optional, Dict
 import appwrite
 from appwrite.client import Client
 from appwrite.query import Query
@@ -13,15 +13,61 @@ from appwrite.services.users import Users
 from appwrite.services.databases import Databases
 from appwrite.id import ID
 from apscheduler.schedulers.background import BackgroundScheduler
-from featureFunctions import calculate_centroid
+from featureFunctions import get_search_region
 from apscheduler.triggers.interval import IntervalTrigger
 from datetime import datetime
 import googlemaps
 import httpx
-
+categories = [
+    "Airport",
+    "AirportGate",
+    "AirportTerminal",
+    "AmusementPark",
+    "ATM",
+    "Aquarium",
+    "Bakery",
+    "Bank",
+    "Beach",
+    "Brewery",
+    "Cafe",
+    "Campground",
+    "CarRental",
+    "EVCharger",
+    "FireStation",
+    "FitnessCenter",
+    "FoodMarket",
+    "GasStation",
+    "Hospital",
+    "Hotel",
+    "Laundry",
+    "Library",
+    "Marina",
+    "MovieTheater",
+    "Museum",
+    "NationalPark",
+    "Nightlife",
+    "Park",
+    "Parking",
+    "Pharmacy",
+    "Playground",
+    "Police",
+    "PostOffice",
+    "PublicTransport",
+    "ReligiousSite",
+    "Restaurant",
+    "Restroom",
+    "School",
+    "Stadium",
+    "Store",
+    "Theater",
+    "University",
+    "Winery",
+    "Zoo"
+]
 # Load environment variables
 load_dotenv()
 
+SERVER_ENDPOINT = "https://maps-api.apple.com"
 # Initialize Appwrite client
 client = Client()
 client.set_endpoint('https://cloud.appwrite.io/v1')
@@ -56,6 +102,77 @@ else:
 # Function to update Apple Maps token
 
 
+class AppleMapsSearch:
+    @staticmethod
+    async def get_access_token(auth_token: str) -> str:
+        """
+        Get an access token using the auth token.
+        """
+        try:
+            async with httpx.AsyncClient() as client:
+                response = await client.get(
+                    f"{SERVER_ENDPOINT}/v1/token",
+                    headers={
+                        "Authorization": f"Bearer {auth_token}"
+                    }
+                )
+                response.raise_for_status()
+                token_data = response.json()
+                return token_data.get("accessToken")
+        except httpx.HTTPStatusError as e:
+            raise HTTPException(status_code=e.response.status_code,
+                                detail=f"Error getting access token: {str(e)}")
+
+    @staticmethod
+    async def search(query: str, lat: float, lon: float, radius: int = 5000) -> List[Dict]:
+        """
+        Perform a search using Apple Maps API.
+        """
+        global global_maps_token
+        try:
+            # Get access token
+            access_token = await AppleMapsSearch.get_access_token(global_maps_token)
+
+            async with httpx.AsyncClient() as client:
+                response = await client.get(
+                    f"{SERVER_ENDPOINT}/v1/search",
+                    params={
+                        "q": query,
+                        "searchLocation": f"{lat},{lon}",
+                    },
+                    headers={
+                        "Authorization": f"Bearer {access_token}"
+                    }
+                )
+                # url = f"{SERVER_ENDPOINT}/v1/search?q={query}&loc={lat},{lon}"
+                # print(url)
+                response.raise_for_status()
+                results = response.json()
+
+                # Format the results
+                locations = [
+                    {
+                        "name": place.get("name"),
+                        "address": ", ".join(place.get("formattedAddressLines", [])),
+                        "location": {
+                            "lat": place.get("coordinate", {}).get("latitude"),
+                            "lon": place.get("coordinate", {}).get("longitude")
+                        },
+                        "category": place.get("poiCategory")
+                    }
+                    for place in results.get("results", [])
+                ]
+
+                return locations
+
+        except httpx.HTTPStatusError as e:
+            raise HTTPException(status_code=e.response.status_code,
+                                detail=f"Apple Maps API error: {str(e)}")
+        except httpx.RequestError as e:
+            raise HTTPException(
+                status_code=500, detail=f"Request error: {str(e)}")
+
+
 def update_apple_token():
     global global_maps_token
     global_maps_token = AppleAuth.generate_apple_token()
@@ -82,10 +199,11 @@ gmaps = googlemaps.Client(key=os.getenv('GOOGLE_MAPS_API'))
 # Pydantic model for user preferences
 
 # model for location google maps api call (recommendations)
+
+
 class Location(BaseModel):
     lat: float
     lon: float
-
 
 
 class SocialInteraction(str, Enum):
@@ -106,19 +224,6 @@ class Shopping(str, Enum):
     SOMETIME = "SOMETIME"
     NO = "NO"
 
-
-# {
-#   "user_id": "66943f0900123a1015ee",
-#   "users": "66943f0900123a1015ee",
-#   "cuisine": ["Italian", "Japanese", "Mexican"],
-#   "atmosphere": ["Cozy", "Modern"],
-#   "entertainment": ["Live Music", "Sports Screening"],
-#   "socializing": "BOTH",
-#   "Time": ["EVENING", "NIGHT"],
-#   "shopping": "SOMETIME",
-#   "family_friendly": true,
-#   "learning": ["History", "Art"]
-# }
 
 # NOTE: MAKE SURE IN FRKONT END ENUSM ARE PROPERLY USED
 class Preferences(BaseModel):
@@ -245,16 +350,16 @@ async def get_recommendations(user_id: str):
     location = user_data['location']
 
     # Use Google Maps API to find places based on preferences and location
-    places = gmaps.places_nearby(
-        location=location, keyword=preferences, radius=5000)
+    # places = gmaps.places_nearby(
+    #     location=location, keyword=preferences, radius=5000)
 
     # Store recommendations in the database
-    database.create_document(
-        database_id=appwrite_config['database_id'],
-        collection_id='recommendations',
-        document_id=ID.unique(),
-        data={'places': places['results']}
-    )
+    # database.create_document(
+    #     database_id=appwrite_config['database_id'],
+    #     collection_id='recommendations',
+    #     document_id=ID.unique(),
+    #     data={'places': places['results']}
+    # )
 
     return {"recommendations": places['results']}
 
@@ -267,19 +372,24 @@ async def get_recommendations(location: Location):
     """
     # Default recommendations based on only location
     dummy_recommendations = [
-        {"type": "entertainment", "name": "Live Music Venue", "location": {"lat": 37.78825, "lon": -122.4324}},
-        {"type": "food", "name": "Italian Restaurant", "location": {"lat": 37.78925, "lon": -122.4314}},
-        {"type": "shopping", "name": "Local Bookstore", "location": {"lat": 37.79025, "lon": -122.4304}},
-        {"type": "sightseeing", "name": "Golden Gate Park", "location": {"lat": 37.79125, "lon": -122.4294}},
-        {"type": "cafe", "name": "Cozy Cafe", "location": {"lat": 37.79225, "lon": -122.4284}}
+        {"type": "entertainment", "name": "Live Music Venue",
+            "location": {"lat": 37.78825, "lon": -122.4324}},
+        {"type": "food", "name": "Italian Restaurant",
+            "location": {"lat": 37.78925, "lon": -122.4314}},
+        {"type": "shopping", "name": "Local Bookstore",
+            "location": {"lat": 37.79025, "lon": -122.4304}},
+        {"type": "sightseeing", "name": "Golden Gate Park",
+            "location": {"lat": 37.79125, "lon": -122.4294}},
+        {"type": "cafe", "name": "Cozy Cafe", "location": {
+            "lat": 37.79225, "lon": -122.4284}}
     ]
-    
+
     # Uncomment and use this section when you want to use Google Places API
     # try:
     #     async with httpx.AsyncClient() as client:
     #         recommendations = []
     #         categories = ["music", "entertainment", "food", "museum", "park"]
-    #         
+    #
     #         for category in categories:
     #             response = await client.get(
     #                 "https://maps.googleapis.com/maps/api/place/nearbysearch/json",
@@ -291,7 +401,7 @@ async def get_recommendations(location: Location):
     #                 }
     #             )
     #             results = response.json().get("results", [])
-    #             
+    #
     #             # Sort places by distance (by their location)
     #             sorted_places = sorted(
     #                 results,
@@ -300,7 +410,7 @@ async def get_recommendations(location: Location):
     #                     (place["geometry"]["location"]["lng"] - location.lon) ** 2
     #                 )
     #             )
-    #             
+    #
     #             # Add top 5 closest places to recommendations
     #             for place in sorted_places[:5]:
     #                 recommendations.append({
@@ -311,7 +421,7 @@ async def get_recommendations(location: Location):
     #                         "lon": place.get("geometry", {}).get("location", {}).get("lng")
     #                     }
     #                 })
-    #         
+    #
     #         return {"recommendations": recommendations}
     # except httpx.HTTPStatusError as e:
     #     raise HTTPException(status_code=e.response.status_code, detail=f"Google Maps API error: {str(e)}")
@@ -320,44 +430,60 @@ async def get_recommendations(location: Location):
 
     return {"recommendations": dummy_recommendations}
 
+
+class Location(BaseModel):
+    lat: float
+    lon: float
+
+
+class ProximityRecommendationRequest(BaseModel):
+    locations: List[Location]
+    interests: List[str]
+
+
+def calculate_centroid(locations: List[Location]) -> Dict[str, float]:
+    """
+    Calculate the centroid of given locations.
+    """
+    latitudes = [loc.lat for loc in locations]
+    longitudes = [loc.lon for loc in locations]
+
+    centroid_lat = sum(latitudes) / len(locations)
+    centroid_lon = sum(longitudes) / len(locations)
+
+    return {"lat": centroid_lat, "lon": centroid_lon}
+
+
 @app.post("/get-proximity-recommendations", summary="Get Recommendations Based on Proximity")
-async def get_proximity_recommendations(locations: List[Location]):
+async def get_proximity_recommendations(request: ProximityRecommendationRequest):
     """
     Generate recommendations based on the centroid of provided user locations.
     """
-    # Calculate the centroid of the given locations
-    centroid = calculate_centroid(locations)
-    
-    # Use Google Maps API to find places near the centroid
-    try:
-        response = await httpx.AsyncClient().get(
-            "https://maps.googleapis.com/maps/api/place/nearbysearch/json",
-            params={
-                "location": f"{centroid['lat']},{centroid['lon']}",
-                "radius": 5000,  # Radius in meters
-                "key": GOOGLE_API_KEY
-            }
-        )
-        results = response.json().get("results", [])
-        
-        # Format the recommendations
-        recommendations = [
-            {
-                "name": place.get("name"),
-                "location": {
-                    "lat": place.get("geometry", {}).get("location", {}).get("lat"),
-                    "lon": place.get("geometry", {}).get("location", {}).get("lng")
-                }
-            }
-            for place in results
-        ]
-        
-        return {"recommendations": recommendations}
-    except httpx.HTTPStatusError as e:
-        raise HTTPException(status_code=e.response.status_code, detail=f"Google Maps API error: {str(e)}")
-    except httpx.RequestError as e:
-        raise HTTPException(status_code=500, detail=f"Request error: {str(e)}")
+    centroid = calculate_centroid(request.locations)
+    print(centroid)
 
+    try:
+        all_recommendations = []
+        for interest in request.interests:
+            results = await AppleMapsSearch.search(interest, centroid['lat'], centroid['lon'], radius=5000)
+            all_recommendations.extend(results)
+
+        # Sort recommendations by distance from centroid (if needed)
+        # This step is optional as Apple Maps might already return sorted results
+        sorted_recommendations = sorted(
+            all_recommendations,
+            key=lambda x: ((x['location']['lat'] - centroid['lat'])**2 +
+                           (x['location']['lon'] - centroid['lon'])**2)**0.5
+        )
+
+        # Limit to top N recommendations if needed
+        # Adjust the number as needed
+        top_recommendations = sorted_recommendations[:20]
+
+        return {"recommendations": sorted_recommendations}
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, detail=f"Error getting recommendations: {str(e)}")
 
 # uvicorn app:app --reload
 
