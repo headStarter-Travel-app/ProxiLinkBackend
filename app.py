@@ -16,6 +16,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 from datetime import datetime
 import googlemaps
+import httpx
 
 # Load environment variables
 load_dotenv()
@@ -40,6 +41,8 @@ app = FastAPI(
     description="API for Proxi Link App",
     version="1.0.0",
 )
+
+GOOGLE_API_KEY = os.getenv('GOOGLE_MAPS_API')
 
 # Global variable for Apple Maps token
 # TODO: In production, initialize this as None
@@ -76,6 +79,12 @@ database = Databases(client)
 gmaps = googlemaps.Client(key=os.getenv('GOOGLE_MAPS_API'))
 
 # Pydantic model for user preferences
+
+# model for location google maps api call (recommendations)
+class Location(BaseModel):
+    lat: float
+    lon: float
+
 
 
 class SocialInteraction(str, Enum):
@@ -219,7 +228,8 @@ async def update_preferences(preferences: Preferences):
             status_code=500, detail=f"Error updating preferences: {str(e)}")
 
 
-@app.get("/recommendations", summary="Get Restaurant Recommendations")
+# Recommendation using preferences in user collection and location use later
+@app.get("/recommendations", summary="Get Recommendations")
 async def get_recommendations(user_id: str):
     """
     Generate restaurant recommendations based on user preferences and location.
@@ -246,6 +256,68 @@ async def get_recommendations(user_id: str):
     )
 
     return {"recommendations": places['results']}
+
+
+# Default recommendations based on only location
+@app.post("/get-recommendations", summary="Get Recommendations")
+async def get_recommendations(location: Location):
+    """
+    Return the closest places from Google Places API based on location and category.
+    """
+    # Default recommendations based on only location
+    dummy_recommendations = [
+        {"type": "entertainment", "name": "Live Music Venue", "location": {"lat": 37.78825, "lon": -122.4324}},
+        {"type": "food", "name": "Italian Restaurant", "location": {"lat": 37.78925, "lon": -122.4314}},
+        {"type": "shopping", "name": "Local Bookstore", "location": {"lat": 37.79025, "lon": -122.4304}},
+        {"type": "sightseeing", "name": "Golden Gate Park", "location": {"lat": 37.79125, "lon": -122.4294}},
+        {"type": "cafe", "name": "Cozy Cafe", "location": {"lat": 37.79225, "lon": -122.4284}}
+    ]
+    
+    # Uncomment and use this section when you want to use Google Places API
+    # try:
+    #     async with httpx.AsyncClient() as client:
+    #         recommendations = []
+    #         categories = ["music", "entertainment", "food", "museum", "park"]
+    #         
+    #         for category in categories:
+    #             response = await client.get(
+    #                 "https://maps.googleapis.com/maps/api/place/nearbysearch/json",
+    #                 params={
+    #                     "location": f"{location.lat},{location.lon}",
+    #                     "radius": 5000,  # Radius in meters
+    #                     "type": category,
+    #                     "key": GOOGLE_API_KEY
+    #                 }
+    #             )
+    #             results = response.json().get("results", [])
+    #             
+    #             # Sort places by distance (by their location)
+    #             sorted_places = sorted(
+    #                 results,
+    #                 key=lambda place: (
+    #                     (place["geometry"]["location"]["lat"] - location.lat) ** 2 +
+    #                     (place["geometry"]["location"]["lng"] - location.lon) ** 2
+    #                 )
+    #             )
+    #             
+    #             # Add top 5 closest places to recommendations
+    #             for place in sorted_places[:5]:
+    #                 recommendations.append({
+    #                     "type": category,
+    #                     "name": place.get("name"),
+    #                     "location": {
+    #                         "lat": place.get("geometry", {}).get("location", {}).get("lat"),
+    #                         "lon": place.get("geometry", {}).get("location", {}).get("lng")
+    #                     }
+    #                 })
+    #         
+    #         return {"recommendations": recommendations}
+    # except httpx.HTTPStatusError as e:
+    #     raise HTTPException(status_code=e.response.status_code, detail=f"Google Maps API error: {str(e)}")
+    # except httpx.RequestError as e:
+    #     raise HTTPException(status_code=500, detail=f"Request error: {str(e)}")
+
+    return {"recommendations": dummy_recommendations}
 
 
 # uvicorn app:app --reload
