@@ -17,8 +17,7 @@ class AppleAuth:
         team_id = os.getenv('TEAM_ID')
         key_id = os.getenv('KEY_ID')
         PK = os.getenv('PRIVATE_KEY')
-        private_key = f"-----BEGIN PRIVATE KEY-----\n{
-            PK}\n-----END PRIVATE KEY-----"
+        private_key = f"""-----BEGIN PRIVATE KEY-----\n{PK}\n-----END PRIVATE KEY-----"""
         private_key = private_key.strip()
 
         # Load the private key to ensure it is correctly formatted
