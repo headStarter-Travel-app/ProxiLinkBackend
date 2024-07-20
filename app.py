@@ -18,6 +18,7 @@ from featureFunctions import get_search_region
 from apscheduler.triggers.interval import IntervalTrigger
 from datetime import datetime
 import googlemaps
+from appwrite.exception import AppwriteException
 import httpx
 load_dotenv()
 
@@ -184,6 +185,12 @@ async def get_preferences(user_id: str):
             document_id=user_id
         )
         return result
+    except AppwriteException as e:
+        if e.code == 404:  # Assuming 404 is the status code for "document not found"
+            # Return an empty structure if the document is not found
+            return {
+            }
+
     except Exception as e:
         raise HTTPException(
             status_code=500, detail=f"Error getting preferences: {str(e)}")
