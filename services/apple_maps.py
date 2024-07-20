@@ -15,10 +15,7 @@ SERVER_ENDPOINT: str = "https://maps-api.apple.com"
 
 class AppleMapsService:
     def __init__(self):
-        if (os.getenv("DEV")):
-            self.token = os.getenv("TOKEN_TEMP")
-        else:
-            self.token = AppleAuth.generate_apple_token()
+        self.token = AppleAuth.generate_apple_token()
         self.setup_token_update()
 
     def setup_token_update(self):
@@ -31,6 +28,9 @@ class AppleMapsService:
             replace_existing=True
         )
         scheduler.start()
+
+    def get_auth_token(self):
+        return self.token
 
     def update_token(self):
         self.token = AppleAuth.generate_apple_token()
