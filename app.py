@@ -165,6 +165,30 @@ async def update_account(account: AccountInfo):
             status_code=500, detail=f"Error updating user account: {str(e)}")
 
 
+# App .get pereferences by the user_id. Pass in user ID in the body, and we query the document and get it, and return errything as a json. Doc ID is same as User ID FYI
+# result = databases.get_document(
+#     database_id = appwrite_config['database_id'],
+#     collection_id = appwrite_config['preferences_collection_id'],
+#     document_id = unique_id
+#     queries = [] # optional
+# )
+@app.get("/get-preferences", summary="Get Preferences")
+async def get_preferences(user_id: str):
+    """
+    Get preferences based on userID
+    """
+    try:
+        result = database.get_document(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['preferences_collection_id'],
+            document_id=user_id
+        )
+        return result
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, detail=f"Error getting preferences: {str(e)}")
+
+
 @app.post("/submit-preferences", summary="Submit User Preferences")
 async def submit_preferences(preferences: Preferences):
     """
@@ -333,6 +357,7 @@ async def get_proximity_recommendations(request: ProximityRecommendationRequest)
         all_recommendations = []
         for interest in request.interests:
             results = await apple_maps_service.search(interest, centroid['lat'], centroid['lon'])
+
             all_recommendations.extend(results)
 
         # Sort recommendations by distance from centroid (if needed)
