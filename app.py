@@ -19,7 +19,6 @@ from apscheduler.triggers.interval import IntervalTrigger
 from datetime import datetime
 import googlemaps
 import httpx
-from config import settings
 load_dotenv()
 
 # Initialize Appwrite client

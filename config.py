@@ -19,7 +19,9 @@ class Settings(BaseSettings):
     HOST: str = "0.0.0.0"
     PORT: int = int(os.getenv("PORT", "8000"))
 
-    # API Endpoints
+    # Flask Settings
+    FLASK_APP: str = os.getenv("FLASK_APP", "app.py")
+    FLASK_ENV: str = os.getenv("FLASK_ENV", "development")
 
     # Database Settings
     DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./test.db")
@@ -37,10 +39,17 @@ class Settings(BaseSettings):
 
     # Apple Maps Settings
     APPLE_MAPS_TOKEN_UPDATE_INTERVAL: int = 168  # hours
+    TEAM_ID: str = os.getenv("TEAM_ID")
+    KEY_ID: str = os.getenv("KEY_ID")
+    PRIVATE_KEY: str = os.getenv("PRIVATE_KEY")
+    TOKEN_TEMP: str = os.getenv("TOKEN_TEMP")
 
     # Recommendation Settings
     DEFAULT_SEARCH_RADIUS: int = 5000  # meters
     MAX_RECOMMENDATIONS: int = 20
+
+    # Development Settings
+    DEV: bool = os.getenv("DEV", "false").lower() == "true"
 
     class Config:
         env_file = ".env"
