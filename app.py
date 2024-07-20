@@ -130,18 +130,6 @@ async def get_apple_token():
         return {"message": "Error generating Apple Maps token"}
 
 
-@app.get("/apple-auth-token", summary="Get Apple Auth Token")
-async def get_apple_auth_token():
-    """
-    Retrieve the current Apple Maps token. If not available, generate a new one.
-    """
-    token = apple_maps_service.get_auth_token()
-    if token:
-        return {"apple_token": token}
-    else:
-        return {"message": "Error generating Apple Maps token"}
-
-
 class AccountInfo(BaseModel):
     uid: str
     firstName: str

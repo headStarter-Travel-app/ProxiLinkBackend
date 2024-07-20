@@ -59,7 +59,6 @@ class AppleMapsService:
     async def search(self, query: str, lat: float, lon: float) -> List[Dict]:
         try:
             access_token = await self.get_access_token()
-            print(f"Access token: {access_token}")
             async with httpx.AsyncClient() as client:
                 response = await client.get(
                     f"{SERVER_ENDPOINT}/v1/search",
