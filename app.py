@@ -200,7 +200,43 @@ async def get_place_details(address_input: AddressInput):
         logger.error(f"Error getting place details: {str(e)}")
         raise HTTPException(
             status_code=500, detail=f"Error getting place details: {str(e)}")
+    
+@app.get("/initial-recommendations")
+async def get_initial_recommendations(lat: float, lon: float, categories: str):
+    included_categories = categories.split(",")
+    recommendations = []
 
+    # Get the authorization token
+    access_token = await apple_maps_service.get_access_token()
+
+    try:
+        async with httpx.AsyncClient() as client:
+            for category in included_categories:
+                response = await client.get(
+                    "https://maps-api.apple.com/v1/search",
+                    params={
+                        "q": category,
+                        "searchLocation": f"{lat},{lon}",
+                        "lang": "en-US"
+                    },
+                    headers={"Authorization": f"Bearer {access_token}"}
+                )
+                results = response.json().get('results', [])
+                for result in results:
+                    recommendations.append({
+                        "location": {
+                            "lat": result['coordinate']['latitude'],
+                            "lon": result['coordinate']['longitude']
+                        },
+                        "name": result['name'],
+                        "description": category,  # Placeholder for description
+                        "address": ", ".join(result.get("formattedAddressLines", []))  # Ensure address is formatted correctly
+                    })
+        return {"recommendations": recommendations}
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, detail=f"Error fetching initial recommendations: {str(e)}"
+        )
 
 @app.get("/get-apple-token", summary="Get Apple Maps Token")
 async def get_apple_token():
