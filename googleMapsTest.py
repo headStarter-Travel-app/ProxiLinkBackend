@@ -2,7 +2,7 @@ import googlemaps
 import json
 
 # Replace 'YOUR_API_KEY' with your actual Google Maps API key
-API_KEY = 'AIzaSyAPWmKvpyjbPAdWK3nyxruJsB4WgQd8kXs'
+API_KEY = 'YOUR_API_KEY'
 
 # Initialize the client
 gmaps = googlemaps.Client(key=API_KEY)
