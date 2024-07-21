@@ -1,59 +1,30 @@
-import googlemaps
+import requests
+import os
 import json
-
-# Replace 'YOUR_API_KEY' with your actual Google Maps API key
-API_KEY = 'YOUR_API_KEY'
-
-# Initialize the client
-gmaps = googlemaps.Client(key=API_KEY)
+from dotenv import load_dotenv
 
 
-def get_place_details(address):
-    # Geocode the address to get place ID
-    geocode_result = gmaps.geocode(address)
-    if not geocode_result:
-        print("Address not found.")
-        return
+def find_place(api_key, input_text, input_type="textquery"):
+    base_url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json"
+    params = {
+        "input": input_text,
+        "inputtype": input_type,
+        "fields": "name,formatted_address,photos,opening_hours,rating",
+        "key": api_key
+    }
 
-    place_id = geocode_result[0]['place_id']
+    response = requests.get(base_url, params=params)
 
-    # Fetch place details using place ID
-    place_details = gmaps.place(place_id=place_id)
-
-    if place_details['status'] != 'OK':
-        print("Failed to fetch place details.")
-        return
-
-    result = place_details['result']
-    print(result)
-
-    # Extracting details
-    name = result.get('name')
-    formatted_address = result.get('formatted_address')
-    opening_hours = result.get('opening_hours', {}).get('weekday_text', 'N/A')
-    price_level = result.get('price_level', 'N/A')
-    reviews = result.get('reviews', [])
-    photos = result.get('photos', [])
-
-    # Print place details
-    print(f"Name: {name}")
-    print(f"Address: {formatted_address}")
-    print(f"Opening Hours: {opening_hours}")
-    print(f"Price Level: {price_level}")
-
-    print("Reviews:")
-    for review in reviews[:5]:  # Limit to first 5 reviews
-        print(f"- {review['text']}")
-
-    # Print photos URLs
-    print("Photos URLs:")
-    for photo in photos[:5]:  # Limit to first 5 photos
-        photo_reference = photo['photo_reference']
-        photo_url = f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference={
-            photo_reference}&key={API_KEY}"
-        print(f"- {photo_url}")
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return f"Error: {response.status_code}, {response.text}"
 
 
-if __name__ == "__main__":
-    address = input("Enter the address: ")
-    get_place_details(address)
+# Usage example
+load_dotenv()  # Load environment variables from .env file
+api_key = os.getenv("GOOGLE_MAPS_API")
+place_to_find = 'Dunkin Honeygo Village Center, 5003 Honeygo Center Dr, Perry Hall, MD 21128'
+
+result = find_place(api_key, place_to_find)
+print(json.dumps(result, indent=2))

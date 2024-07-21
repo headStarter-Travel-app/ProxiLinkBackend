@@ -4,6 +4,7 @@ import os
 from enum import Enum
 from services.appleSetup import AppleAuth
 from services.apple_maps import apple_maps_service
+from services.google_maps import google_maps_service
 from fastapi import FastAPI, Request, HTTPException
 from pydantic import BaseModel
 from typing import List, Any, Optional, Dict
@@ -20,6 +21,10 @@ from datetime import datetime
 import googlemaps
 from appwrite.exception import AppwriteException
 import httpx
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 load_dotenv()
 
 # Initialize Appwrite client
@@ -34,7 +39,9 @@ appwrite_config = {
     "database_id": "66930e1000087eb0d4bd",
     "user_collection_id": "66930e5900107bc194dc",
     "preferences_collection_id": "6696016b00117bbf6352",
-    "friends_collection_id": "friends"
+    "friends_collection_id": "friends",
+    "locations_collection_id": "669d2a590010d4bf7d30"
+
 
 }
 
@@ -116,6 +123,83 @@ class Preferences(BaseModel):
 @app.get("/", summary="Root")
 async def root():
     return {"message": "Welcome to the Proxi Link API"}
+
+
+class AddressInput(BaseModel):
+    address: str
+    name: str
+
+
+class PlaceDetails(BaseModel):
+    address: str
+    ID: str
+    rating: float
+    name: str
+    hours: List[str]
+    url: str
+    photos: List[str]
+
+
+@app.post("/get_place_details", summary="Get Place Details from the Database or Google maps")
+async def get_place_details(address_input: AddressInput):
+    """
+    Get place details from the database or Google Maps.
+
+    Payload: {"address": "123 Main St, City, State", "name": "Place Name"}
+    From apple maps get the address and name and this cooks
+    """
+    try:
+        address = address_input.address
+        logger.info(f"Fetching details for address: {address}")
+
+        # Check if the place details are already stored in the database
+        result = database.list_documents(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['locations_collection_id'],
+            queries=[Query.equal('address', [address])]
+        )
+        print(result)
+
+        if result['total'] > 0:
+            logger.info("Details found in database")
+            return PlaceDetails(**result['documents'][0])
+        else:
+            logger.info(
+                "Details not found in database, fetching from Google Maps")
+            input = f"{address_input.name}, {address_input.address}"
+            details = google_maps_service.find_place(input)
+            if 'places' in details and len(details['places']) > 0:
+                place = details['places'][0]
+                place_details = PlaceDetails(
+                    address=address_input.address,
+                    ID=place.get('id', '0'),
+                    rating=place.get('rating', 0),
+                    name=place.get('displayName', {}).get(
+                        'text', 'Default Name'),
+                    hours=place.get('currentOpeningHours', {}).get(
+                        'weekdayDescriptions', []),
+                    url=place.get('websiteUri', ''),
+                    photos=place.get('photo_urls', [])
+                )
+                print(place_details)
+
+                logger.info("Storing new details in database")
+                update = database.create_document(
+                    database_id=appwrite_config['database_id'],
+                    collection_id=appwrite_config['locations_collection_id'],
+                    document_id=ID.unique(),
+                    data=place_details.model_dump()
+                )
+                return place_details
+            else:
+                logger.warning("No place details found")
+                raise HTTPException(
+                    status_code=404, detail="No place details found")
+
+    except Exception as e:
+        logger.error(f"Error getting place details: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error getting place details: {str(e)}")
 
 
 @app.get("/get-apple-token", summary="Get Apple Maps Token")
