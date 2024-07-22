@@ -2,23 +2,34 @@ import requests
 import os
 import json
 from dotenv import load_dotenv
+from services.google_maps import google_maps_service
 
 
-def find_place(api_key, input_text, input_type="textquery"):
-    base_url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json"
-    params = {
-        "input": input_text,
-        "inputtype": input_type,
-        "fields": "name,formatted_address,photos,opening_hours,rating",
-        "key": api_key
-    }
+def find_place(name, address_input):
+    input = f"{name}, {address_input}"
+    details = google_maps_service.find_place(input)
+    print(details)
+    if 'places' in details and len(details['places']) > 0:
+        place = details['places'][0]
+        place_details = {
+            'address': address_input.address,
+            'ID': place.get('id', '0'),
+            'rating': place.get('rating', 0),
+            'name': place.get('displayName', {}).get('text', 'Default Name'),
+            'hours': place.get('currentOpeningHours', {}).get('weekdayDescriptions', []),
+            'url': place.get('websiteUri', ''),
+            'photos': place.get('photo_urls', [])
+        }
+        print(place_details)
 
-    response = requests.get(base_url, params=params)
-
-    if response.status_code == 200:
-        return response.json()
-    else:
-        return f"Error: {response.status_code}, {response.text}"
+        logger.info("Storing new details in database")
+        update = database.create_document(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['locations_collection_id'],
+            document_id=ID.unique(),
+            data=place_details.model_dump()
+        )
+        return place_details
 
 
 # Usage example

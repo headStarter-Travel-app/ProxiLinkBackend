@@ -139,20 +139,19 @@ class PlaceDetails(BaseModel):
     url: str
     photos: List[str]
 
-@app.post("/get_place_details", summary="Get Place Details from the Database or Google Maps")
+
+@app.post("/get_place_details", summary="Get Place Details from the Database or Google maps")
 async def get_place_details(address_input: AddressInput):
     """
     Get place details from the database or Google Maps.
-
     Payload: {"address": "123 Main St, City, State", "name": "Place Name"}
-    From Apple Maps get the address and name and this cooks.
+    From apple maps get the address and name and this cooks
     """
     try:
         address = address_input.address
-        name = address_input.name
         logger.info(f"Fetching details for address: {address}")
 
-        # Search for existing entry in the database
+        # Check if the place details are already stored in the database
         result = database.list_documents(
             database_id=appwrite_config['database_id'],
             collection_id=appwrite_config['locations_collection_id'],
@@ -160,112 +159,94 @@ async def get_place_details(address_input: AddressInput):
         )
 
         if result['total'] > 0:
-            logger.info("Updating existing details in database")
-            existing_document = result['documents'][0]
-            place_id = existing_document['$id']
+            logger.info("Details found in database")
+            return PlaceDetails(**result['documents'][0])
         else:
-            logger.info("Creating new document for the location")
-            place_id = ID.unique()
+            logger.info(
+                "Details not found in database, fetching from Google Maps")
+            input = f"{address_input.name}, {address_input.address}"
+            details = google_maps_service.find_place(input)
+            if 'places' in details and len(details['places']) > 0:
+                place = details['places'][0]
+                place_details = PlaceDetails(
+                    address=address_input.address,
+                    ID=place.get('id', '0'),
+                    rating=place.get('rating', 0),
+                    name=place.get('displayName', {}).get(
+                        'text', 'Default Name'),
+                    hours=place.get('currentOpeningHours', {}).get(
+                        'weekdayDescriptions', []),
+                    url=place.get('websiteUri', ''),
+                    photos=place.get('photo_urls', [])
+                )
 
-        # Fetch details from Google Maps
-        details = google_maps_service.find_place(f"{name}, {address}")
-        if 'places' in details and len(details['places']) > 0:
-            place = details['places'][0]
-            place_details = {
-                "address": address,
-                "ID": place.get('id', '0'),
-                "rating": place.get('rating', 0),
-                "name": place.get('displayName', name),
-                "hours": place.get('currentOpeningHours', {}).get('weekdayDescriptions', []),
-                "url": place.get('websiteUri', ''),
-                "photos": place.get('photo_urls', [])
-            }
-
-            # Update or create the document in the database
-            if result['total'] > 0:
-                update_response = database.update_document(
+                logger.info("Storing new details in database")
+                update = database.create_document(
                     database_id=appwrite_config['database_id'],
                     collection_id=appwrite_config['locations_collection_id'],
-                    document_id=place_id,
-                    data=place_details
+                    document_id=ID.unique(),
+                    data=place_details.model_dump()
                 )
+                return place_details
             else:
-                create_response = database.create_document(
-                    database_id=appwrite_config['database_id'],
-                    collection_id=appwrite_config['locations_collection_id'],
-                    document_id=place_id,
-                    data=place_details
-                )
-            return place_details
-        else:
-            logger.warning("No detailed place information found")
-            raise HTTPException(status_code=404, detail="No detailed place information found")
+                logger.warning("No place details found")
+                raise HTTPException(
+                    status_code=404, detail="No place details found")
 
     except Exception as e:
         logger.error(f"Error getting place details: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Error getting place details: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error getting place details: {str(e)}")
 
 
 @app.get("/initial-recommendations")
-async def get_initial_recommendations(lat: float, lon: float, user_id: str):
+async def get_initial_recommendations(lat: float, lon: float):
     try:
         # Define proximity margin for location checking
         proximity_margin = 0.05  # Adjust based on desired precision
 
         # Search for nearby existing entries in the database
-        results = database.list_documents(
-            database_id=appwrite_config['database_id'],
-            collection_id=appwrite_config['locations_collection_id'],
-            queries=[
-                Query.greater('latitude', lat - proximity_margin),
-                Query.less('latitude', lat + proximity_margin),
-                Query.greater('longitude', lon - proximity_margin),
-                Query.less('longitude', lon + proximity_margin)
-            ]
-        )
+        categories = ["food", "entertainment", "park"]
+        recommendations = []
+        access_token = await apple_maps_service.get_access_token()
 
-        if results['total'] > 0:
-            return {"recommendations": [doc for doc in results['documents']]}
-        else:
-            categories = ["food", "entertainment", "nature/park"]
-            recommendations = []
-            access_token = await apple_maps_service.get_access_token()
-
-            async with httpx.AsyncClient() as client:
-                for category in categories:
-                    response = await client.get(
-                        "https://maps-api.apple.com/v1/search",
-                        params={
-                            "q": category,
-                            "searchLocation": f"{lat},{lon}",
-                            "lang": "en-US",
-                            "limit": 5  # Increase limit to fetch more results
-                        },
-                        headers={"Authorization": f"Bearer {access_token}"}
-                    )
-                    if response.status_code == 200:
-                        for place in response.json().get('results', []):
-                            # Store new place details in the database
-                            place_data = {
-                                "name": place['name'],
-                                "description": category,
-                                "latitude": place['coordinate']['latitude'],
-                                "longitude": place['coordinate']['longitude'],
-                                "address": ", ".join(place.get("formattedAddressLines", [])),
-                                "url": place.get('url', '')
-                            }
-                            create_response = database.create_document(
-                                database_id=appwrite_config['database_id'],
-                                collection_id=appwrite_config['locations_collection_id'],
-                                document_id=ID.unique(),
-                                data=place_data
-                            )
-                            recommendations.append(create_response)
-            return {"recommendations": recommendations}
+        async with httpx.AsyncClient() as client:
+            for category in categories:
+                response = await client.get(
+                    "https://maps-api.apple.com/v1/search",
+                    params={
+                        "q": category,
+                        "searchLocation": f"{lat},{lon}",
+                        "lang": "en-US",
+                        "limit": 5  # Increase limit to fetch more results
+                    },
+                    headers={"Authorization": f"Bearer {access_token}"}
+                )
+                recommendations.extend(response.json().get('results', []))
+                # if response.status_code == 200:
+                #     for place in response.json().get('results', []):
+                #         # Store new place details in the database
+                #         place_data = {
+                #             "name": place['name'],
+                #             "description": category,
+                #             "latitude": place['coordinate']['latitude'],
+                #             "longitude": place['coordinate']['longitude'],
+                #             "address": ", ".join(place.get("formattedAddressLines", [])),
+                #             "url": place.get('url', '')
+                #         }
+                #         create_response = database.create_document(
+                #             database_id=appwrite_config['database_id'],
+                #             collection_id=appwrite_config['locations_collection_id'],
+                #             document_id=ID.unique(),
+                #             data=place_data
+                #         )
+                #         recommendations.append(create_response)
+        return {"recommendations": recommendations[:5]}
     except Exception as e:
         raise HTTPException(
             status_code=500, detail=f"Error fetching initial recommendations: {str(e)}"
         )
+
 
 @app.get("/get-apple-token", summary="Get Apple Maps Token")
 async def get_apple_token():

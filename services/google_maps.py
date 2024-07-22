@@ -46,7 +46,7 @@ class GoogleMapsService:
 load_dotenv()  # Load environment variables from .env file
 google_maps_service = GoogleMapsService()
 
-# place_to_find = 'Rainbow King, 554 Baltimore Pike, Bel Air, MD 21014, United States'
+# place_to_find = 'The Melt, 925 Market St, San Francisco, CA  94103, United States'
 
 # result = google_maps_service.find_place(place_to_find)
 # print(json.dumps(result, indent=2))
