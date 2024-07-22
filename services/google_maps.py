@@ -36,8 +36,7 @@ class GoogleMapsService:
                     photo_urls = []
                     for photo in place['photos'][5:]:  # Limit to first 5 photos
                         if 'name' in photo:
-                            photo_url = f"https://places.googleapis.com/v1/{photo['name']}/media?key={
-                                self.api_key}&maxHeightPx=400&maxWidthPx=400"
+                            photo_url = f"https://places.googleapis.com/v1/{photo['name']}/media?key={self.api_key}&maxHeightPx=400&maxWidthPx=400"
                             photo_urls.append(photo_url)
                     place['photo_urls'] = photo_urls
 
