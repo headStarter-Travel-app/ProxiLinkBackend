@@ -511,7 +511,12 @@ async def get_proximity_recommendations(request: ProximityRecommendationRequest)
     except Exception as e:
         raise HTTPException(
             status_code=500, detail=f"Error getting recommendations: {str(e)}")
+    
 
+class FriendRequest(BaseModel):
+    sender_id: str
+    receiver_id: str
+    
 # uvicorn app:app --reload
 
 if (os.getenv('DEV')):
