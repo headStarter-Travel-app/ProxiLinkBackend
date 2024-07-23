@@ -581,10 +581,71 @@ async def get_all_users(user_id: str):
         logger.error(f"Error getting all users: {str(e)}")
         raise HTTPException(
             status_code=500, detail=f"Error getting all users: {str(e)}")
-# 2. Get all the users that are friends (Just query the current user, and return all the ID's matched with the Email that are in the friends column )
 
+# 2. Get all the users that are friends (Just query the current user, and return all the ID's matched with the Email that are in the friends column )
+# return all ids in the friends array, link each id to user.
+
+
+# kasim did this
+@app.get("/get-friends", summary="Get all friends of the user")
+async def get_friends(user_id: str):
+    try:
+        # Fetch the current user
+        current_user = database.get_document(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['user_collection_id'],
+            document_id=user_id
+        )
+
+        friends_ids = current_user.get('friends', [])
+
+        # Fetch all friends' details
+        friends = []
+        for friend_id in friends_ids:
+            friend = database.get_document(
+                database_id=appwrite_config['database_id'],
+                collection_id=appwrite_config['user_collection_id'],
+                document_id=friend_id
+            )
+        friends.append(friend)
+
+        return {"friends": friends}
+    except Exception as e:
+        logger.error(f"Error getting friends: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error getting friends: {str(e)}")
 
 # 3: Get allt he pending users
+
+
+# kasim did this
+@app.get("/get-pending-friend-requests", summary="Get all pending friends of the user")
+async def get_user_requests(user_id: str):
+    try:
+        # Fetch the current user
+        current_user = database.get_document(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['user_collection_id'],
+            document_id=user_id
+        )
+
+        friends_ids = current_user.get('receivedRequests', [])
+
+        friends = []
+        for friend_id in friends_ids:
+            friend = database.get_document(
+                database_id=appwrite_config['database_id'],
+                collection_id=appwrite_config['user_collection_id'],
+                document_id=friend_id
+            )
+        friends.append(friend)
+
+        return {"friends": friends}
+    except Exception as e:
+        logger.error(f"Error getting friends: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error getting friends: {str(e)}")
+
 # uvicorn app:app --reload
 
 if (os.getenv('DEV')):
