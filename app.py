@@ -364,7 +364,7 @@ async def submit_preferences(preferences: Preferences):
             status_code=500, detail=f"Error submitting preferences: {str(e)}")
 
 
-# Recommendation using preferences in user collection and location use later
+# Recommendation using preferences in user collection and location USE LATER
 @app.get("/recommendations", summary="Get Recommendations")
 async def get_recommendations(user_id: str):
     """
@@ -547,7 +547,9 @@ async def send_friend_request(request: FriendRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 # 1. Get all useres (Gets all the users eligible for a friend request, and then in all the users, remove th eones that are in the current users received and set requests)
-@app.get("/get-all-users", summary="Get all users eligible for friend request")
+
+
+@app.get("/get-eligible-friends", summary="Get all users eligible for friend request")
 async def get_all_users(user_id: str):
     try:
         # fetch the current user
@@ -577,7 +579,8 @@ async def get_all_users(user_id: str):
         return {"eligible_users": eligible_users}
     except Exception as e:
         logger.error(f"Error getting all users: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Error getting all users: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error getting all users: {str(e)}")
 # 2. Get all the users that are friends (Just query the current user, and return all the ID's matched with the Email that are in the friends column )
 
 
