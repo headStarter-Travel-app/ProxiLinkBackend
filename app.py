@@ -519,7 +519,11 @@ class FriendRequest(BaseModel):
 
 
 @app.post("/send-friend-request")
-async def send_friend_request(request: FriendRequest):
+async def send_friend_request(request: FriendRequest, summary="Sends a friend request between two users"):
+    """
+    Sends a friend request to a user when putting in the sender ID and receiver ID. Pending requests will query the received ID, and accepting will delete it from the array and send to friends
+    """
+
     try:
         # Update sender's sentRequests
         sender = database.get_document(
@@ -551,6 +555,9 @@ async def send_friend_request(request: FriendRequest):
 
 @app.get("/get-eligible-friends", summary="Get all users eligible for friend request")
 async def get_all_users(user_id: str):
+    """
+    Fetches all the people that you can friend, except those who are your existing friends and yourself
+    """
     try:
         # fetch the current user
         current_user = database.get_document(
@@ -622,6 +629,9 @@ async def get_friends(user_id: str):
 # kasim did this
 @app.get("/get-pending-friend-requests", summary="Get all pending friends of the user")
 async def get_user_requests(user_id: str):
+    """
+    Gets the received requests
+    """
     try:
         # Fetch the current user
         current_user = database.get_document(
