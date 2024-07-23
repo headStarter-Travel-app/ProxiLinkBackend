@@ -546,6 +546,12 @@ async def send_friend_request(request: FriendRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+# 1. Get all useres (Gets all the users eligible for a friend request, and then in all the users, remove th eones that are in the current users received and set requests)
+
+# 2. Get all the users that are friends (Just query the current user, and return all the ID's matched with the Email that are in the friends column )
+
+
+# 3: Get allt he pending users
 # uvicorn app:app --reload
 
 if (os.getenv('DEV')):
