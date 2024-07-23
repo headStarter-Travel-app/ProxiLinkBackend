@@ -547,7 +547,37 @@ async def send_friend_request(request: FriendRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 # 1. Get all useres (Gets all the users eligible for a friend request, and then in all the users, remove th eones that are in the current users received and set requests)
+@app.get("/get-all-users", summary="Get all users eligible for friend request")
+async def get_all_users(user_id: str):
+    try:
+        # fetch the current user
+        current_user = database.get_document(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['user_collection_id'],
+            document_id=user_id
+        )
 
+        sent_requests = set(current_user.get('sentRequests', []))
+        recieved_requests = set(current_user.get('receivedRequests'))
+        friends = set(current_user.get('friends', []))
+
+        # Fetch all users
+        all_users = database.list_documents(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['user_collection_id'],
+        )['documents']
+
+        # Filter out users who are already sent, received requests or friends
+        eligible_users = [
+            user for user in all_users
+            if user['$id'] != user_id and user['$id'] not in sent_requests
+            and user['$id'] not in recieved_requests and user['$id'] not in friends
+        ]
+
+        return {"eligible_users": eligible_users}
+    except Exception as e:
+        logger.error(f"Error getting all users: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error getting all users: {str(e)}")
 # 2. Get all the users that are friends (Just query the current user, and return all the ID's matched with the Email that are in the friends column )
 
 
