@@ -517,16 +517,27 @@ class FriendRequest(BaseModel):
     sender_id: str
     receiver_id: str
     
-# uvicorn app:app --reload
+@app.post("/send-friend-request")
+async def send_friend_request(request: FriendRequest):
+    try:
+        # Update sender's sentRequests
+        sender = database.get_document(appwrite_config["database_id"], appwrite_config["user_collection_id"], request.sender_id)
+        sent_requests = set(sender.get('sentRequests', []))
+        sent_requests.add(request.receiver_id)
+        
+        # Update receiver's receivedRequests
+        receiver = database.get_document(appwrite_config["database_id"], appwrite_config["user_collection_id"], request.receiver_id)
+        received_requests = set(receiver.get('receivedRequests', []))
+        received_requests.add(request.sender_id)
+        
+        # Perform the updates
+        database.update_document(appwrite_config["database_id"], appwrite_config["user_collection_id"], request.sender_id, {
+            'sentRequests': list(sent_requests)
+        })
+        database.update_document(appwrite_config["database_id"], appwrite_config["user_collection_id"], request.receiver_id, {
+            'receivedRequests': list(received_requests)
+        })
 
-if (os.getenv('DEV')):
-    if __name__ == "__main__":
-        # For development use only
-        import uvicorn
-        uvicorn.run(app, host="0.0.0.0", port=8000)
-else:
-    # Production use
-    if __name__ == "__main__":
-        update_apple_token()
-        import uvicorn
-        uvicorn.run(app, host="0.0.0.0", port=8000)
+        return {"message": "Friend request sent successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
