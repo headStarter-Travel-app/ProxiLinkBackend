@@ -602,12 +602,13 @@ async def get_friends(user_id: str):
         # Fetch all friends' details
         friends = []
         for friend_id in friends_ids:
+            friend_id = friend_id.strip('"')
             friend = database.get_document(
                 database_id=appwrite_config['database_id'],
                 collection_id=appwrite_config['user_collection_id'],
                 document_id=friend_id
             )
-        friends.append(friend)
+            friends.append(friend)
 
         return {"friends": friends}
     except Exception as e:
@@ -633,12 +634,14 @@ async def get_user_requests(user_id: str):
 
         friends = []
         for friend_id in friends_ids:
+            friend_id = friend_id.strip('"')
+
             friend = database.get_document(
                 database_id=appwrite_config['database_id'],
                 collection_id=appwrite_config['user_collection_id'],
                 document_id=friend_id
             )
-        friends.append(friend)
+            friends.append(friend)
 
         return {"friends": friends}
     except Exception as e:
