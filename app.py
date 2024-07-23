@@ -511,25 +511,29 @@ async def get_proximity_recommendations(request: ProximityRecommendationRequest)
     except Exception as e:
         raise HTTPException(
             status_code=500, detail=f"Error getting recommendations: {str(e)}")
-    
+
 
 class FriendRequest(BaseModel):
     sender_id: str
     receiver_id: str
-    
+
+
 @app.post("/send-friend-request")
 async def send_friend_request(request: FriendRequest):
     try:
         # Update sender's sentRequests
-        sender = database.get_document(appwrite_config["database_id"], appwrite_config["user_collection_id"], request.sender_id)
+        sender = database.get_document(
+            appwrite_config["database_id"], appwrite_config["user_collection_id"], request.sender_id)
+        print(sender)
         sent_requests = set(sender.get('sentRequests', []))
         sent_requests.add(request.receiver_id)
-        
+
         # Update receiver's receivedRequests
-        receiver = database.get_document(appwrite_config["database_id"], appwrite_config["user_collection_id"], request.receiver_id)
+        receiver = database.get_document(
+            appwrite_config["database_id"], appwrite_config["user_collection_id"], request.receiver_id)
         received_requests = set(receiver.get('receivedRequests', []))
         received_requests.add(request.sender_id)
-        
+
         # Perform the updates
         database.update_document(appwrite_config["database_id"], appwrite_config["user_collection_id"], request.sender_id, {
             'sentRequests': list(sent_requests)
@@ -541,3 +545,17 @@ async def send_friend_request(request: FriendRequest):
         return {"message": "Friend request sent successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+# uvicorn app:app --reload
+
+if (os.getenv('DEV')):
+    if __name__ == "__main__":
+        # For development use only
+        import uvicorn
+        uvicorn.run(app, host="0.0.0.0", port=8000)
+else:
+    # Production use
+    if __name__ == "__main__":
+        update_apple_token()
+        import uvicorn
+        uvicorn.run(app, host="0.0.0.0", port=8000)
