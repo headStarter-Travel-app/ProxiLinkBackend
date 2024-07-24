@@ -721,6 +721,33 @@ async def remove_friend(request: FriendRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+
+@app.post("/reject-friend-request")
+async def reject_friend_request(request: FriendRequest):
+    try:
+        # Remove from sender's sentRequests
+        sender = database.get_document(
+            appwrite_config['database_id'], appwrite_config['user_collection_id'], request.sender_id)
+        sent_requests = set(sender.get('sentRequests', []))
+        sent_requests.discard(request.receiver_id)
+
+        # Remove from receiver's receivedRequests
+        receiver = database.get_document(
+            appwrite_config['database_id'], appwrite_config["user_collection_id"], request.receiver_id)
+        received_requests = set(receiver.get('receivedRequests', []))
+        received_requests.discard(request.sender_id)
+
+        # Perform the updates
+        database.update_document(appwrite_config['database_id'], appwrite_config["user_collection_id"], request.sender_id, {
+            'sentRequests': list(sent_requests)
+        })
+        database.update_document(appwrite_config['database_id'], appwrite_config["user_collection_id"], request.receiver_id, {
+            'receivedRequests': list(received_requests)
+        })
+
+        return {"message": "Friend request rejected successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 # @app.get("/user-profile/{user_id}")
 # async def get_user_profile(user_id: str, current_user_id: str):
 #     try:
