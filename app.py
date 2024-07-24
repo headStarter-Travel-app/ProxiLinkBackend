@@ -817,6 +817,106 @@ async def get_friends(user_id: str):
             status_code=500, detail=f"Error getting friends: {str(e)}")
 
 
+# Create Group (Make the creator group leader), and edit group name
+
+class Group(BaseModel):
+    name: str
+    leader_id: str
+    members: List[str] = []
+
+# make sure data is properly validated
+
+
+class CreateGroupRequest(BaseModel):
+    name: str
+    creator_id: str
+
+
+@app.post("/create-group", summary="Create Group and creator is automatically leader")
+async def create_group(request: CreateGroupRequest):
+    """
+    Create a new Group and creator is automatically leader
+    """
+    try:
+        # define the new group data
+        group_data = {
+            "name": request.name,
+            "leader_id": request.creator_id,
+            "members": [request.creator_id]
+        }
+
+        result = database.create_document(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['groups_collection_id'],
+            document_id=ID.unique(),
+            data=group_data
+        )
+        return {"message": "Group created successfully", "group_id": result['$id']}
+    except Exception as e:
+        logger.error(f"Error creating group: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error creating group: {str(e)}")
+
+
+class EditGroupNameRequest(BaseModel):
+    group_id: str
+    new_name: str
+
+@app.post("/edit-group-name", summary="Edit Group name")
+async def edit_group_name(request: EditGroupNameRequest):
+    """
+    Edit the name of an existing group.
+    """
+    try:
+        # Update the group document with the new name
+        result = database.update_document(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['groups_collection_id'],
+            document_id=request.group_id,
+            data={"name": request.new_name}
+        )
+        return {"message": "Group name updated successfully", "group_id": result['$id']}
+    except Exception as e:
+        logger.error(f"Error updating group name: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error updating group name: {str(e)}")
+
+
+class AddMembersrequest(BaseModel):
+    group_id: str
+    members: List[str]
+
+
+@app.post("/add-members", summary="Add members to group")
+async def add_members(request: AddMembersrequest):
+    """
+    Add members to an existing group.
+    """
+    try:
+        # Fetch the current group data
+        group = database.get_document(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['groups_collection_id'],
+            document_id=request.group_id
+        )
+
+        # Update the members list
+        current_members = set(group['members'])
+        new_members = set(request.members)
+        updated_members = list(current_members.union(new_members))
+
+        # Update the group document with the new members
+        result = database.update_document(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['groups_collection_id'],
+            document_id=request.group_id,
+            data={"members": updated_members}
+        )
+
+        return {"message": "Members added successfully", "group_id": result['$id']}
+    except Exception as e:
+        logger.error(f"Error adding members: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error adding members: {str(e)}")
+
+
 # uvicorn app:app --reload
 
 if (os.getenv('DEV')):
