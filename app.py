@@ -621,7 +621,7 @@ async def get_user_profile(user_id: str, current_user_id: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/user-friends/{user_id}")
+@app.get("/user-friends/")
 async def get_user_friends(user_id: str):
     try:
         user = database.get_document(appwrite_config['database_id'], appwrite_config["user_collection_id"], user_id)
