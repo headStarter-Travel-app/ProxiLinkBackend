@@ -659,6 +659,89 @@ async def get_user_requests(user_id: str):
         raise HTTPException(
             status_code=500, detail=f"Error getting friends: {str(e)}")
 
+
+@app.post("/accept-friend-request")
+async def accept_friend_request(request: FriendRequest):
+    try:
+        # Update sender's friends and remove from sentRequests
+        sender = database.get_document(
+            appwrite_config['database_id'], appwrite_config['user_collection_id'], request.sender_id)
+        sender_friends = set(sender.get('friends', []))
+        sender_friends.add(request.receiver_id)
+        sent_requests = set(sender.get('sentRequests', []))
+        sent_requests.discard(request.receiver_id)
+
+        # Update receiver's friends and remove from receivedRequests
+        receiver = database.get_document(
+            appwrite_config['database_id'], appwrite_config["user_collection_id"], request.receiver_id)
+        receiver_friends = set(receiver.get('friends', []))
+        receiver_friends.add(request.sender_id)
+        received_requests = set(receiver.get('receivedRequests', []))
+        received_requests.discard(request.sender_id)
+
+        # Perform the updates
+        database.update_document(appwrite_config['database_id'], appwrite_config["user_collection_id"], request.sender_id, {
+            'friends': list(sender_friends),
+            'sentRequests': list(sent_requests)
+        })
+        database.update_document(appwrite_config['database_id'], appwrite_config["user_collection_id"], request.receiver_id, {
+            'friends': list(receiver_friends),
+            'receivedRequests': list(received_requests)
+        })
+
+        return {"message": "Friend request accepted"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/remove-friend")
+async def remove_friend(request: FriendRequest):
+    try:
+        # Remove from user1's friends list
+        user1 = database.get_document(
+            appwrite_config['database_id'], appwrite_config["user_collection_id"], request.sender_id)
+        user1_friends = set(user1.get('friends', []))
+        user1_friends.discard(request.receiver_id)
+
+        # Remove from user2's friends list
+        user2 = database.get_document(
+            appwrite_config['database_id'], appwrite_config["user_collection_id"], request.receiver_id)
+        user2_friends = set(user2.get('friends', []))
+        user2_friends.discard(request.sender_id)
+
+        # Perform the updates
+        database.update_document(appwrite_config['database_id'], appwrite_config["user_collection_id"], request.sender_id, {
+            'friends': list(user1_friends)
+        })
+        database.update_document(appwrite_config['database_id'], appwrite_config["user_collection_id"], request.receiver_id, {
+            'friends': list(user2_friends)
+        })
+
+        return {"message": "Friend removed successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+# @app.get("/user-profile/{user_id}")
+# async def get_user_profile(user_id: str, current_user_id: str):
+#     try:
+#         user = database.get_document(appwrite_config['database_id'],appwrite_config["user_collection_id"] , user_id)
+#         current_user = database.get_document(appwrite_config['database_id'], appwrite_config["user_collection_id"], current_user_id)
+
+#         friendship_status = "not_friends"
+#         if user_id in current_user.get('friends', []):
+#             friendship_status = "friends"
+#         elif user_id in current_user.get('sentRequests', []):
+#             friendship_status = "request_sent"
+#         elif user_id in current_user.get('receivedRequests', []):
+#             friendship_status = "request_received"
+
+#         return {
+#             "name": user.get('name'),
+#             "email": user.get('email'),
+#             "friendship_status": friendship_status
+#         }
+#     except Exception as e:
+#         raise HTTPException(status_code=500, detail=str(e))
 # uvicorn app:app --reload
 
 if (os.getenv('DEV')):
