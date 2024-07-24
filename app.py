@@ -364,7 +364,7 @@ async def submit_preferences(preferences: Preferences):
             status_code=500, detail=f"Error submitting preferences: {str(e)}")
 
 
-# Recommendation using preferences in user collection and location USE LATER
+# Recommendation using preferences in user collection and location use later
 @app.get("/recommendations", summary="Get Recommendations")
 async def get_recommendations(user_id: str):
     """
@@ -511,33 +511,25 @@ async def get_proximity_recommendations(request: ProximityRecommendationRequest)
     except Exception as e:
         raise HTTPException(
             status_code=500, detail=f"Error getting recommendations: {str(e)}")
-
+    
 
 class FriendRequest(BaseModel):
     sender_id: str
     receiver_id: str
-
-
+    
 @app.post("/send-friend-request")
-async def send_friend_request(request: FriendRequest, summary="Sends a friend request between two users"):
-    """
-    Sends a friend request to a user when putting in the sender ID and receiver ID. Pending requests will query the received ID, and accepting will delete it from the array and send to friends
-    """
-
+async def send_friend_request(request: FriendRequest):
     try:
         # Update sender's sentRequests
-        sender = database.get_document(
-            appwrite_config["database_id"], appwrite_config["user_collection_id"], request.sender_id)
-        print(sender)
+        sender = database.get_document(appwrite_config["database_id"], appwrite_config["user_collection_id"], request.sender_id)
         sent_requests = set(sender.get('sentRequests', []))
         sent_requests.add(request.receiver_id)
-
+        
         # Update receiver's receivedRequests
-        receiver = database.get_document(
-            appwrite_config["database_id"], appwrite_config["user_collection_id"], request.receiver_id)
+        receiver = database.get_document(appwrite_config["database_id"], appwrite_config["user_collection_id"], request.receiver_id)
         received_requests = set(receiver.get('receivedRequests', []))
         received_requests.add(request.sender_id)
-
+        
         # Perform the updates
         database.update_document(appwrite_config["database_id"], appwrite_config["user_collection_id"], request.sender_id, {
             'sentRequests': list(sent_requests)
@@ -549,136 +541,49 @@ async def send_friend_request(request: FriendRequest, summary="Sends a friend re
         return {"message": "Friend request sent successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
-# 1. Get all useres (Gets all the users eligible for a friend request, and then in all the users, remove th eones that are in the current users received and set requests)
-
-
-@app.get("/get-eligible-friends", summary="Get all users eligible for friend request")
-async def get_all_users(user_id: str):
-    """
-    Fetches all the people that you can friend, except those who are your existing friends and yourself
-    """
+    
+@app.post("/reject-friend-request")
+async def reject_friend_request(request: FriendRequest):
     try:
-        # fetch the current user
-        current_user = database.get_document(
-            database_id=appwrite_config['database_id'],
-            collection_id=appwrite_config['user_collection_id'],
-            document_id=user_id
-        )
+        # Remove from sender's sentRequests
+        sender = database.get_document(appwrite_config['database_id'], appwrite_config['user_collection_id'], request.sender_id)
+        sent_requests = set(sender.get('sentRequests', []))
+        sent_requests.discard(request.receiver_id)
+        
+        # Remove from receiver's receivedRequests
+        receiver = database.get_document(appwrite_config['database_id'], appwrite_config["user_collection_id"], request.receiver_id)
+        received_requests = set(receiver.get('receivedRequests', []))
+        received_requests.discard(request.sender_id)
+        
+        # Perform the updates
+        database.update_document(appwrite_config['database_id'], appwrite_config["user_collection_id"], request.sender_id, {
+            'sentRequests': list(sent_requests)
+        })
+        database.update_document(appwrite_config['database_id'], appwrite_config["user_collection_id"], request.receiver_id, {
+            'receivedRequests': list(received_requests)
+        })
 
-        sent_requests = set(current_user.get('sentRequests', []))
-        recieved_requests = set(current_user.get('receivedRequests'))
-        friends = set(current_user.get('friends', []))
-
-        # Fetch all users
-        all_users = database.list_documents(
-            database_id=appwrite_config['database_id'],
-            collection_id=appwrite_config['user_collection_id'],
-        )['documents']
-
-        # Filter out users who are already sent, received requests or friends
-        eligible_users = [
-            user for user in all_users
-            if user['$id'] != user_id and user['$id'] not in sent_requests
-            and user['$id'] not in recieved_requests and user['$id'] not in friends
-        ]
-
-        return {"eligible_users": eligible_users}
+        return {"message": "Friend request rejected successfully"}
     except Exception as e:
-        logger.error(f"Error getting all users: {str(e)}")
-        raise HTTPException(
-            status_code=500, detail=f"Error getting all users: {str(e)}")
-
-# 2. Get all the users that are friends (Just query the current user, and return all the ID's matched with the Email that are in the friends column )
-# return all ids in the friends array, link each id to user.
-
-
-# kasim did this
-@app.get("/get-friends", summary="Get all friends of the user")
-async def get_friends(user_id: str):
-    try:
-        # Fetch the current user
-        current_user = database.get_document(
-            database_id=appwrite_config['database_id'],
-            collection_id=appwrite_config['user_collection_id'],
-            document_id=user_id
-        )
-
-        friends_ids = current_user.get('friends', [])
-
-        # Fetch all friends' details
-        friends = []
-        for friend_id in friends_ids:
-            friend_id = friend_id.strip('"')
-            friend = database.get_document(
-                database_id=appwrite_config['database_id'],
-                collection_id=appwrite_config['user_collection_id'],
-                document_id=friend_id
-            )
-            friends.append(friend)
-
-        return {"friends": friends}
-    except Exception as e:
-        logger.error(f"Error getting friends: {str(e)}")
-        raise HTTPException(
-            status_code=500, detail=f"Error getting friends: {str(e)}")
-
-# 3: Get allt he pending users
-
-
-# kasim did this
-@app.get("/get-pending-friend-requests", summary="Get all pending friends of the user")
-async def get_user_requests(user_id: str):
-    """
-    Gets the received requests
-    """
-    try:
-        # Fetch the current user
-        current_user = database.get_document(
-            database_id=appwrite_config['database_id'],
-            collection_id=appwrite_config['user_collection_id'],
-            document_id=user_id
-        )
-
-        friends_ids = current_user.get('receivedRequests', [])
-
-        friends = []
-        for friend_id in friends_ids:
-            friend_id = friend_id.strip('"')
-
-            friend = database.get_document(
-                database_id=appwrite_config['database_id'],
-                collection_id=appwrite_config['user_collection_id'],
-                document_id=friend_id
-            )
-            friends.append(friend)
-
-        return {"friends": friends}
-    except Exception as e:
-        logger.error(f"Error getting friends: {str(e)}")
-        raise HTTPException(
-            status_code=500, detail=f"Error getting friends: {str(e)}")
-
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/accept-friend-request")
 async def accept_friend_request(request: FriendRequest):
     try:
         # Update sender's friends and remove from sentRequests
-        sender = database.get_document(
-            appwrite_config['database_id'], appwrite_config['user_collection_id'], request.sender_id)
+        sender = database.get_document(appwrite_config['database_id'], appwrite_config['user_collection_id'], request.sender_id)
         sender_friends = set(sender.get('friends', []))
         sender_friends.add(request.receiver_id)
         sent_requests = set(sender.get('sentRequests', []))
         sent_requests.discard(request.receiver_id)
-
+        
         # Update receiver's friends and remove from receivedRequests
-        receiver = database.get_document(
-            appwrite_config['database_id'], appwrite_config["user_collection_id"], request.receiver_id)
+        receiver = database.get_document(appwrite_config['database_id'], appwrite_config["user_collection_id"], request.receiver_id)
         receiver_friends = set(receiver.get('friends', []))
         receiver_friends.add(request.sender_id)
         received_requests = set(receiver.get('receivedRequests', []))
         received_requests.discard(request.sender_id)
-
+        
         # Perform the updates
         database.update_document(appwrite_config['database_id'], appwrite_config["user_collection_id"], request.sender_id, {
             'friends': list(sender_friends),
@@ -693,22 +598,57 @@ async def accept_friend_request(request: FriendRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+# Use LATER
+@app.get("/user-profile/{user_id}")
+async def get_user_profile(user_id: str, current_user_id: str):
+    try:
+        user = database.get_document(appwrite_config['database_id'],appwrite_config["user_collection_id"] , user_id)
+        current_user = database.get_document(appwrite_config['database_id'], appwrite_config["user_collection_id"], current_user_id)
+
+        friendship_status = "not_friends"
+        if user_id in current_user.get('friends', []):
+            friendship_status = "friends"
+        elif user_id in current_user.get('sentRequests', []):
+            friendship_status = "request_sent"
+        elif user_id in current_user.get('receivedRequests', []):
+            friendship_status = "request_received"
+
+        return {
+            "name": user.get('name'),
+            "email": user.get('email'),
+            "friendship_status": friendship_status
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/user-friends/{user_id}")
+async def get_user_friends(user_id: str):
+    try:
+        user = database.get_document(appwrite_config['database_id'], appwrite_config["user_collection_id"], user_id)
+        
+        friends = user.get('friends', [])
+        received_requests = user.get('receivedRequests', [])
+        
+        return {
+            "friends": friends,
+            "pending_requests": received_requests
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/remove-friend")
 async def remove_friend(request: FriendRequest):
     try:
         # Remove from user1's friends list
-        user1 = database.get_document(
-            appwrite_config['database_id'], appwrite_config["user_collection_id"], request.sender_id)
+        user1 = database.get_document(appwrite_config['database_id'], appwrite_config["user_collection_id"], request.sender_id)
         user1_friends = set(user1.get('friends', []))
         user1_friends.discard(request.receiver_id)
-
+        
         # Remove from user2's friends list
-        user2 = database.get_document(
-            appwrite_config['database_id'], appwrite_config["user_collection_id"], request.receiver_id)
+        user2 = database.get_document(appwrite_config['database_id'], appwrite_config["user_collection_id"], request.receiver_id)
         user2_friends = set(user2.get('friends', []))
         user2_friends.discard(request.sender_id)
-
+        
         # Perform the updates
         database.update_document(appwrite_config['database_id'], appwrite_config["user_collection_id"], request.sender_id, {
             'friends': list(user1_friends)
@@ -720,55 +660,9 @@ async def remove_friend(request: FriendRequest):
         return {"message": "Friend removed successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
 
 
-@app.post("/reject-friend-request")
-async def reject_friend_request(request: FriendRequest):
-    try:
-        # Remove from sender's sentRequests
-        sender = database.get_document(
-            appwrite_config['database_id'], appwrite_config['user_collection_id'], request.sender_id)
-        sent_requests = set(sender.get('sentRequests', []))
-        sent_requests.discard(request.receiver_id)
-
-        # Remove from receiver's receivedRequests
-        receiver = database.get_document(
-            appwrite_config['database_id'], appwrite_config["user_collection_id"], request.receiver_id)
-        received_requests = set(receiver.get('receivedRequests', []))
-        received_requests.discard(request.sender_id)
-
-        # Perform the updates
-        database.update_document(appwrite_config['database_id'], appwrite_config["user_collection_id"], request.sender_id, {
-            'sentRequests': list(sent_requests)
-        })
-        database.update_document(appwrite_config['database_id'], appwrite_config["user_collection_id"], request.receiver_id, {
-            'receivedRequests': list(received_requests)
-        })
-
-        return {"message": "Friend request rejected successfully"}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-# @app.get("/user-profile/{user_id}")
-# async def get_user_profile(user_id: str, current_user_id: str):
-#     try:
-#         user = database.get_document(appwrite_config['database_id'],appwrite_config["user_collection_id"] , user_id)
-#         current_user = database.get_document(appwrite_config['database_id'], appwrite_config["user_collection_id"], current_user_id)
-
-#         friendship_status = "not_friends"
-#         if user_id in current_user.get('friends', []):
-#             friendship_status = "friends"
-#         elif user_id in current_user.get('sentRequests', []):
-#             friendship_status = "request_sent"
-#         elif user_id in current_user.get('receivedRequests', []):
-#             friendship_status = "request_received"
-
-#         return {
-#             "name": user.get('name'),
-#             "email": user.get('email'),
-#             "friendship_status": friendship_status
-#         }
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail=str(e))
 # uvicorn app:app --reload
 
 if (os.getenv('DEV')):
