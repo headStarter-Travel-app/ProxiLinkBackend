@@ -943,6 +943,32 @@ async def get_user_data(user_id: str):
             status_code=500, detail=f"Error getting user data: {str(e)}")
 
 
+class ReassignLeaderRequest(BaseModel):
+    group_id: str
+    new_leader_id: str
+
+
+@app.post("/reassign-leader", summary="Reassign Group Leader")
+async def reassign_leader(request: ReassignLeaderRequest):
+    """
+    Reassign the leader of an existing group.
+    """
+    try:
+        # Update the group document with the new leader ID
+        result = database.update_document(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['groups_collection_id'],
+            document_id=request.group_id,
+            data={"leader_id": request.new_leader_id}
+        )
+
+        return {"message": "Group leader reassigned successfully", "group_id": result['$id']}
+    except Exception as e:
+        logger.error(f"Error reassigning group leader: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error reassigning group leader: {str(e)}")
+
+
+
 # uvicorn app:app --reload
 
 if (os.getenv('DEV')):
