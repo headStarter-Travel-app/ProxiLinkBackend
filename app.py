@@ -40,7 +40,8 @@ appwrite_config = {
     "user_collection_id": "66930e5900107bc194dc",
     "preferences_collection_id": "6696016b00117bbf6352",
     "friends_collection_id": "friends",
-    "locations_collection_id": "669d2a590010d4bf7d30"
+    "locations_collection_id": "669d2a590010d4bf7d30",
+    "groups_collection_id": "Groups"
 
 
 }
@@ -76,6 +77,7 @@ else:
     global_maps_token = None
 
 database = Databases(client)
+users = Users(client)
 
 # Initialize Google Maps client
 gmaps = googlemaps.Client(key=os.getenv('GOOGLE_MAPS_API'))
@@ -854,12 +856,14 @@ async def create_group(request: CreateGroupRequest):
         return {"message": "Group created successfully", "group_id": result['$id']}
     except Exception as e:
         logger.error(f"Error creating group: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Error creating group: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error creating group: {str(e)}")
 
 
 class EditGroupNameRequest(BaseModel):
     group_id: str
     new_name: str
+
 
 @app.post("/edit-group-name", summary="Edit Group name")
 async def edit_group_name(request: EditGroupNameRequest):
@@ -877,7 +881,8 @@ async def edit_group_name(request: EditGroupNameRequest):
         return {"message": "Group name updated successfully", "group_id": result['$id']}
     except Exception as e:
         logger.error(f"Error updating group name: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Error updating group name: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error updating group name: {str(e)}")
 
 
 class AddMembersrequest(BaseModel):
@@ -914,7 +919,28 @@ async def add_members(request: AddMembersrequest):
         return {"message": "Members added successfully", "group_id": result['$id']}
     except Exception as e:
         logger.error(f"Error adding members: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Error adding members: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error adding members: {str(e)}")
+
+
+@app.get("/user-data", summary="Get user data")
+async def get_user_data(user_id: str):
+    try:
+        user_data = database.get_document(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['user_collection_id'],
+            document_id=user_id
+        )
+        user_main_data = users.get(
+            user_id=(user_id)
+        )
+
+        return {"user_data": user_data, "user_main_data": user_main_data}
+
+    except Exception as e:
+        logger.error(f"Error getting user data: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error getting user data: {str(e)}")
 
 
 # uvicorn app:app --reload
