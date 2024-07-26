@@ -41,7 +41,8 @@ appwrite_config = {
     "preferences_collection_id": "6696016b00117bbf6352",
     "friends_collection_id": "friends",
     "locations_collection_id": "669d2a590010d4bf7d30",
-    "groups_collection_id": "Groups"
+    "groups_collection_id": "Groups",
+    "contact_id": "66a419bb000fa8674a7e"
 
 
 }
@@ -989,6 +990,33 @@ async def get_groups(user_id: str):
     except Exception as e:
         logger.error(f"Error getting groups: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Error getting groups: {str(e)}")
+
+
+class WaitListEntry(BaseModel):
+    name: str
+    email: str
+    message: Optional[str] = None
+
+
+@app.post("submit waitlist", summary="Submit Waitlist Entry")
+async def submit_waitlist(entry: WaitListEntry):
+        """
+        Submit a new waitlist entry to the database.
+        """
+        try:
+            waitlist_data = entry.dict()
+
+            result = database.create_document(
+                database_id=appwrite_config['database_id'],
+                collection_id=appwrite_config['contact_id'],
+                document_id=ID.unique(),
+                data=waitlist_data
+            )
+            return {"message": "Waitlist entry submitted successfully", "document_id": result['$id']}
+        except Exception as e:
+            logger.error(f"Error submitting waitlist entry: {str(e)}")
+            raise HTTPException(status_code=500, detail=f"Error submitting waitlist entry: {str(e)}")
+
 
 # uvicorn app:app --reload
 
