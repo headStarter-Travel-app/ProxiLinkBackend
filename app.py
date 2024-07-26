@@ -968,6 +968,27 @@ async def reassign_leader(request: ReassignLeaderRequest):
         raise HTTPException(status_code=500, detail=f"Error reassigning group leader: {str(e)}")
 
 
+class GetGroupsRequest(BaseModel):
+    user_id: str
+
+
+@app.get("/get-groups", summary="Get all groups by User ID")
+async def get_groups(user_id: str):
+    """
+    Get all groups where the user ID is included in the members list.
+    """
+    try:
+        # Query the groups collection to find groups where the user_id is in the members list
+        groups = database.list_documents(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['groups_collection_id'],
+            queries=[Query.search('members', user_id)]
+        )
+
+        return {"groups": groups['documents']}
+    except Exception as e:
+        logger.error(f"Error getting groups: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error getting groups: {str(e)}")
 
 # uvicorn app:app --reload
 
