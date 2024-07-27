@@ -994,6 +994,35 @@ async def get_groups(user_id: str):
             status_code=500, detail=f"Error getting groups: {str(e)}")
 
 
+@app.get("/get-group-details", summary="Get Group Details")
+async def get_group_details(group_id: str):
+    '''
+    Get group details by group ID
+    '''
+    try:
+        group = database.get_document(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['groups_collection_id'],
+            document_id=group_id
+        )
+
+        # Initialize an empty list to hold expanded member details
+        expanded_members = []
+
+        for member in group['members']:
+            user = users.get(user_id=member)
+            expanded_members.append(user)
+
+        # Append expanded member details to the group JSON
+        group['expanded_members'] = expanded_members
+
+        return group
+    except Exception as e:
+        logger.error(f"Error getting group details: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error getting group details: {str(e)}")
+
+
 class WaitListEntry(BaseModel):
     name: str
     email: str
