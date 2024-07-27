@@ -22,6 +22,7 @@ import googlemaps
 from appwrite.exception import AppwriteException
 import httpx
 import logging
+from fastapi.middleware.cors import CORSMiddleware
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -52,6 +53,15 @@ app = FastAPI(
     title="Proxi Link AI API",
     description="API for Proxi Link App",
     version="1.0.0",
+)
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
