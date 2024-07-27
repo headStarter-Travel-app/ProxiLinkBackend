@@ -693,35 +693,6 @@ async def remove_friend(request: FriendRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@app.get("/get-friends", summary="Get all friends of the user")
-async def get_friends(user_id: str):
-    try:
-        # Fetch the current user
-        current_user = database.get_document(
-            database_id=appwrite_config['database_id'],
-            collection_id=appwrite_config['user_collection_id'],
-            document_id=user_id
-        )
-
-        friends_ids = current_user.get('friends', [])
-
-        # Fetch all friends' details
-        friends = []
-        for friend_id in friends_ids:
-            friend_id = friend_id.strip('"')
-            friend = database.get_document(
-                database_id=appwrite_config['database_id'],
-                collection_id=appwrite_config['user_collection_id'],
-                document_id=friend_id
-            )
-            friends.append(friend)
-
-        return {"friends": friends}
-    except Exception as e:
-        logger.error(f"Error getting friends: {str(e)}")
-        raise HTTPException(
-            status_code=500, detail=f"Error getting friends: {str(e)}")
-
 # 3: Get allt he pending users
 
 
@@ -745,11 +716,12 @@ async def get_user_requests(user_id: str):
         for friend_id in friends_ids:
             friend_id = friend_id.strip('"')
 
-            friend = database.get_document(
-                database_id=appwrite_config['database_id'],
-                collection_id=appwrite_config['user_collection_id'],
-                document_id=friend_id
-            )
+            # friend = database.get_document(
+            #     database_id=appwrite_config['database_id'],
+            #     collection_id=appwrite_config['user_collection_id'],
+            #     document_id=friend_id
+            # )
+            friend = users.get(user_id=friend_id)
             friends.append(friend)
 
         return {"friends": friends}
@@ -777,10 +749,12 @@ async def get_all_users(user_id: str):
         friends = set(current_user.get('friends', []))
 
         # Fetch all users
-        all_users = database.list_documents(
-            database_id=appwrite_config['database_id'],
-            collection_id=appwrite_config['user_collection_id'],
-        )['documents']
+        # all_users = database.list_documents(
+        #     database_id=appwrite_config['database_id'],
+        #     collection_id=appwrite_config['user_collection_id'],
+        # )['documents']
+        all_users = users.list()
+        all_users = all_users['users']
 
         # Filter out users who are already sent, received requests or friends
         eligible_users = [
@@ -816,11 +790,12 @@ async def get_friends(user_id: str):
         friends = []
         for friend_id in friends_ids:
             friend_id = friend_id.strip('"')
-            friend = database.get_document(
-                database_id=appwrite_config['database_id'],
-                collection_id=appwrite_config['user_collection_id'],
-                document_id=friend_id
-            )
+            # friend = database.get_document(
+            #     database_id=appwrite_config['database_id'],
+            #     collection_id=appwrite_config['user_collection_id'],
+            #     document_id=friend_id
+            # )
+            friend = users.get(user_id=friend_id)
             friends.append(friend)
 
         return {"friends": friends}
@@ -947,6 +922,21 @@ async def get_user_data(user_id: str):
         )
 
         return {"user_data": user_data, "user_main_data": user_main_data}
+
+    except Exception as e:
+        logger.error(f"Error getting user data: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error getting user data: {str(e)}")
+
+
+@app.get("/user-picture", summary="Get user picture")
+async def get_user_picture(user_id: str):
+    try:
+        user_data = users.get(
+            user_id=(user_id)
+        )
+
+        return {"user_data": user_data}
 
     except Exception as e:
         logger.error(f"Error getting user data: {str(e)}")
