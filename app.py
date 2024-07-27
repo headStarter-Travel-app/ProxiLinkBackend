@@ -966,7 +966,8 @@ async def reassign_leader(request: ReassignLeaderRequest):
         return {"message": "Group leader reassigned successfully", "group_id": result['$id']}
     except Exception as e:
         logger.error(f"Error reassigning group leader: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Error reassigning group leader: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error reassigning group leader: {str(e)}")
 
 
 class GetGroupsRequest(BaseModel):
@@ -989,7 +990,8 @@ async def get_groups(user_id: str):
         return {"groups": groups['documents']}
     except Exception as e:
         logger.error(f"Error getting groups: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Error getting groups: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error getting groups: {str(e)}")
 
 
 class WaitListEntry(BaseModel):
@@ -998,24 +1000,25 @@ class WaitListEntry(BaseModel):
     message: Optional[str] = None
 
 
-@app.post("submit waitlist", summary="Submit Waitlist Entry")
+@app.post("/submit-waitlist", summary="Submit Waitlist Entry")
 async def submit_waitlist(entry: WaitListEntry):
-        """
-        Submit a new waitlist entry to the database.
-        """
-        try:
-            waitlist_data = entry.dict()
+    """
+    Submit a new waitlist entry to the database.
+    """
+    try:
+        waitlist_data = entry.dict()
 
-            result = database.create_document(
-                database_id=appwrite_config['database_id'],
-                collection_id=appwrite_config['contact_id'],
-                document_id=ID.unique(),
-                data=waitlist_data
-            )
-            return {"message": "Waitlist entry submitted successfully", "document_id": result['$id']}
-        except Exception as e:
-            logger.error(f"Error submitting waitlist entry: {str(e)}")
-            raise HTTPException(status_code=500, detail=f"Error submitting waitlist entry: {str(e)}")
+        result = database.create_document(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['contact_id'],
+            document_id=ID.unique(),
+            data=waitlist_data
+        )
+        return {"message": "Waitlist entry submitted successfully", "document_id": result['$id']}
+    except Exception as e:
+        logger.error(f"Error submitting waitlist entry: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error submitting waitlist entry: {str(e)}")
 
 
 # uvicorn app:app --reload
