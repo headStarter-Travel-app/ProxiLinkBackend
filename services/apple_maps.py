@@ -22,7 +22,7 @@ class AppleMapsService:
         scheduler = BackgroundScheduler()
         scheduler.add_job(
             func=self.update_token,
-            trigger=IntervalTrigger(hours=168),
+            trigger=IntervalTrigger(hours=84),
             id='apple_token_update',
             name='Update Apple Token every 7 days',
             replace_existing=True
