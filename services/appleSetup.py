@@ -56,6 +56,7 @@ class AppleAuth:
         try:
             token = jwt.encode(payload, private_key,
                                algorithm='ES256', headers=headers)
+            print("JWT generated successfully.")
             return token
         except Exception as e:
             print("Failed to generate JWT:", e)
