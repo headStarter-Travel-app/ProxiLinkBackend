@@ -24,7 +24,7 @@ import httpx
 import logging
 from fastapi.middleware.cors import CORSMiddleware
 import socketio
-from socketio import AsyncServer
+from socket_server import sio, send_friend_request_notification
 
 # Installed
 logging.basicConfig(level=logging.INFO)
@@ -68,7 +68,6 @@ app.add_middleware(
 )
 
 # Initialize Socket.IO server
-sio = AsyncServer(async_mode='asgi')
 socket_app = socketio.ASGIApp(sio, app)
 
 connected__user = {}

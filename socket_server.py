@@ -1,13 +1,8 @@
+# socket_server.py
 import socketio
-from fastapi import FastAPI
-import uvicorn
-
-# Create a new FastAPI app
-app = FastAPI()
 
 # Create a new Socket.IO server
 sio = socketio.AsyncServer(async_mode='asgi')
-socket_app = socketio.ASGIApp(sio, app)
 
 # Store connected users
 connected_users = {}
@@ -38,6 +33,3 @@ def send_friend_request_notification(user_id):
 # This function can be called whenever a new friend request is made
 def new_friend_request(user_id):
     send_friend_request_notification(user_id)
-
-if __name__ == "__main__":
-    uvicorn.run(socket_app, host="0.0.0.0", port=8000)
