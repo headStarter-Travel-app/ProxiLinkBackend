@@ -5,7 +5,7 @@ from enum import Enum
 from services.appleSetup import AppleAuth
 from services.apple_maps import apple_maps_service
 from services.google_maps import google_maps_service
-from fastapi import FastAPI, Request, HTTPException
+from fastapi import FastAPI, Request, HTTPException, WebSocket, WebSocketDisconnect
 from pydantic import BaseModel
 from typing import List, Any, Optional, Dict
 import appwrite
@@ -64,6 +64,37 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+active_connections: Dict[str, WebSocket] = {}
+
+class FriendRequest(BaseModel):
+    sender_id: str
+    receiver_id: str
+
+
+@app.websocket("/ws/{user_id}")
+async def websocket_endpoint(websocket: WebSocket, user_id: str):
+    await websocket.accept()
+    active_connections[user_id] = websocket
+    try:
+        while True:
+            await websocket.receive_text()
+    except WebSocketDisconnect:
+        del active_connections[user_id]
+
+async def notify_friend_request(receiver_id: str, sender_id: str):
+    if receiver_id in active_connections:
+        await active_connections[receiver_id].send_json({
+            "type": "friend_request",
+            "sender_id": sender_id
+        })
+async def notify_friend_request_accept(sender_id: str, receiver_id: str):
+    if sender_id in active_connections:
+        await active_connections[sender_id].send_json({
+            "type": "friend_accept",
+            "receiver_id": receiver_id
+        })
+        
 
 
 def update_apple_token():
@@ -556,7 +587,7 @@ async def send_friend_request(request: FriendRequest):
         })
 
         # Send notification to receiver
-        send_friend_request_notification(request.receiver_id)
+        await notify_friend_request(request.receiver_id, request.sender_id)
 
         return {"message": "Friend request sent successfully"}
     except Exception as e:
@@ -621,10 +652,7 @@ async def accept_friend_request(request: FriendRequest):
         })
 
         # Notify the sender that their request was accepted
-        sio.emit('friendRequestAccepted', {
-            'message': 'Your friend request was accepted',
-            'accepterId': request.receiver_id
-        }, room=request.sender_id)
+        await notify_friend_request_accept(request.sender_id, request.receiver_id)
 
         return {"message": "Friend request accepted"}
     except Exception as e:
