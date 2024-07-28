@@ -1091,14 +1091,14 @@ async def submit_waitlist(entry: WaitListEntry):
 
 # uvicorn app:app --reload
 
-# if (os.getenv('DEV')):
-#     if __name__ == "__main__":
-#         # For development use only
-#         import uvicorn
-#         uvicorn.run(socket_app, host="0.0.0.0", port=8000)
-# else:
+if (os.getenv('DEV')):
+    if __name__ == "__main__":
+        # For development use only
+        import uvicorn
+        uvicorn.run(socket_app, host="0.0.0.0", port=8000)
+else:
     # Production use
-if __name__ == "__main__":
-    update_apple_token()
-    import uvicorn
-    uvicorn.run(socket_app, host="0.0.0.0", port=8000)
+    if __name__ == "__main__":
+        update_apple_token()
+        import uvicorn
+        uvicorn.run(socket_app, host="0.0.0.0", port=8000)
