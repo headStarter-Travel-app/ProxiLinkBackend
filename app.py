@@ -23,6 +23,8 @@ from appwrite.exception import AppwriteException
 import httpx
 import logging
 from fastapi.middleware.cors import CORSMiddleware
+import socketio
+from socketio import AsyncServer
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -63,6 +65,35 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Initialize Socket.IO server
+sio = AsyncServer(async_mode='asgi')
+socket_app = socketio.ASGIApp(sio, app)
+
+connected__user = {}
+
+@sio.event
+async def connect(sid, environ):
+    print(f"User connected: {sid}")
+    connected__user[sid] = None
+
+@sio.event
+async def join(sid, data):
+    user_id = data['userId']
+    connected__user[sid] = user_id
+    sio.enter_room(sid, user_id)
+    print(f"User {sid} joined room {user_id}")
+
+@sio.event
+async def disconnect(sid):
+    print(f"User disconnected: {sid}")
+    user_id = connected__user.get(sid)
+    if user_id:
+        sio.leave_room(sid, user_id)
+    connected__user.pop(sid, None)
+
+def send_friend_request_notification(user_id):
+    sio.emit('friendRequest', {'message': 'You have a new friend request'}, room=user_id)
 
 
 def update_apple_token():
@@ -553,6 +584,9 @@ async def send_friend_request(request: FriendRequest):
         database.update_document(appwrite_config["database_id"], appwrite_config["user_collection_id"], request.receiver_id, {
             'receivedRequests': list(received_requests)
         })
+
+        # Send notification to receiver
+        send_friend_request_notification(request.receiver_id)
 
         return {"message": "Friend request sent successfully"}
     except Exception as e:
@@ -1056,10 +1090,10 @@ if (os.getenv('DEV')):
     if __name__ == "__main__":
         # For development use only
         import uvicorn
-        uvicorn.run(app, host="0.0.0.0", port=8000)
+        uvicorn.run(socket_app, host="0.0.0.0", port=8000)
 else:
     # Production use
     if __name__ == "__main__":
         update_apple_token()
         import uvicorn
-        uvicorn.run(app, host="0.0.0.0", port=8000)
+        uvicorn.run(socket_app, host="0.0.0.0", port=8000)
