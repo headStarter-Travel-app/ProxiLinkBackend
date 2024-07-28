@@ -26,6 +26,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import socketio
 from socketio import AsyncServer
 
+# Installed
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 load_dotenv()
@@ -72,10 +73,12 @@ socket_app = socketio.ASGIApp(sio, app)
 
 connected__user = {}
 
+
 @sio.event
 async def connect(sid, environ):
     print(f"User connected: {sid}")
     connected__user[sid] = None
+
 
 @sio.event
 async def join(sid, data):
@@ -83,6 +86,7 @@ async def join(sid, data):
     connected__user[sid] = user_id
     sio.enter_room(sid, user_id)
     print(f"User {sid} joined room {user_id}")
+
 
 @sio.event
 async def disconnect(sid):
@@ -92,8 +96,10 @@ async def disconnect(sid):
         sio.leave_room(sid, user_id)
     connected__user.pop(sid, None)
 
+
 def send_friend_request_notification(user_id):
-    sio.emit('friendRequest', {'message': 'You have a new friend request'}, room=user_id)
+    sio.emit('friendRequest', {
+             'message': 'You have a new friend request'}, room=user_id)
 
 
 def update_apple_token():
