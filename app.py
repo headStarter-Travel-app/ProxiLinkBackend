@@ -23,8 +23,6 @@ from appwrite.exception import AppwriteException
 import httpx
 import logging
 from fastapi.middleware.cors import CORSMiddleware
-import socketio
-from socket_server import sio, send_friend_request_notification
 
 # Installed
 logging.basicConfig(level=logging.INFO)
@@ -66,39 +64,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# Initialize Socket.IO server
-socket_app = socketio.ASGIApp(sio, app)
-
-connected__user = {}
-
-
-@sio.event
-async def connect(sid, environ):
-    print(f"User connected: {sid}")
-    connected__user[sid] = None
-
-
-@sio.event
-async def join(sid, data):
-    user_id = data['userId']
-    connected__user[sid] = user_id
-    sio.enter_room(sid, user_id)
-    print(f"User {sid} joined room {user_id}")
-
-
-@sio.event
-async def disconnect(sid):
-    print(f"User disconnected: {sid}")
-    user_id = connected__user.get(sid)
-    if user_id:
-        sio.leave_room(sid, user_id)
-    connected__user.pop(sid, None)
-
-
-def send_friend_request_notification(user_id):
-    sio.emit('friendRequest', {
-             'message': 'You have a new friend request'}, room=user_id)
 
 
 def update_apple_token():
@@ -1101,10 +1066,8 @@ if (os.getenv('DEV')):
     if __name__ == "__main__":
         # For development use only
         import uvicorn
-        uvicorn.run(socket_app, host="0.0.0.0", port=8000)
 else:
     # Production use
     if __name__ == "__main__":
         update_apple_token()
         import uvicorn
-        uvicorn.run(socket_app, host="0.0.0.0", port=8000)
