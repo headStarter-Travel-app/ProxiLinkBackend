@@ -655,6 +655,12 @@ async def accept_friend_request(request: FriendRequest):
             'receivedRequests': list(received_requests)
         })
 
+        # Notify the sender that their request was accepted
+        sio.emit('friendRequestAccepted', {
+            'message': 'Your friend request was accepted',
+            'accepterId': request.receiver_id
+        }, room=request.sender_id)
+
         return {"message": "Friend request accepted"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
