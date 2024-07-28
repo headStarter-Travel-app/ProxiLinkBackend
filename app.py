@@ -1102,4 +1102,4 @@ else:
     if __name__ == "__main__":
         update_apple_token()
         import uvicorn
-        uvicorn.run(socket_app, host="0.0.0.0", port=8000)
+        # uvicorn.run(socket_app, host="0.0.0.0", port=8000)
