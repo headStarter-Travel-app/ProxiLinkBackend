@@ -768,6 +768,7 @@ async def remove_friend(request: FriendRequest):
 # kasim did this
 @app.get("/get-pending-friend-requests", summary="Get all pending friends of the user")
 async def get_user_requests(user_id: str):
+    logger.info(f"Received request for pending friend requests. User ID: {user_id}")
     """
     Gets the received requests
     """
@@ -778,6 +779,8 @@ async def get_user_requests(user_id: str):
             collection_id=appwrite_config['user_collection_id'],
             document_id=user_id
         )
+
+        logger.info(f"Current user: {current_user}")
 
         friends_ids = current_user.get('receivedRequests', [])
 
