@@ -94,6 +94,18 @@ async def notify_friend_request_accept(sender_id: str, receiver_id: str):
             "type": "friend_accept",
             "receiver_id": receiver_id
         })
+
+async def notify_friend_remove(user1_id: str, user2_id: str):
+    if user1_id in active_connections:
+        await active_connections[user1_id].send_json({
+            "type": "friend_remove",
+            "removed_friend_id": user2_id
+        })
+    if user2_id in active_connections:
+        await active_connections[user2_id].send_json({
+            "type": "friend_remove",
+            "removed_friend_id": user1_id
+        })
         
 
 
@@ -653,6 +665,7 @@ async def accept_friend_request(request: FriendRequest):
 
         # Notify the sender that their request was accepted
         await notify_friend_request_accept(request.sender_id, request.receiver_id)
+        await notify_friend_request_accept(request.receiver_id, request.sender_id)
 
         return {"message": "Friend request accepted"}
     except Exception as e:
@@ -725,6 +738,8 @@ async def remove_friend(request: FriendRequest):
         database.update_document(appwrite_config['database_id'], appwrite_config["user_collection_id"], request.receiver_id, {
             'friends': list(user2_friends)
         })
+
+        await notify_friend_remove(request.sender_id, request.receiver_id)
 
         return {"message": "Friend removed successfully"}
     except Exception as e:
