@@ -72,22 +72,34 @@ class FriendRequest(BaseModel):
     receiver_id: str
 
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+
 @app.websocket("/ws/{user_id}")
 async def websocket_endpoint(websocket: WebSocket, user_id: str):
     await websocket.accept()
     active_connections[user_id] = websocket
+    logger.info(f"WebSocket connection established for user {user_id}")
     try:
         while True:
             await websocket.receive_text()
     except WebSocketDisconnect:
         del active_connections[user_id]
+        logger.info(f"WebSocket connection closed for user {user_id}")
 
 async def notify_friend_request(receiver_id: str, sender_id: str):
     if receiver_id in active_connections:
-        await active_connections[receiver_id].send_json({
-            "type": "friend_request",
-            "sender_id": sender_id
-        })
+        try:
+            await active_connections[receiver_id].send_json({
+                "type": "friend_request",
+                "sender_id": sender_id
+            })
+        except Exception as e:
+            print(f"Error sending notification to {receiver_id}: {str(e)}")
+            # Optionally, remove the connection if it's no longer valid
+            del active_connections[receiver_id]
+    
 async def notify_friend_request_accept(sender_id: str, receiver_id: str):
     if sender_id in active_connections:
         await active_connections[sender_id].send_json({
@@ -602,8 +614,12 @@ async def send_friend_request(request: FriendRequest):
         await notify_friend_request(request.receiver_id, request.sender_id)
 
         return {"message": "Friend request sent successfully"}
+    except AppwriteException as e:
+        logger.error(f"Appwrite error in send_friend_request: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        logger.error(f"Unexpected error in send_friend_request: {str(e)}")
+        raise HTTPException(status_code=500, detail="An unexpected error occurred")
 
 
 @app.post("/reject-friend-request")
