@@ -59,7 +59,8 @@ class GoogleMapsService:
                     photo_urls = []
                     for photo in place['photos'][:5]:  # Limit to first 5 photos
                         if 'name' in photo:
-                            photo_url = f"https://places.googleapis.com/v1/{photo['name']}/media?key={api_key}&maxHeightPx=400&maxWidthPx=400"
+                            photo_url = f"https://places.googleapis.com/v1/{
+                                photo['name']}/media?key={api_key}&maxHeightPx=400&maxWidthPx=400"
                             photo_urls.append(photo_url)
                     place['photo_urls'] = photo_urls
 
@@ -67,12 +68,3 @@ class GoogleMapsService:
 # Usage example
 load_dotenv()  # Load environment variables from .env file
 google_maps_service = GoogleMapsService()
-
-# Example usage
-place_to_find = 'The Melt, 925 Market St, San Francisco, CA  94103, United States'
-
-# Make multiple calls to demonstrate API key rotation
-for i in range(5):
-    print(f"\nCall {i+1}:")
-    result = google_maps_service.find_place(place_to_find)
-    print(json.dumps(result, indent=2))
