@@ -67,6 +67,7 @@ app.add_middleware(
 
 active_connections: Dict[str, WebSocket] = {}
 
+
 class FriendRequest(BaseModel):
     sender_id: str
     receiver_id: str
@@ -86,26 +87,23 @@ async def websocket_endpoint(websocket: WebSocket, user_id: str):
             await websocket.receive_text()
     except WebSocketDisconnect:
         del active_connections[user_id]
-        logger.info(f"WebSocket connection closed for user {user_id}")
+
 
 async def notify_friend_request(receiver_id: str, sender_id: str):
     if receiver_id in active_connections:
-        try:
-            await active_connections[receiver_id].send_json({
-                "type": "friend_request",
-                "sender_id": sender_id
-            })
-        except Exception as e:
-            print(f"Error sending notification to {receiver_id}: {str(e)}")
-            # Optionally, remove the connection if it's no longer valid
-            del active_connections[receiver_id]
-    
+        await active_connections[receiver_id].send_json({
+            "type": "friend_request",
+            "sender_id": sender_id
+        })
+
+
 async def notify_friend_request_accept(sender_id: str, receiver_id: str):
     if sender_id in active_connections:
         await active_connections[sender_id].send_json({
             "type": "friend_accept",
             "receiver_id": receiver_id
         })
+
 
 async def notify_friend_remove(user1_id: str, user2_id: str):
     if user1_id in active_connections:
@@ -118,7 +116,6 @@ async def notify_friend_remove(user1_id: str, user2_id: str):
             "type": "friend_remove",
             "removed_friend_id": user1_id
         })
-        
 
 
 def update_apple_token():
@@ -147,7 +144,7 @@ database = Databases(client)
 users = Users(client)
 
 # Initialize Google Maps client
-gmaps = googlemaps.Client(key=os.getenv('GOOGLE_MAPS_API'))
+# gmaps = googlemaps.Client(key=os.getenv('GOOGLE_MAPS_API1'))
 
 
 class Location(BaseModel):
@@ -616,10 +613,12 @@ async def send_friend_request(request: FriendRequest):
         return {"message": "Friend request sent successfully"}
     except AppwriteException as e:
         logger.error(f"Appwrite error in send_friend_request: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Database error: {str(e)}")
     except Exception as e:
         logger.error(f"Unexpected error in send_friend_request: {str(e)}")
-        raise HTTPException(status_code=500, detail="An unexpected error occurred")
+        raise HTTPException(
+            status_code=500, detail="An unexpected error occurred")
 
 
 @app.post("/reject-friend-request")
@@ -768,7 +767,8 @@ async def remove_friend(request: FriendRequest):
 # kasim did this
 @app.get("/get-pending-friend-requests", summary="Get all pending friends of the user")
 async def get_user_requests(user_id: str):
-    logger.info(f"Received request for pending friend requests. User ID: {user_id}")
+    logger.info(
+        f"Received request for pending friend requests. User ID: {user_id}")
     """
     Gets the received requests
     """
