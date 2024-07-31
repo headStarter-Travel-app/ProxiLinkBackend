@@ -67,6 +67,7 @@ app.add_middleware(
 
 active_connections: Dict[str, WebSocket] = {}
 
+
 class FriendRequest(BaseModel):
     sender_id: str
     receiver_id: str
@@ -82,18 +83,22 @@ async def websocket_endpoint(websocket: WebSocket, user_id: str):
     except WebSocketDisconnect:
         del active_connections[user_id]
 
+
 async def notify_friend_request(receiver_id: str, sender_id: str):
     if receiver_id in active_connections:
         await active_connections[receiver_id].send_json({
             "type": "friend_request",
             "sender_id": sender_id
         })
+
+
 async def notify_friend_request_accept(sender_id: str, receiver_id: str):
     if sender_id in active_connections:
         await active_connections[sender_id].send_json({
             "type": "friend_accept",
             "receiver_id": receiver_id
         })
+
 
 async def notify_friend_remove(user1_id: str, user2_id: str):
     if user1_id in active_connections:
@@ -106,7 +111,6 @@ async def notify_friend_remove(user1_id: str, user2_id: str):
             "type": "friend_remove",
             "removed_friend_id": user1_id
         })
-        
 
 
 def update_apple_token():
@@ -135,7 +139,7 @@ database = Databases(client)
 users = Users(client)
 
 # Initialize Google Maps client
-gmaps = googlemaps.Client(key=os.getenv('GOOGLE_MAPS_API'))
+# gmaps = googlemaps.Client(key=os.getenv('GOOGLE_MAPS_API1'))
 
 
 class Location(BaseModel):
