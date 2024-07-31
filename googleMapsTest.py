@@ -34,7 +34,7 @@ def find_place(name, address_input):
 
 # Usage example
 load_dotenv()  # Load environment variables from .env file
-api_key = os.getenv("GOOGLE_MAPS_API")
+api_key = os.getenv("GOOGLE_MAPS_API1")
 place_to_find = 'Dunkin Honeygo Village Center, 5003 Honeygo Center Dr, Perry Hall, MD 21128'
 
 result = find_place(api_key, place_to_find)

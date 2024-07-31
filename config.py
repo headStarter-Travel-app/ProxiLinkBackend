@@ -35,7 +35,7 @@ class Settings(BaseSettings):
     APPWRITE_PREFERENCES_COLLECTION_ID: str = "6696016b00117bbf6352"
 
     # Google Maps Settings
-    GOOGLE_MAPS_API_KEY: str = os.getenv("GOOGLE_MAPS_API")
+    GOOGLE_MAPS_API_KEY: str = os.getenv("GOOGLE_MAPS_API1")
 
     # Apple Maps Settings
     APPLE_MAPS_TOKEN_UPDATE_INTERVAL: int = 168  # hours
