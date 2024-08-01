@@ -1162,26 +1162,6 @@ async def submit_waitlist(entry: WaitListEntry):
             status_code=500, detail=f"Error submitting waitlist entry: {str(e)}")
 
 
-@app.post("/notification-token", summary="Submit Notification Token")
-async def submit_notification_token(token: str):
-    """
-    Submit a new notification token to the database.
-    """
-    try:
-        token_data = {"token": token}
-
-        result = database.create_document(
-            database_id=appwrite_config['database_id'],
-            collection_id=appwrite_config['notification_collection_id'],
-            document_id=ID.unique(),
-            data=token_data
-        )
-        return {"message": "Notification token submitted successfully", "document_id": result['$id']}
-    except Exception as e:
-        logger.error(f"Error submitting notification token: {str(e)}")
-        raise HTTPException(
-            status_code=500, detail=f"Error submitting notification token: {str(e)}")
-
 # uvicorn app:app --reload
 
 if (os.getenv('DEV')):
