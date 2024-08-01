@@ -1066,6 +1066,44 @@ async def get_groups(user_id: str):
             status_code=500, detail=f"Error getting groups: {str(e)}")
 
 
+class GroupRemoveReq(BaseModel):
+    group_id: str
+    member_id: str
+
+
+@app.post("/remove-member", summary="Remove member from group")
+async def remove_member(req: GroupRemoveReq):
+    '''
+    Remove a member from a group
+    '''
+    try:
+        # Fetch the current group data
+        group = database.get_document(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['groups_collection_id'],
+            document_id=req.group_id
+        )
+
+        # Update the members list
+        current_members = set(group['members'])
+        current_members.discard(req.member_id)
+
+        # Update the group document with the new members
+        result = database.update_document(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['groups_collection_id'],
+            document_id=req.group_id,
+            data={"members": list(current_members)}
+        )
+
+        return {"message": "Member removed successfully", "group_id": result['$id']}
+    except Exception as e:
+        logger.error(f"Error removing member: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error removing member: {str(e)}"
+        )
+
+
 @app.get("/get-group-details", summary="Get Group Details")
 async def get_group_details(group_id: str):
     '''
