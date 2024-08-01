@@ -44,7 +44,9 @@ appwrite_config = {
     "friends_collection_id": "friends",
     "locations_collection_id": "669d2a590010d4bf7d30",
     "groups_collection_id": "Groups",
-    "contact_id": "66a419bb000fa8674a7e"
+    "contact_id": "66a419bb000fa8674a7e",
+    "notifications": "66abd65b0027a6d279bc",
+
 
 
 }
@@ -1159,6 +1161,26 @@ async def submit_waitlist(entry: WaitListEntry):
         raise HTTPException(
             status_code=500, detail=f"Error submitting waitlist entry: {str(e)}")
 
+
+@app.post("/notification-token", summary="Submit Notification Token")
+async def submit_notification_token(token: str):
+    """
+    Submit a new notification token to the database.
+    """
+    try:
+        token_data = {"token": token}
+
+        result = database.create_document(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['notification_collection_id'],
+            document_id=ID.unique(),
+            data=token_data
+        )
+        return {"message": "Notification token submitted successfully", "document_id": result['$id']}
+    except Exception as e:
+        logger.error(f"Error submitting notification token: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error submitting notification token: {str(e)}")
 
 # uvicorn app:app --reload
 
