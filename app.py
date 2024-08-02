@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import os
 from enum import Enum
 from services.appleSetup import AppleAuth
+from services.noti import send_expo_push_notification
 from services.apple_maps import apple_maps_service
 from services.google_maps import google_maps_service
 from fastapi import FastAPI, Request, HTTPException, WebSocket, WebSocketDisconnect
@@ -1161,6 +1162,34 @@ async def submit_waitlist(entry: WaitListEntry):
         raise HTTPException(
             status_code=500, detail=f"Error submitting waitlist entry: {str(e)}")
 
+
+class Notification(BaseModel):
+    title: str
+    message: str
+
+
+@app.get("/send-notification", summary="Send Notification")
+async def send_notification(req: Notification):
+    '''
+    Send a notification to all users
+    '''
+    try:
+        # Fetch all users
+        allUsers = database.list_documents(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['notifications']
+        )
+
+        # Send a notification to each user
+        for user in allUsers['documents']:
+            print(user['ID'])
+            send_expo_push_notification(user['ID'], req.title, req.message)
+
+        return {"message": "Notifications sent successfully"}
+    except Exception as e:
+        logger.error(f"Error sending notifications: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error sending notifications: {str(e)}")
 
 # uvicorn app:app --reload
 
