@@ -10,20 +10,11 @@
       "category": "Restaurant"
     },
     {
-      "name": "Iron Rooster - College Park",
+      "name": "Potomac Pizza",
       "address": "7777 Baltimore Ave, College Park, MD  20740, United States",
       "location": {
-        "lat": 38.9869586,
-        "lon": -76.935151
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "GrillMarx Steakhouse & Raw Bar",
-      "address": "7777 Baltimore Ave, College Park, MD  20740, United States",
-      "location": {
-        "lat": 38.9869586,
-        "lon": -76.935151
+        "lat": 38.9873178,
+        "lon": -76.9356036
       },
       "category": "Restaurant"
     },
@@ -37,11 +28,65 @@
       "category": "Restaurant"
     },
     {
+      "name": "Blaze Pizza",
+      "address": "7419 Baltimore Ave, College Park, MD  20740, United States",
+      "location": {
+        "lat": 38.9817562,
+        "lon": -76.9375892
+      },
+      "category": "Restaurant"
+    },
+    {
+      "name": "Pizza Kingdom",
+      "address": "4439 Lehigh Rd, College Park, MD  20740, United States",
+      "location": {
+        "lat": 38.9817109,
+        "lon": -76.9383089
+      },
+      "category": "Restaurant"
+    },
+    {
+      "name": "Dog Haus Biergarten",
+      "address": "7401 Baltimore Ave, Unit 1A, College Park, MD  20740, United States",
+      "location": {
+        "lat": 38.9812184,
+        "lon": -76.9375926
+      },
+      "category": "Nightlife"
+    },
+    {
       "name": "Marathon Deli",
       "address": "4429 Lehigh Rd, College Park, MD  20740, United States",
       "location": {
         "lat": 38.9811446,
         "lon": -76.9380934
+      },
+      "category": "Restaurant"
+    },
+    {
+      "name": "Terrapins Turf",
+      "address": "4410 Knox Rd, College Park, MD  20740, United States",
+      "location": {
+        "lat": 38.9810151,
+        "lon": -76.9384146
+      },
+      "category": "Nightlife"
+    },
+    {
+      "name": "The Cornerstone Grill & Loft",
+      "address": "7325 Baltimore Ave, College Park, MD  20740, United States",
+      "location": {
+        "lat": 38.9806529,
+        "lon": -76.9375442
+      },
+      "category": "Nightlife"
+    },
+    {
+      "name": "Ledo Pizza",
+      "address": "4509 Knox Rd, College Park, MD  20740, United States",
+      "location": {
+        "lat": 38.9805615,
+        "lon": -76.937126
       },
       "category": "Restaurant"
     },
@@ -55,6 +100,15 @@
       "category": "Store"
     },
     {
+      "name": "Looney's Pub",
+      "address": "8150 Baltimore Ave, College Park, MD  20740, United States",
+      "location": {
+        "lat": 38.9908073,
+        "lon": -76.9343843
+      },
+      "category": "Nightlife"
+    },
+    {
       "name": "College Park Shopping Center",
       "address": "7236 Baltimore Ave, College Park, MD  20740, United States",
       "location": {
@@ -64,121 +118,94 @@
       "category": "Store"
     },
     {
-      "name": "Eastern Gourmet",
-      "address": "8150 Baltimore Ave, Ste D, College Park, MD  20740, United States",
+      "name": "&pizza",
+      "address": "7236 Baltimore Ave, College Park, MD  20740, United States",
       "location": {
-        "lat": 38.9911763,
-        "lon": -76.9340584
+        "lat": 38.9798026,
+        "lon": -76.9382319
       },
       "category": "Restaurant"
     },
     {
-      "name": "Roots Natural Kitchen",
-      "address": "4420 Calvert Rd, College Park, MD  20740, United States",
+      "name": "Paisano's",
+      "address": "7201 Baltimore Ave, College Park, MD  20740, United States",
       "location": {
-        "lat": 38.9786754,
-        "lon": -76.9385314
+        "lat": 38.9779008,
+        "lon": -76.9374922
       },
       "category": "Restaurant"
     },
     {
-      "name": "SeoulSpice",
-      "address": "4200 Guilford Dr, College Park, MD  20740, United States",
+      "name": "The Clarice Smith Performing Arts Center",
+      "address": "8270 Alumni Dr, Unit 3800, College Park, MD 20742, United States",
       "location": {
-        "lat": 38.9804121,
-        "lon": -76.942514
+        "lat": 38.9911304,
+        "lon": -76.9502978
+      },
+      "category": "Theater"
+    },
+    {
+      "name": "MOD Pizza",
+      "address": "4401 Woodberry St, Riverdale, MD  20737, United States",
+      "location": {
+        "lat": 38.9705689,
+        "lon": -76.9370529
       },
       "category": "Restaurant"
     },
     {
-      "name": "Adele H. Stamp Student Union",
-      "address": "3972 Campus Dr, College Park, MD  20742, United States",
+      "name": "Pizza Hut",
+      "address": "9015 Baltimore Ave, College Park, MD  20740, United States",
       "location": {
-        "lat": 38.9880809,
-        "lon": -76.9448787
-      },
-      "category": "University"
-    },
-    {
-      "name": "MeatUp Korean BBQ & Bar",
-      "address": "8503 Baltimore Ave, College Park, MD  20740, United States",
-      "location": {
-        "lat": 38.9948577,
-        "lon": -76.9319577
+        "lat": 38.9998521,
+        "lon": -76.9310388
       },
       "category": "Restaurant"
     },
     {
-      "name": "MeatUp Korean BBQ & Bar",
-      "address": "8503 Baltimore Ave, College Park, MD  20740, United States",
+      "name": "CDepot",
+      "address": "9039 Baltimore Ave, College Park, MD  20740, United States",
       "location": {
-        "lat": 38.9948577,
-        "lon": -76.9319577
+        "lat": 39.00087,
+        "lon": -76.9303701
+      },
+      "category": "Store"
+    },
+    {
+      "name": "The Common",
+      "address": "3501 University Blvd E, Hyattsville, MD 20742, United States",
+      "location": {
+        "lat": 38.9861232,
+        "lon": -76.9539774
       },
       "category": "Restaurant"
     },
     {
-      "name": "Tacos A La Madre",
-      "address": "5010 Berwyn Rd, College Park, MD  20740, United States",
+      "name": "Krazi Kebob",
+      "address": "5110 Roanoke Pl, Unit 102, College Park, MD  20740, United States",
       "location": {
-        "lat": 38.9948437,
-        "lon": -76.9258524
+        "lat": 38.9947098,
+        "lon": -76.9225145
       },
       "category": "Restaurant"
     },
     {
-      "name": "College Park Aviation Museum",
-      "address": "1985 Corporal Frank Scott Dr, College Park, MD 20740, United States",
+      "name": "The Shed DMV",
+      "address": "5650 Rivertech Ct\nUnit K\nRiverdale, MD  20737\nUnited States",
       "location": {
-        "lat": 38.9790055,
-        "lon": -76.9226663
+        "lat": 38.9686602,
+        "lon": -76.9305718
       },
-      "category": "Museum"
+      "category": "Store"
     },
     {
-      "name": "The Jerk Pit",
-      "address": "9078 Baltimore Ave, College Park, MD  20740, United States",
+      "name": "Piano Man Superstore",
+      "address": "9520 Baltimore Ave, College Park, MD  20740, United States",
       "location": {
-        "lat": 39.0026555,
-        "lon": -76.931175
+        "lat": 39.010097,
+        "lon": -76.9292895
       },
-      "category": "Restaurant"
-    },
-    {
-      "name": "Paint Branch Golf Complex",
-      "address": "4690 University Blvd, College Park, MD  20740, United States",
-      "location": {
-        "lat": 39.0038245,
-        "lon": -76.93561
-      },
-      "category": "Golf"
-    },
-    {
-      "name": "University of Maryland Golf Course",
-      "address": "3800 Golf Course Rd, College Park, MD 20742, United States",
-      "location": {
-        "lat": 38.9910788,
-        "lon": -76.9548726
-      },
-      "category": "Golf"
-    },
-    {
-      "name": "Bonchon",
-      "address": "6507 America Blvd, Ste 101, Hyattsville, MD  20782, United States",
-      "location": {
-        "lat": 38.9686852,
-        "lon": -76.9517612
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "Calvert Road Disc Golf Course",
-      "address": "5201 Paint Branch Pkwy, College Park, MD 20740, United States",
-      "location": {
-        "lat": 38.9756263,
-        "lon": -76.9167584
-      },
-      "category": null
+      "category": "Store"
     },
     {
       "name": "The Shoppes At Metro Station",
@@ -199,6 +226,15 @@
       "category": "Museum"
     },
     {
+      "name": "&pizza",
+      "address": "3500 East West Hwy, Hyattsville, MD 20782, United States",
+      "location": {
+        "lat": 38.9679937,
+        "lon": -76.9569482
+      },
+      "category": "Restaurant"
+    },
+    {
       "name": "National Archives archeological site",
       "address": "8601 Adelphi Rd, College Park, MD  20742, United States",
       "location": {
@@ -217,15 +253,6 @@
       "category": "Store"
     },
     {
-      "name": "Taqueria Los Perez",
-      "address": "5803 Baltimore Ave, Riverdale Park, MD 20737, United States",
-      "location": {
-        "lat": 38.9587754,
-        "lon": -76.9395923
-      },
-      "category": "Restaurant"
-    },
-    {
       "name": "Olive Garden Italian Restaurant",
       "address": "3480 East-West Hwy, Hyattsville, MD  20782, United States",
       "location": {
@@ -241,14 +268,23 @@
         "lat": 38.9579289,
         "lon": -76.942261
       },
-      "category": null
+      "category": "Soccer"
     },
     {
-      "name": "Iron Pig Korean BBQ",
-      "address": "6107 Greenbelt Rd, Berwyn Heights, MD  20740, United States",
+      "name": "Spice 6 Modern Indian",
+      "address": "5501 Baltimore Ave, Unit 107, Hyattsville, MD 20781, United States",
       "location": {
-        "lat": 38.9969666,
-        "lon": -76.9089081
+        "lat": 38.955408,
+        "lon": -76.9393447
+      },
+      "category": "Restaurant"
+    },
+    {
+      "name": "EZ Kabob",
+      "address": "6106 Greenbelt Rd, Greenbelt, MD  20770, United States",
+      "location": {
+        "lat": 38.9995341,
+        "lon": -76.9091138
       },
       "category": "Restaurant"
     },
@@ -289,29 +325,83 @@
       "category": "Store"
     },
     {
-      "name": "Laugh Out Loud Stations MEGA Fun Center",
-      "address": "6250 Greenbelt Rd, Greenbelt, MD  20770, United States",
+      "name": "Prime Restaurant",
+      "address": "5126 Baltimore Ave, Hyattsville, MD  20781, United States",
       "location": {
-        "lat": 39.0000933,
-        "lon": -76.9061712
-      },
-      "category": "Playground"
-    },
-    {
-      "name": "Chuck E. Cheese",
-      "address": "1127 University Blvd E, Takoma Park, MD  20912, United States",
-      "location": {
-        "lat": 38.9893487,
-        "lon": -76.9900026
+        "lat": 38.952251,
+        "lon": -76.940804
       },
       "category": "Restaurant"
     },
     {
-      "name": "Myong Dong",
-      "address": "11114 Baltimore Ave, Beltsville, MD  20705, United States",
+      "name": "Base Lounge Restaurant",
+      "address": "5451 Annapolis Rd, Bladensburg, MD  20710, United States",
       "location": {
-        "lat": 39.035736,
-        "lon": -76.9075025
+        "lat": 38.9385981,
+        "lon": -76.923466
+      },
+      "category": "Nightlife"
+    },
+    {
+      "name": "Jewel of India",
+      "address": "10151 New Hampshire Ave, Silver Spring, MD  20903, United States",
+      "location": {
+        "lat": 39.0218927,
+        "lon": -76.9762337
+      },
+      "category": "Restaurant"
+    },
+    {
+      "name": "Hip Hop Fish & Chicken",
+      "address": "5609 Sargent Rd, Hyattsville, MD  20782, United States",
+      "location": {
+        "lat": 38.9584731,
+        "lon": -76.9854791
+      },
+      "category": "Restaurant"
+    },
+    {
+      "name": "Hip Hop Fish & Chicken",
+      "address": "10961 Baltimore Ave, Beltsville, MD  20705, United States",
+      "location": {
+        "lat": 39.0335897,
+        "lon": -76.9084566
+      },
+      "category": "Restaurant"
+    },
+    {
+      "name": "Atomic Music",
+      "address": "11011 Baltimore Ave, Unit 2, Beltsville, MD 20705, United States",
+      "location": {
+        "lat": 39.0333825,
+        "lon": -76.9068028
+      },
+      "category": "Store"
+    },
+    {
+      "name": "Sonidos Music & More",
+      "address": "11011 Baltimore Ave, Beltsville, MD  20705, United States",
+      "location": {
+        "lat": 39.0333825,
+        "lon": -76.9068028
+      },
+      "category": "Store"
+    },
+    {
+      "name": "Music & Arts",
+      "address": "7587 Greenbelt Rd, Greenbelt, MD  20770, United States",
+      "location": {
+        "lat": 38.9924711,
+        "lon": -76.8768478
+      },
+      "category": "Store"
+    },
+    {
+      "name": "Hip Hop Fish & Chicken",
+      "address": "7524 Annapolis Rd, Hyattsville, MD  20784, United States",
+      "location": {
+        "lat": 38.9509075,
+        "lon": -76.8867693
       },
       "category": "Restaurant"
     },
@@ -322,25 +412,7 @@
         "lat": 38.9916217,
         "lon": -76.8748616
       },
-      "category": null
-    },
-    {
-      "name": "Da Rae Won Restaurant",
-      "address": "5013 Garrett Ave, Beltsville, MD  20705, United States",
-      "location": {
-        "lat": 39.041095,
-        "lon": -76.9064398
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "Gah Rham Korean BBQ Restaurant",
-      "address": "5027 Garrett Ave, Beltsville, MD  20705, United States",
-      "location": {
-        "lat": 39.0410352,
-        "lon": -76.9056434
-      },
-      "category": "Restaurant"
+      "category": "Soccer"
     },
     {
       "name": "United Elite Soccer Club",
@@ -352,6 +424,42 @@
       "category": "Soccer"
     },
     {
+      "name": "Echostage",
+      "address": "2135 Queens Chapel Rd NE, Washington, DC  20018, United States",
+      "location": {
+        "lat": 38.9199061,
+        "lon": -76.9724275
+      },
+      "category": "MusicVenue"
+    },
+    {
+      "name": "Curry Place",
+      "address": "11229 New Hampshire Ave, Silver Spring, MD  20904, United States",
+      "location": {
+        "lat": 39.0413545,
+        "lon": -76.9883808
+      },
+      "category": "Restaurant"
+    },
+    {
+      "name": "Bay Street Restaurant & Lounge",
+      "address": "5910 Princess Garden Pkwy, Lanham, MD  20706, United States",
+      "location": {
+        "lat": 38.9619658,
+        "lon": -76.8654209
+      },
+      "category": "Nightlife"
+    },
+    {
+      "name": "Masala Story",
+      "address": "3301 12th St NE, Washington, DC  20017, United States",
+      "location": {
+        "lat": 38.9307604,
+        "lon": -76.9907479
+      },
+      "category": "Restaurant"
+    },
+    {
       "name": "Total Soccer Arena",
       "address": "8400 Ardwick Ardmore Rd, Landover, MD 20785, United States",
       "location": {
@@ -361,58 +469,13 @@
       "category": "Soccer"
     },
     {
-      "name": "Culture",
-      "address": "2006 Fenwick St NE, Washington, DC  20002, United States",
+      "name": "Hip Hop Fish & Chicken",
+      "address": "8000 Martin Luther King Jr Hwy, Lanham, MD  20706, United States",
       "location": {
-        "lat": 38.9146324,
-        "lon": -76.9852431
-      },
-      "category": null
-    },
-    {
-      "name": "Firepan Korean BBQ",
-      "address": "962 Wayne Ave, Silver Spring, MD  20910, United States",
-      "location": {
-        "lat": 38.9942451,
-        "lon": -77.025975
+        "lat": 38.9323073,
+        "lon": -76.86898
       },
       "category": "Restaurant"
-    },
-    {
-      "name": "Citizens & Culture",
-      "address": "8113 Georgia Ave, Silver Spring, MD  20910, United States",
-      "location": {
-        "lat": 38.9909441,
-        "lon": -77.0262427
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "Dave & Buster's",
-      "address": "8661 Colesville Rd, Unit E102, Silver Spring, MD  20910, United States",
-      "location": {
-        "lat": 38.9970747,
-        "lon": -77.0266661
-      },
-      "category": "Nightlife"
-    },
-    {
-      "name": "Langston Golf Course",
-      "address": "2600 Benning Rd NE, Washington, DC  20002, United States",
-      "location": {
-        "lat": 38.9008777,
-        "lon": -76.9674435
-      },
-      "category": "Golf"
-    },
-    {
-      "name": "Sligo Creek Golf Course",
-      "address": "9701 Sligo Creek Pkwy, Silver Spring, MD  20901, United States",
-      "location": {
-        "lat": 39.0139932,
-        "lon": -77.0262775
-      },
-      "category": "Golf"
     },
     {
       "name": "FourSoccer",
@@ -424,31 +487,40 @@
       "category": "Soccer"
     },
     {
-      "name": "Gunpowder Golf Course",
-      "address": "14300 Old Gunpowder Rd, Laurel, MD 20707, United States",
+      "name": "Songbyrd Music House",
+      "address": "540 Penn St NE, Washington, DC  20002, United States",
       "location": {
-        "lat": 39.0864269,
-        "lon": -76.9201451
+        "lat": 38.9102184,
+        "lon": -76.9964703
       },
-      "category": "Golf"
+      "category": "MusicVenue"
     },
     {
-      "name": "Rock Creek Park Golf Course",
-      "address": "6100 16th St NW, Washington, DC  20011, United States",
+      "name": "The Queen Vic British Pub",
+      "address": "1206 H St NE, Washington, DC  20002, United States",
       "location": {
-        "lat": 38.966433,
-        "lon": -77.0407677
+        "lat": 38.9003214,
+        "lon": -76.9898719
       },
-      "category": "Golf"
+      "category": "Nightlife"
     },
     {
-      "name": "Iron Age Korean Steak House",
-      "address": "3365 14th St NW, Washington, DC  20010, United States",
+      "name": "Indigo",
+      "address": "243 K St NE, Washington, DC  20002, United States",
       "location": {
-        "lat": 38.9311633,
-        "lon": -77.032367
+        "lat": 38.9022762,
+        "lon": -77.0022404
       },
       "category": "Restaurant"
+    },
+    {
+      "name": "The Artemis",
+      "address": "3605 14th St NW, Washington, DC 20016, United States",
+      "location": {
+        "lat": 38.93641,
+        "lon": -77.0325288
+      },
+      "category": "Nightlife"
     },
     {
       "name": "Bell & Lincoln Soccer Field",
@@ -487,6 +559,15 @@
       "category": "Restaurant"
     },
     {
+      "name": "Spice 6 Modern Indian",
+      "address": "740 6th St NW, Washington, DC  20001, United States",
+      "location": {
+        "lat": 38.8994944,
+        "lon": -77.0200612
+      },
+      "category": "Restaurant"
+    },
+    {
       "name": "United States Capitol",
       "address": "Washington, DC  20001, United States",
       "location": {
@@ -494,24 +575,6 @@
         "lon": -77.008616
       },
       "category": "Landmark"
-    },
-    {
-      "name": "Player's Club",
-      "address": "1400 14th St NW, Washington, DC  20005, United States",
-      "location": {
-        "lat": 38.9090013,
-        "lon": -77.0322275
-      },
-      "category": "Nightlife"
-    },
-    {
-      "name": "Museum of Illusions",
-      "address": "927 H St NW, Washington, DC 20001, United States",
-      "location": {
-        "lat": 38.9000056,
-        "lon": -77.0245797
-      },
-      "category": "Museum"
     },
     {
       "name": "CityCenterDC",
@@ -523,22 +586,22 @@
       "category": "Store"
     },
     {
-      "name": "Penn Social",
-      "address": "801 E St NW, Washington, DC  20004, United States",
+      "name": "Rasika",
+      "address": "633 D St NW, Washington, DC  20004, United States",
       "location": {
-        "lat": 38.8963137,
-        "lon": -77.0231366
+        "lat": 38.8949492,
+        "lon": -77.0213002
       },
-      "category": "Nightlife"
+      "category": "Restaurant"
     },
     {
-      "name": "National Gallery of Art",
-      "address": "6th and Constitution Ave NW, Washington, DC 20565, United States",
+      "name": "The Mirror",
+      "address": "1413 K St NW, Washington, DC  20005, United States",
       "location": {
-        "lat": 38.8912666,
-        "lon": -77.0199215
+        "lat": 38.9029207,
+        "lon": -77.0327151
       },
-      "category": "Landmark"
+      "category": "Nightlife"
     },
     {
       "name": "Grazie Nonna",
@@ -550,13 +613,22 @@
       "category": "Restaurant"
     },
     {
-      "name": "National Air and Space Museum",
-      "address": "6th Street and Independence Ave SW, Washington, DC 20560, United States",
+      "name": "Chuck Levin's Washington Music Center",
+      "address": "11151 Veirs Mill Rd, Silver Spring, MD  20902, United States",
       "location": {
-        "lat": 38.8878678,
-        "lon": -77.0197713
+        "lat": 39.0391607,
+        "lon": -77.0533881
       },
-      "category": "Museum"
+      "category": "Music"
+    },
+    {
+      "name": "Elephant & Castle",
+      "address": "1201 Pennsylvania Ave NW, Washington, DC  20004, United States",
+      "location": {
+        "lat": 38.8954934,
+        "lon": -77.0282587
+      },
+      "category": "Restaurant"
     },
     {
       "name": "Westfield Wheaton",
@@ -568,42 +640,6 @@
       "category": "Store"
     },
     {
-      "name": "Museum of the Bible",
-      "address": "400 Fourth St SW, Washington, DC 20024, United States",
-      "location": {
-        "lat": 38.8847886,
-        "lon": -77.0169894
-      },
-      "category": "Museum"
-    },
-    {
-      "name": "Culture House",
-      "address": "700 Delaware Ave SW, Washington, DC  20024, United States",
-      "location": {
-        "lat": 38.8804475,
-        "lon": -77.0119017
-      },
-      "category": null
-    },
-    {
-      "name": "National Museum of Natural History",
-      "address": "10th St & Constitution Ave NW, Washington, DC 20560, United States",
-      "location": {
-        "lat": 38.891278,
-        "lon": -77.025933
-      },
-      "category": "Landmark"
-    },
-    {
-      "name": "National Children's Museum",
-      "address": "1300 Pennsylvania Ave NW, Washington, DC  20004, United States",
-      "location": {
-        "lat": 38.8943313,
-        "lon": -77.0301515
-      },
-      "category": "Museum"
-    },
-    {
       "name": "Il Piatto",
       "address": "900 Black Lives Matter Plaza NW, Washington, DC  20006, United States",
       "location": {
@@ -613,13 +649,13 @@
       "category": "Restaurant"
     },
     {
-      "name": "National Museum of American History",
-      "address": "1300 Constitution Ave NW\nWashington, DC 20560\nUnited States",
+      "name": "Across The Pond",
+      "address": "1732 Connecticut Ave NW, Washington, DC  20009, United States",
       "location": {
-        "lat": 38.8911255,
-        "lon": -77.0302535
+        "lat": 38.9136053,
+        "lon": -77.0460677
       },
-      "category": "Museum"
+      "category": "Nightlife"
     },
     {
       "name": "The White House",
@@ -631,31 +667,13 @@
       "category": "Landmark"
     },
     {
-      "name": "Enterprise Golf Course",
-      "address": "2802 Enterprise Rd, Mitchellville, MD 20721, United States",
+      "name": "Rasika",
+      "address": "1190 New Hampshire Ave NW, Washington, DC  20037, United States",
       "location": {
-        "lat": 38.928356,
-        "lon": -76.81691
+        "lat": 38.9050889,
+        "lon": -77.0479623
       },
-      "category": "Golf"
-    },
-    {
-      "name": "Spy Museum",
-      "address": "700 L'Enfant Plaza SW, Washington, DC  20024, United States",
-      "location": {
-        "lat": 38.8839761,
-        "lon": -77.0254362
-      },
-      "category": "Museum"
-    },
-    {
-      "name": "Artechouse",
-      "address": "1238 Maryland Ave SW, Washington, DC  20024, United States",
-      "location": {
-        "lat": 38.8839544,
-        "lon": -77.0292483
-      },
-      "category": "Museum"
+      "category": "Restaurant"
     },
     {
       "name": "Washington Monument",
@@ -667,11 +685,20 @@
       "category": "Landmark"
     },
     {
-      "name": "Boardwalk Bar & Arcade",
-      "address": "715 Wharf St SW, Washington, DC  20024, United States",
+      "name": "Gordon Ramsay Fish & Chips",
+      "address": "665 Wharf St SW, Ste 730, Washington, DC  20024, United States",
       "location": {
-        "lat": 38.8784704,
-        "lon": -77.0240762
+        "lat": 38.8775368,
+        "lon": -77.0228344
+      },
+      "category": "Restaurant"
+    },
+    {
+      "name": "The Brighton SW1",
+      "address": "949 Wharf St SW, Washington, DC  20024, United States",
+      "location": {
+        "lat": 38.8801253,
+        "lon": -77.0260705
       },
       "category": "Nightlife"
     },
@@ -683,15 +710,6 @@
         "lon": -77.0405209
       },
       "category": "Landmark"
-    },
-    {
-      "name": "East Potomac Golf Course",
-      "address": "972 Ohio Dr SW, Washington, DC  20024, United States",
-      "location": {
-        "lat": 38.8745842,
-        "lon": -77.0267934
-      },
-      "category": "Golf"
     },
     {
       "name": "Thomas Jefferson Memorial",
@@ -739,33 +757,6 @@
       "category": "Restaurant"
     },
     {
-      "name": "Vr Zone Dc",
-      "address": "2300 Wisconsin Ave NW, Unit G - 101, Washington, DC 20007, United States",
-      "location": {
-        "lat": 38.9201458,
-        "lon": -77.0719399
-      },
-      "category": null
-    },
-    {
-      "name": "Dave & Buster's",
-      "address": "1851 Ritchie Station Ct, Capitol Heights, MD  20743, United States",
-      "location": {
-        "lat": 38.8636088,
-        "lon": -76.8496569
-      },
-      "category": "Nightlife"
-    },
-    {
-      "name": "Bowie Golf Club",
-      "address": "7420 Laurel Bowie Rd\nBowie, MD  20715\nUnited States",
-      "location": {
-        "lat": 38.9960736,
-        "lon": -76.7622685
-      },
-      "category": "Golf"
-    },
-    {
       "name": "Westfield Montgomery",
       "address": "7101 Democracy Blvd, Bethesda, MD 20817, United States",
       "location": {
@@ -793,15 +784,6 @@
       "category": "Store"
     },
     {
-      "name": "GameOn bar+arcade",
-      "address": "6000 Merriweather Dr, Columbia, MD  21044, United States",
-      "location": {
-        "lat": 39.206706,
-        "lon": -76.8625447
-      },
-      "category": "Nightlife"
-    },
-    {
       "name": "Soccer Dome",
       "address": "7330 Montevideo Rd, Jessup, MD  20794, United States",
       "location": {
@@ -826,7 +808,16 @@
         "lat": 39.1527383,
         "lon": -77.3114627
       },
-      "category": null
+      "category": "Soccer"
+    },
+    {
+      "name": "Lake Clarke Shores",
+      "address": "Lake Clarke Shores, FL, United States",
+      "location": {
+        "lat": 26.649811,
+        "lon": -80.076944
+      },
+      "category": "Live Sports"
     }
   ]
 }
