@@ -10,7 +10,7 @@ class GoogleMapsService:
         # self.api_key2 = os.getenv("GOOGLE_MAPS_API2")
         # self.current_key_index = 0
         self.api_keys = []
-        for i in range(1, 4):  # Adjuast number basedon API keys
+        for i in range(1, 5):  # Adjuast number basedon API keys
             key = os.getenv(f"GOOGLE_MAPS_API{i}")
             if key:
                 self.api_keys.append(key)
