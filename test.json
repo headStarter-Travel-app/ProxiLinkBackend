@@ -10,24 +10,54 @@
     "category2": "Italian food"
   },
   {
-    "name": "Wasabi Bistro Japanese Food & Bubble Tea",
-    "address": "4505 College Ave, College Park, MD  20740, United States",
+    "name": "The Spa at The Hotel at the University of Maryland",
+    "address": "7777 Baltimore Ave, FL 4, College Park, MD  20740, United States",
     "location": {
-      "lat": 38.9818553,
-      "lon": -76.9373256
+      "lat": 38.9869586,
+      "lon": -76.935151
     },
-    "category": "Restaurant",
-    "category2": "Japanese food"
+    "category": "Spa",
+    "category2": "Spas"
   },
   {
-    "name": "Q\u00f9 Japan",
-    "address": "7406 Baltimore Ave, College Park, MD  20740, United States",
+    "name": "The Hall CP",
+    "address": "4656 Hotel Drive, College Park, MD 20742, United States",
     "location": {
-      "lat": 38.9811565,
-      "lon": -76.9380815
+      "lat": 38.9861878,
+      "lon": -76.9336134
     },
     "category": "Restaurant",
-    "category2": "Japanese food"
+    "category2": "Nightlife"
+  },
+  {
+    "name": "Dog Haus Biergarten",
+    "address": "7401 Baltimore Ave, Unit 1A, College Park, MD  20740, United States",
+    "location": {
+      "lat": 38.9812184,
+      "lon": -76.9375926
+    },
+    "category": "Nightlife",
+    "category2": "Nightlife"
+  },
+  {
+    "name": "Terrapins Turf",
+    "address": "4410 Knox Rd, College Park, MD  20740, United States",
+    "location": {
+      "lat": 38.9810151,
+      "lon": -76.9384146
+    },
+    "category": "Nightlife",
+    "category2": "Nightlife"
+  },
+  {
+    "name": "The Cornerstone Grill & Loft",
+    "address": "7325 Baltimore Ave, College Park, MD  20740, United States",
+    "location": {
+      "lat": 38.9806529,
+      "lon": -76.9375442
+    },
+    "category": "Nightlife",
+    "category2": "Nightlife"
   },
   {
     "name": "College Park Shopping Center",
@@ -40,104 +70,44 @@
     "category2": "shopping"
   },
   {
-    "name": "The Spot Mini",
-    "address": "4207 Knox Rd, College Park, MD  20740, United States",
+    "name": "Looney's Pub",
+    "address": "8150 Baltimore Ave, College Park, MD  20740, United States",
     "location": {
-      "lat": 38.9810829,
-      "lon": -76.9426016
+      "lat": 38.9914766,
+      "lon": -76.9343682
+    },
+    "category": "Nightlife",
+    "category2": "Nightlife"
+  },
+  {
+    "name": "SeoulSpice",
+    "address": "4200 Guilford Dr, College Park, MD  20740, United States",
+    "location": {
+      "lat": 38.9804121,
+      "lon": -76.942514
     },
     "category": "Restaurant",
-    "category2": "Japanese food"
+    "category2": "Korean food"
   },
   {
-    "name": "Lakeland Park",
-    "address": "4901 Lakeland Rd, College Park, MD 20740, United States",
+    "name": "MeatUp Korean BBQ & Bar",
+    "address": "8503 Baltimore Ave, College Park, MD  20740, United States",
     "location": {
-      "lat": 38.9885604,
-      "lon": -76.9299066
-    },
-    "category": "Park",
-    "category2": "Parks"
-  },
-  {
-    "name": "Onikama Ramen Bar",
-    "address": "3711 Campus Dr, College Park, MD  20740, United States",
-    "location": {
-      "lat": 38.9840987,
-      "lon": -76.9493794
+      "lat": 38.9948577,
+      "lon": -76.9319577
     },
     "category": "Restaurant",
-    "category2": "Japanese food"
+    "category2": "Korean food"
   },
   {
-    "name": "Calvert Park",
-    "address": "4807 Drexel Rd, College Park, MD  20740, United States",
+    "name": "Pebbles Wellness Spa",
+    "address": "8507 Baltimore Ave, College Park, MD  20740, United States",
     "location": {
-      "lat": 38.9749661,
-      "lon": -76.9306147
+      "lat": 38.9953574,
+      "lon": -76.9317421
     },
-    "category": "Park",
-    "category2": "Parks"
-  },
-  {
-    "name": "Acredale Community Park",
-    "address": "4300 Metzerott Rd, College Park, MD  20740, United States",
-    "location": {
-      "lat": 38.9993807,
-      "lon": -76.9339978
-    },
-    "category": "Park",
-    "category2": "Parks"
-  },
-  {
-    "name": "The Clarice Smith Performing Arts Center",
-    "address": "8270 Alumni Dr, Unit 3800, College Park, MD 20742, United States",
-    "location": {
-      "lat": 38.9911304,
-      "lon": -76.9502978
-    },
-    "category": "Theater",
-    "category2": "Music"
-  },
-  {
-    "name": "Lake Artemesia Natural Area",
-    "address": "Berywyn Rd & 55th Ave, Berwyn Heights, MD 20740, United States",
-    "location": {
-      "lat": 38.9863687,
-      "lon": -76.922641
-    },
-    "category": "Park",
-    "category2": "Parks"
-  },
-  {
-    "name": "Horu Sushi Kitchen",
-    "address": "4407 Woodberry St, Riverdale, MD 20737, United States",
-    "location": {
-      "lat": 38.970507,
-      "lon": -76.936748
-    },
-    "category": "Restaurant",
-    "category2": "Japanese food"
-  },
-  {
-    "name": "CDepot",
-    "address": "9039 Baltimore Ave, College Park, MD  20740, United States",
-    "location": {
-      "lat": 39.0009313,
-      "lon": -76.9305318
-    },
-    "category": "Store",
-    "category2": "Music"
-  },
-  {
-    "name": "Krazi Kebob",
-    "address": "5110 Roanoke Pl, Unit 102, College Park, MD  20740, United States",
-    "location": {
-      "lat": 38.9947098,
-      "lon": -76.9225145
-    },
-    "category": "Restaurant",
-    "category2": "Indian food"
+    "category": "Spa",
+    "category2": "Spas"
   },
   {
     "name": "Paint Branch Golf Complex",
@@ -160,14 +130,14 @@
     "category2": "Golf"
   },
   {
-    "name": "The Shed DMV",
-    "address": "5650 Rivertech Ct\nUnit K\nRiverdale, MD  20737\nUnited States",
+    "name": "Bonchon",
+    "address": "6507 America Blvd, Ste 101, Hyattsville, MD  20782, United States",
     "location": {
-      "lat": 38.9686602,
-      "lon": -76.9305718
+      "lat": 38.9686852,
+      "lon": -76.9517612
     },
-    "category": "Store",
-    "category2": "Music"
+    "category": "Restaurant",
+    "category2": "Korean food"
   },
   {
     "name": "Calvert Road Disc Golf Course",
@@ -180,36 +150,6 @@
     "category2": "Golf"
   },
   {
-    "name": "Sushinado & Teriyaki",
-    "address": "6450 America Blvd, Unit 103, Hyattsville, MD  20782, United States",
-    "location": {
-      "lat": 38.9677584,
-      "lon": -76.9522842
-    },
-    "category": "Restaurant",
-    "category2": "Japanese food"
-  },
-  {
-    "name": "University Hills Duck Pond Park",
-    "address": "3400 Stanford St, Hyattsville, MD  20783, United States",
-    "location": {
-      "lat": 38.9832199,
-      "lon": -76.9614301
-    },
-    "category": "Park",
-    "category2": "Parks"
-  },
-  {
-    "name": "Piano Man Superstore",
-    "address": "9520 Baltimore Ave, College Park, MD  20740, United States",
-    "location": {
-      "lat": 39.0102615,
-      "lon": -76.929484
-    },
-    "category": "Store",
-    "category2": "Music"
-  },
-  {
     "name": "The Shoppes At Metro Station",
     "address": "6211 Belcrest Rd, Hyattsville, MD  20782, United States",
     "location": {
@@ -218,6 +158,26 @@
     },
     "category": "Store",
     "category2": "shopping"
+  },
+  {
+    "name": "Riversdale House Museum",
+    "address": "4811 Riverdale Rd, Riverdale, MD  20737, United States",
+    "location": {
+      "lat": 38.9605855,
+      "lon": -76.9313344
+    },
+    "category": "Museum",
+    "category2": "Historical Sites"
+  },
+  {
+    "name": "National Archives archeological site",
+    "address": "8601 Adelphi Rd, College Park, MD  20742, United States",
+    "location": {
+      "lat": 39.000308,
+      "lon": -76.959666
+    },
+    "category": "Landmark",
+    "category2": "Historical Sites"
   },
   {
     "name": "Mall at Prince George's",
@@ -240,24 +200,24 @@
     "category2": "Italian food"
   },
   {
-    "name": "Spice 6 Modern Indian",
-    "address": "5501 Baltimore Ave, Unit 107, Hyattsville, MD 20781, United States",
+    "name": "Iron Pig Korean BBQ",
+    "address": "6107 Greenbelt Rd, Berwyn Heights, MD  20740, United States",
     "location": {
-      "lat": 38.955408,
-      "lon": -76.9393447
+      "lat": 38.9969666,
+      "lon": -76.9089081
     },
     "category": "Restaurant",
-    "category2": "Indian food"
+    "category2": "Korean food"
   },
   {
-    "name": "EZ Kabob",
-    "address": "6106 Greenbelt Rd, Greenbelt, MD  20770, United States",
+    "name": "Essential Day Spa 2",
+    "address": "5331 Baltimore Ave, Ste 106, Hyattsville, MD  20781, United States",
     "location": {
-      "lat": 38.9995341,
-      "lon": -76.9091138
+      "lat": 38.9547558,
+      "lon": -76.9400233
     },
-    "category": "Restaurant",
-    "category2": "Indian food"
+    "category": "Spa",
+    "category2": "Spas"
   },
   {
     "name": "Mamma Lucia",
@@ -268,16 +228,6 @@
     },
     "category": "Restaurant",
     "category2": "Italian food"
-  },
-  {
-    "name": "Super Japan Japanese Restaurant",
-    "address": "6096 Greenbelt Rd, Greenbelt, MD  20770, United States",
-    "location": {
-      "lat": 38.9991254,
-      "lon": -76.9086206
-    },
-    "category": "Restaurant",
-    "category2": "Japanese food"
   },
   {
     "name": "Beltway Plaza Mall",
@@ -310,14 +260,14 @@
     "category2": "shopping"
   },
   {
-    "name": "Heurich Community Park",
-    "address": "6001 Ager Rd, Hyattsville, MD  20782, United States",
+    "name": "Essential Day Spa",
+    "address": "10250 Baltimore Ave\nUnit D\nCollege Park, MD  20740\nUnited States",
     "location": {
-      "lat": 38.9650983,
-      "lon": -76.9684124
+      "lat": 39.022529,
+      "lon": -76.9259158
     },
-    "category": "Park",
-    "category2": "Parks"
+    "category": "Spa",
+    "category2": "Spas"
   },
   {
     "name": "Go Kart Track",
@@ -330,24 +280,14 @@
     "category2": "Go Kart"
   },
   {
-    "name": "Teriyaki express Japanese Grill",
-    "address": "1425 University Blvd E, Hyattsville, MD  20783, United States",
+    "name": "Parkway Spa Asian Massage",
+    "address": "5507 Landover Rd, Hyattsville, MD 20784, United States",
     "location": {
-      "lat": 38.9854885,
-      "lon": -76.9830082
+      "lat": 38.939225,
+      "lon": -76.9224179
     },
-    "category": "Restaurant",
-    "category2": "Japanese food"
-  },
-  {
-    "name": "Greenbelt Park",
-    "address": "6565 Greenbelt Rd, Greenbelt, MD 20770, United States",
-    "location": {
-      "lat": 38.9949465,
-      "lon": -76.8923698
-    },
-    "category": "NationalPark",
-    "category2": "Parks"
+    "category": "Spa",
+    "category2": "Spas"
   },
   {
     "name": "Hillandale Shopping Center",
@@ -360,74 +300,14 @@
     "category2": "shopping"
   },
   {
-    "name": "Buddy Attick Lake Park",
-    "address": "555 Crescent Rd, Greenbelt, MD  20770, United States",
+    "name": "Myong Dong",
+    "address": "11114 Baltimore Ave, Beltsville, MD  20705, United States",
     "location": {
-      "lat": 39.0046366,
-      "lon": -76.8886757
-    },
-    "category": "Park",
-    "category2": "Parks"
-  },
-  {
-    "name": "Bladensburg Waterfront Park",
-    "address": "4601 Annapolis Rd, Bladensburg, MD  20710, United States",
-    "location": {
-      "lat": 38.9334949,
-      "lon": -76.9378265
-    },
-    "category": "Park",
-    "category2": "Parks"
-  },
-  {
-    "name": "Kobe Japan Hibachi and Sushi",
-    "address": "1163 University Blvd E, Takoma Park, MD  20912, United States",
-    "location": {
-      "lat": 38.9889565,
-      "lon": -76.9897038
+      "lat": 39.035736,
+      "lon": -76.9075025
     },
     "category": "Restaurant",
-    "category2": "Japanese food"
-  },
-  {
-    "name": "Jewel of India",
-    "address": "10151 New Hampshire Ave, Silver Spring, MD  20903, United States",
-    "location": {
-      "lat": 39.0218927,
-      "lon": -76.9762337
-    },
-    "category": "Restaurant",
-    "category2": "Indian food"
-  },
-  {
-    "name": "Quickway Japanese Hibachi",
-    "address": "6300 Annapolis Rd, Unit 7, Hyattsville, MD 20784, United States",
-    "location": {
-      "lat": 38.940117,
-      "lon": -76.9066458
-    },
-    "category": "Restaurant",
-    "category2": "Japanese food"
-  },
-  {
-    "name": "Atomic Music",
-    "address": "11011 Baltimore Ave, Unit 2, Beltsville, MD 20705, United States",
-    "location": {
-      "lat": 39.0333825,
-      "lon": -76.9068028
-    },
-    "category": "Store",
-    "category2": "Music"
-  },
-  {
-    "name": "Sonidos Music & More",
-    "address": "11011 Baltimore Ave, Beltsville, MD  20705, United States",
-    "location": {
-      "lat": 39.0333825,
-      "lon": -76.9068028
-    },
-    "category": "Store",
-    "category2": "Music"
+    "category2": "Korean food"
   },
   {
     "name": "Greenway Shopping Center",
@@ -440,54 +320,24 @@
     "category2": "shopping"
   },
   {
-    "name": "Music & Arts",
-    "address": "7587 Greenbelt Rd, Greenbelt, MD  20770, United States",
+    "name": "Da Rae Won Restaurant",
+    "address": "5013 Garrett Ave, Beltsville, MD  20705, United States",
     "location": {
-      "lat": 38.9924711,
-      "lon": -76.8768478
-    },
-    "category": "Store",
-    "category2": "Music"
-  },
-  {
-    "name": "Fort Lincoln Park",
-    "address": "3229 Ft Lincoln Dr NE, Washington, DC  20018, United States",
-    "location": {
-      "lat": 38.9250471,
-      "lon": -76.9585081
-    },
-    "category": "Park",
-    "category2": "Parks"
-  },
-  {
-    "name": "Curry Place",
-    "address": "11229 New Hampshire Ave, Silver Spring, MD  20904, United States",
-    "location": {
-      "lat": 39.0413545,
-      "lon": -76.9883808
+      "lat": 39.041095,
+      "lon": -76.9064398
     },
     "category": "Restaurant",
-    "category2": "Indian food"
+    "category2": "Korean food"
   },
   {
-    "name": "Masala Story",
-    "address": "3301 12th St NE, Washington, DC  20017, United States",
+    "name": "Gah Rham Korean BBQ Restaurant",
+    "address": "5027 Garrett Ave, Beltsville, MD  20705, United States",
     "location": {
-      "lat": 38.9307604,
-      "lon": -76.9907479
+      "lat": 39.0410352,
+      "lon": -76.9056434
     },
     "category": "Restaurant",
-    "category2": "Indian food"
-  },
-  {
-    "name": "Culture",
-    "address": "2006 Fenwick St NE, Washington, DC  20002, United States",
-    "location": {
-      "lat": 38.9146324,
-      "lon": -76.9852431
-    },
-    "category": "Culture",
-    "category2": "Culture"
+    "category2": "Korean food"
   },
   {
     "name": "Bryant Street NE",
@@ -500,14 +350,14 @@
     "category2": "shopping"
   },
   {
-    "name": "Citizens & Culture",
-    "address": "8113 Georgia Ave, Silver Spring, MD  20910, United States",
+    "name": "Firepan Korean BBQ",
+    "address": "962 Wayne Ave, Silver Spring, MD  20910, United States",
     "location": {
-      "lat": 38.9909441,
-      "lon": -77.0262427
+      "lat": 38.9942451,
+      "lon": -77.025975
     },
     "category": "Restaurant",
-    "category2": "Culture"
+    "category2": "Korean food"
   },
   {
     "name": "Langston Golf Course",
@@ -530,14 +380,14 @@
     "category2": "Golf"
   },
   {
-    "name": "Songbyrd Music House",
-    "address": "540 Penn St NE, Washington, DC  20002, United States",
+    "name": "Granville Moore's",
+    "address": "1238 H St NE, Washington, DC  20002, United States",
     "location": {
-      "lat": 38.9102184,
-      "lon": -76.9964703
+      "lat": 38.9004267,
+      "lon": -76.988931
     },
-    "category": "MusicVenue",
-    "category2": "Music"
+    "category": "Restaurant",
+    "category2": "Belgian food"
   },
   {
     "name": "Gunpowder Golf Course",
@@ -560,24 +410,34 @@
     "category2": "Golf"
   },
   {
-    "name": "Indigo",
-    "address": "243 K St NE, Washington, DC  20002, United States",
+    "name": "Iron Age Korean Steak House",
+    "address": "3365 14th St NW, Washington, DC  20010, United States",
     "location": {
-      "lat": 38.9022762,
-      "lon": -77.0022404
+      "lat": 38.9311633,
+      "lon": -77.032367
     },
     "category": "Restaurant",
-    "category2": "Indian food"
+    "category2": "Korean food"
   },
   {
-    "name": "Music on the Hill",
-    "address": "801 D St NE, Washington, DC  20002, United States",
+    "name": "9:30 Club",
+    "address": "815 V St NW, Washington, DC  20001, United States",
     "location": {
-      "lat": 38.8946727,
-      "lon": -76.9948047
+      "lat": 38.9178869,
+      "lon": -77.0237142
     },
-    "category": "Store",
-    "category2": "Music"
+    "category": "MusicVenue",
+    "category2": "Nightlife"
+  },
+  {
+    "name": "Morgan Black Spas",
+    "address": "10111 Martin Luther King Jr Hwy, Bowie, MD  20720, United States",
+    "location": {
+      "lat": 38.9553445,
+      "lon": -76.8287839
+    },
+    "category": "Spa",
+    "category2": "Spas"
   },
   {
     "name": "Caruso's Grocery",
@@ -588,6 +448,16 @@
     },
     "category": "Restaurant",
     "category2": "Italian food"
+  },
+  {
+    "name": "The Little Gay Pub",
+    "address": "1100 P St NW, Washington, DC 20001, United States",
+    "location": {
+      "lat": 38.9095139,
+      "lon": -77.0273898
+    },
+    "category": "Nightlife",
+    "category2": "Nightlife"
   },
   {
     "name": "Trattoria Alberto's Italian Cuisine",
@@ -610,14 +480,24 @@
     "category2": "Italian food"
   },
   {
-    "name": "Spice 6 Modern Indian",
-    "address": "740 6th St NW, Washington, DC  20001, United States",
+    "name": "Belga Cafe",
+    "address": "514 Eighth St SE, Washington, DC  20003, United States",
     "location": {
-      "lat": 38.8994274,
-      "lon": -77.0202517
+      "lat": 38.8821764,
+      "lon": -76.9947356
     },
     "category": "Restaurant",
-    "category2": "Indian food"
+    "category2": "Belgian food"
+  },
+  {
+    "name": "United States Capitol",
+    "address": "Washington, DC  20001, United States",
+    "location": {
+      "lat": 38.8894251,
+      "lon": -77.008616
+    },
+    "category": "Landmark",
+    "category2": "Historical Sites"
   },
   {
     "name": "CityCenterDC",
@@ -630,14 +510,34 @@
     "category2": "shopping"
   },
   {
-    "name": "Rasika",
-    "address": "633 D St NW, Washington, DC  20004, United States",
+    "name": "Etalon Day Spa",
+    "address": "707 D St NW, Washington, DC  20004, United States",
     "location": {
-      "lat": 38.8949492,
-      "lon": -77.0213002
+      "lat": 38.8949455,
+      "lon": -77.0223134
+    },
+    "category": "Spa",
+    "category2": "Spas"
+  },
+  {
+    "name": "Anju",
+    "address": "1805 18th St NW, Washington, DC  20009, United States",
+    "location": {
+      "lat": 38.9143441,
+      "lon": -77.0414731
     },
     "category": "Restaurant",
-    "category2": "Indian food"
+    "category2": "Korean food"
+  },
+  {
+    "name": "Aura spa - Yards",
+    "address": "1212 Fourth St SE, Ste 170, Washington, DC  20003, United States",
+    "location": {
+      "lat": 38.8753353,
+      "lon": -77.0000881
+    },
+    "category": "Spa",
+    "category2": "Spas"
   },
   {
     "name": "Grazie Nonna",
@@ -650,24 +550,54 @@
     "category2": "Italian food"
   },
   {
-    "name": "Chuck Levin's Washington Music Center",
-    "address": "11151 Veirs Mill Rd, Silver Spring, MD  20902, United States",
+    "name": "Spa Logic",
+    "address": "1721 Connecticut Ave NW, Washington, DC  20009, United States",
     "location": {
-      "lat": 39.0391607,
-      "lon": -77.0533881
+      "lat": 38.913265,
+      "lon": -77.045313
     },
-    "category": "Music",
-    "category2": "Music"
+    "category": "Beauty",
+    "category2": "Spas"
   },
   {
-    "name": "Culture House",
-    "address": "700 Delaware Ave SW, Washington, DC  20024, United States",
+    "name": "Decades",
+    "address": "1219 Connecticut Avenue NW, Washington, DC 20036, United States",
     "location": {
-      "lat": 38.8804475,
-      "lon": -77.0119017
+      "lat": 38.906513,
+      "lon": -77.04126
     },
-    "category": "Culture",
-    "category2": "Culture"
+    "category": "Nightlife",
+    "category2": "Nightlife"
+  },
+  {
+    "name": "Swingers Dupont Circle",
+    "address": "1330 19th St NW, Washington, DC  20036, United States",
+    "location": {
+      "lat": 38.9084408,
+      "lon": -77.0437496
+    },
+    "category": "MiniGolf",
+    "category2": "Nightlife"
+  },
+  {
+    "name": "St. Arnold's Mussel Bar",
+    "address": "1827 Jefferson Pl NW, Washington, DC  20036, United States",
+    "location": {
+      "lat": 38.9065335,
+      "lon": -77.0427796
+    },
+    "category": "Restaurant",
+    "category2": "Belgian food"
+  },
+  {
+    "name": "The White House",
+    "address": "1600 Pennsylvania Ave NW, Washington, DC 20500-0003, United States",
+    "location": {
+      "lat": 38.8976817,
+      "lon": -77.036588
+    },
+    "category": "Landmark",
+    "category2": "Historical Sites"
   },
   {
     "name": "Enterprise Golf Course",
@@ -680,14 +610,34 @@
     "category2": "Golf"
   },
   {
-    "name": "Rasika",
-    "address": "1190 New Hampshire Ave NW, Washington, DC  20037, United States",
+    "name": "Live-K",
+    "address": "730 Maine Ave SW, Washington, DC  20024, United States",
     "location": {
-      "lat": 38.9050889,
-      "lon": -77.0479623
+      "lat": 38.8788022,
+      "lon": -77.0234163
     },
-    "category": "Restaurant",
-    "category2": "Indian food"
+    "category": "Nightlife",
+    "category2": "Nightlife"
+  },
+  {
+    "name": "Washington Monument",
+    "address": "2 15th St NW, Washington, DC  20024, United States",
+    "location": {
+      "lat": 38.88943,
+      "lon": -77.0353955
+    },
+    "category": "Landmark",
+    "category2": "Historical Sites"
+  },
+  {
+    "name": "World War II Memorial",
+    "address": "1750 Independence Ave SW, Washington, DC 20024, United States",
+    "location": {
+      "lat": 38.8893877,
+      "lon": -77.0405209
+    },
+    "category": "Landmark",
+    "category2": "Historical Sites"
   },
   {
     "name": "East Potomac Golf Course",
@@ -700,6 +650,36 @@
     "category2": "Golf"
   },
   {
+    "name": "Thomas Jefferson Memorial",
+    "address": "16 E Basin Dr SW, Washington, DC 20024, United States",
+    "location": {
+      "lat": 38.8813621,
+      "lon": -77.0365351
+    },
+    "category": "Landmark",
+    "category2": "Historical Sites"
+  },
+  {
+    "name": "Vietnam Veterans Memorial",
+    "address": "5 Henry Bacon Dr NW, Washington, DC 20002, United States",
+    "location": {
+      "lat": 38.8912541,
+      "lon": -77.0477146
+    },
+    "category": "Landmark",
+    "category2": "Historical Sites"
+  },
+  {
+    "name": "Martin Luther King, Jr. Memorial",
+    "address": "1850 W Basin Dr SW, Washington, DC  20024, United States",
+    "location": {
+      "lat": 38.8862185,
+      "lon": -77.0442197
+    },
+    "category": "Landmark",
+    "category2": "Historical Sites"
+  },
+  {
     "name": "il Canale",
     "address": "1065 31st St NW, Washington, DC  20007, United States",
     "location": {
@@ -708,6 +688,26 @@
     },
     "category": "Restaurant",
     "category2": "Italian food"
+  },
+  {
+    "name": "Lincoln Memorial",
+    "address": "2 Lincoln Memorial Cir NW, Washington, DC  20037, United States",
+    "location": {
+      "lat": 38.889218,
+      "lon": -77.050178
+    },
+    "category": "Landmark",
+    "category2": "Historical Sites"
+  },
+  {
+    "name": "The Sovereign",
+    "address": "1206 Wisconsin Ave NW, Washington, DC  20007, United States",
+    "location": {
+      "lat": 38.9055479,
+      "lon": -77.063183
+    },
+    "category": "Restaurant",
+    "category2": "Belgian food"
   },
   {
     "name": "Filomena Ristorante",
@@ -730,6 +730,26 @@
     "category2": "Golf"
   },
   {
+    "name": "Et Voila",
+    "address": "5120 MacArthur Blvd NW, Washington, DC  20016, United States",
+    "location": {
+      "lat": 38.925407,
+      "lon": -77.102364
+    },
+    "category": "Restaurant",
+    "category2": "Belgian food"
+  },
+  {
+    "name": "Woodhouse Spa",
+    "address": "2 Paseo Dr, Rockville, MD  20852, United States",
+    "location": {
+      "lat": 39.0426612,
+      "lon": -77.112211
+    },
+    "category": "Spa",
+    "category2": "Spas"
+  },
+  {
     "name": "Bowie Town Center",
     "address": "15606 Emerald Way, Bowie, MD  20716, United States",
     "location": {
@@ -738,6 +758,16 @@
     },
     "category": "Store",
     "category2": "shopping"
+  },
+  {
+    "name": "Mannequin Pis",
+    "address": "18064 Georgia Ave, Olney, MD  20832, United States",
+    "location": {
+      "lat": 39.1524126,
+      "lon": -77.0676249
+    },
+    "category": "Restaurant",
+    "category2": "Belgian food"
   },
   {
     "name": "Autobahn Indoor Speedway",
@@ -778,6 +808,36 @@
     },
     "category": "GoKart",
     "category2": "Go Kart"
+  },
+  {
+    "name": "Freetjes",
+    "address": "1448 Light St, Baltimore, MD  21230, United States",
+    "location": {
+      "lat": 39.2729366,
+      "lon": -76.6120387
+    },
+    "category": "Restaurant",
+    "category2": "Belgian food"
+  },
+  {
+    "name": "Cock and Bowl",
+    "address": "302 Poplar Alley, Occoquan, VA 22125, United States",
+    "location": {
+      "lat": 38.6838156,
+      "lon": -77.2610078
+    },
+    "category": "Restaurant",
+    "category2": "Belgian food"
+  },
+  {
+    "name": "The Brewer's Art",
+    "address": "1106 N Charles St, Baltimore, MD  21201, United States",
+    "location": {
+      "lat": 39.3027715,
+      "lon": -76.6163875
+    },
+    "category": "Brewery",
+    "category2": "Belgian food"
   },
   {
     "name": "Autobahn Indoor Speedway & Events",
@@ -830,13 +890,13 @@
     "category2": "Go Kart"
   },
   {
-    "name": "Lake Clarke Shores",
-    "address": "Lake Clarke Shores, FL, United States",
+    "name": "Aquatic Sports",
+    "address": "10803 SW Barbur Blvd, Portland, OR  97219, United States",
     "location": {
-      "lat": 26.649811,
-      "lon": -80.076944
+      "lat": 45.4473683,
+      "lon": -122.7296765
     },
-    "category": "Live Sports",
-    "category2": "Live Sports"
+    "category": "Aquatic Sports",
+    "category2": "Aquatic Sports"
   }
 ]
