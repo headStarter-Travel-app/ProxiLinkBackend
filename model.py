@@ -118,7 +118,7 @@ class AiModel:
         "ReligiousSite", "Planetarium", "Fairground", "ConventionCenter"
     ]
 
-    Vacation = [
+    vacation = [
         "Hotel", "Beach", "NationalPark", "Park", "Winery", "Campground",
         "Marina", "Skiing", "RVPark", "Store"
     ]
@@ -289,7 +289,7 @@ class AiModel:
             raise HTTPException(
                 status_code=500, detail=f"Error getting recommendations: {str(e)}")
 
-    def prepare_data(self, data, name, budget):
+    def prepare_data(self, data, name, budget, ratingsData=[]):
         '''
         Prepare the data for the model
         Data is the self.locationsList
@@ -301,14 +301,15 @@ class AiModel:
             "Budget": budget,
             "Other": self.other
         }
+        df_user_profile = pd.DataFrame(user_profile, index=[0])
         places_df['combined_category'] = places_df.apply(
             lambda row: [row['category'], row['category2']], axis=1)
-        df_user_profile = pd.DataFrame([user_profile])
         df_user_profile['combined_preferences'] = df_user_profile.apply(
             lambda row: row['Theme'] + row['Other'], axis=1)
         mlb = MultiLabelBinarizer()
         le_name = LabelEncoder()
         le_address = LabelEncoder()
+
         # Fit the MultiLabelBinarizer on both places and user preferences
         all_categories = list(places_df['combined_category'].explode().unique(
         )) + list(df_user_profile['combined_preferences'].explode().unique())
@@ -332,12 +333,8 @@ class AiModel:
             [places_df[['name_encoded', 'address_encoded', 'lat', 'lon']].values, places_encoded])
         user_features = np.hstack(
             [user_encoded, df_user_profile[['Budget']].values])
-
-        places_features_df = pd.DataFrame(places_features)
-        user_features_df = pd.DataFrame(user_features)
         places_tensor = torch.tensor(places_features, dtype=torch.float32)
         user_tensor = torch.tensor(user_features, dtype=torch.float32)
-        return places_features_df, user_features_df, places_tensor, user_tensor
 
 
 async def main():
