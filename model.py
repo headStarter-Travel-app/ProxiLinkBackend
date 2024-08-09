@@ -65,18 +65,20 @@ class ProximityRecommendationRequest(BaseModel):
     locations: List[Location]
     interests: List[str]
 
+
 class ContentModel(nn.Module):
     def __init__(self, input_dim):
         super(ContentModel, self).__init__()
         self.fc1 = nn.Linear(input_dim, 128)
         self.fc2 = nn.Linear(128, 64)
         self.fc4 = nn.Linear(64, 1)
-    
+
     def forward(self, x):
         x = torch.relu(self.fc1(x))
         x = torch.relu(self.fc2(x))
         x = self.fc4(x)
         return x
+
 
 class CollaborativeFilteringModel(nn.Module):
     def __init__(self, num_users, num_items, num_factors):
@@ -84,22 +86,25 @@ class CollaborativeFilteringModel(nn.Module):
         self.user_factors = nn.Embedding(num_users, num_factors)
         self.item_factors = nn.Embedding(num_items, num_factors)
         # add biases later on
-    
+
     def forward(self, user, item):
         return (self.user_factors(user) * self.item_factors(item)).sum(1)
+
 
 class HybridModel(nn.Module):
     def __init__(self, content_input_dim, num_users, num_items, num_factors):
         super(HybridModel, self).__init__()
         self.content_model = ContentModel(content_input_dim)
-        self.cf_model = CollaborativeFilteringModel(num_users, num_items, num_factors)
+        self.cf_model = CollaborativeFilteringModel(
+            num_users, num_items, num_factors)
         self.fc = nn.Linear(2, 1)  # Combine content and CF scores
-        
+
     def forward(self, content_input, user, item):
         content_score = self.content_model(content_input)
         cf_score = self.cf_model(user, item)
         combined = torch.cat((content_score, cf_score.unsqueeze(1)), dim=1)
         return self.fc(combined)
+
 
 class AiModel:
     romantic_date = [
@@ -185,14 +190,17 @@ class AiModel:
         self.locationsList = None
         self.other = other
         self.theme = self.__class__.theme_categories[theme]
-        self.model = self.load_model()
         self.places_df = None
         self.user_tensor = None
         self.places_tensor = None
-    
-    def load_model(self):
+        self.budget = budget
+        self.num_users = 0
+        self.num_items = 0
+
+    def load_model(self, input_dim):
         # Load the model
-        model = HybridModel(content_input_dim=12, num_users=10, num_items=10, num_factors=5)
+        model = HybridModel(content_input_dim=input_dim,
+                            num_users=self.num_users, num_items=self.num_items, num_factors=20)
         model.load_state_dict(torch.load("model.pth"))
         model.eval()
         return model
@@ -201,20 +209,27 @@ class AiModel:
         self.model.eval()
         with torch.no_grad():
             current_user_tensor = self.user_tensor[user_idx].unsqueeze(0)
-            current_user_tensor_repeated = current_user_tensor.repeat(self.places_tensor.shape[0], 1)
-            user_place_tensor = torch.cat((current_user_tensor_repeated, self.places_tensor), dim=1)
+            current_user_tensor_repeated = current_user_tensor.repeat(
+                self.places_tensor.shape[0], 1)
+            user_place_tensor = torch.cat(
+                (current_user_tensor_repeated, self.places_tensor), dim=1)
 
-            user_indices = torch.full((self.places_tensor.shape[0],), user_idx, dtype=torch.long)
-            item_indices = torch.arange(self.places_tensor.shape[0], dtype=torch.long)
+            user_indices = torch.full(
+                (self.places_tensor.shape[0],), user_idx, dtype=torch.long)
+            item_indices = torch.arange(
+                self.places_tensor.shape[0], dtype=torch.long)
 
-            predictions = self.model(user_place_tensor, user_indices, item_indices)
+            predictions = self.model(
+                user_place_tensor, user_indices, item_indices)
             predictions = predictions.numpy().flatten()
-        
+
         recommendations = self.places_df.copy()
         recommendations['hybrid_score'] = predictions
 
-        content_scores = self.model.content_model(user_place_tensor).detach().numpy().flatten()
-        cf_scores = self.model.cf_model(user_indices, item_indices).detach().numpy().flatten()
+        content_scores = self.model.content_model(
+            user_place_tensor).detach().numpy().flatten()
+        cf_scores = self.model.cf_model(
+            user_indices, item_indices).detach().numpy().flatten()
 
         recommendations['content_score'] = content_scores
         recommendations['cf_score'] = cf_scores
@@ -222,10 +237,12 @@ class AiModel:
         def normalize_score_hybrid(score):
             return 10 * (score - score.min()) / (score.max() - score.min())
 
-        recommendations['hybrid_score'] = normalize_score_hybrid(recommendations['hybrid_score'])
+        recommendations['hybrid_score'] = normalize_score_hybrid(
+            recommendations['hybrid_score'])
 
         # Sort recommendations by hybrid score
-        recommendations = recommendations.sort_values(by='hybrid_score', ascending=False)
+        recommendations = recommendations.sort_values(
+            by='hybrid_score', ascending=False)
 
         return recommendations
 
@@ -257,9 +274,15 @@ class AiModel:
         self.prepare_data(self.locationsList, self.users,
                           self.budget, ratings_data_default)
 
+        # Loading model
+        input_dim = self.places_tensor.shape[1] + self.user_tensor.shape[1]
+        self.model = self.load_model(input_dim)
+
+        #
+
     @classmethod
-    async def create(cls, users: List[str], location: List[Location], theme: str, other: List[str] = []):
-        instance = cls(users, location, theme, other)
+    async def create(cls, users: List[str], location: List[Location], theme: str, other: List[str] = [], budget: int = 100):
+        instance = cls(users, location, theme, other, budget)
         await instance.initialize()
         return instance
 
@@ -384,7 +407,7 @@ class AiModel:
         '''
         places_df = pd.DataFrame(data)
         self.places_df = places_df
-        user_profile = {
+        user_profile = [{
             "Group Name": name,
             "Theme": self.theme,
             "Budget": budget,
@@ -424,7 +447,7 @@ class AiModel:
             [user_encoded, df_user_profile[['Budget']].values])
         self.places_tensor = torch.tensor(places_features, dtype=torch.float32)
         self.user_tensor = torch.tensor(user_features, dtype=torch.float32)
-        
+
         ratings_df = pd.DataFrame(ratingsData)
         user_encoder = LabelEncoder()
         item_encoder = LabelEncoder()
@@ -434,9 +457,9 @@ class AiModel:
             ratings_df['Address'])
 
         # Create the user-item interaction matrix
-        num_users = len(user_encoder.classes_)
-        num_items = len(places_df)
-        interaction_matrix = np.zeros((num_users, num_items))
+        self.num_users = len(user_encoder.classes_)
+        self.num_items = len(places_df)
+        interaction_matrix = np.zeros((self.num_users, self.num_items))
 
         for _, row in ratings_df.iterrows():
             user_idx = row['user_idx']
@@ -485,9 +508,13 @@ async def main():
     user_idx = 0
     recommendations = model.get_recommendations(user_idx)
 
-    selected_columns = ['name', 'address', 'combined_category', 'hybrid_score', 'content_score', 'cf_score']
+    selected_columns = ['name', 'address', 'combined_category',
+                        'hybrid_score', 'content_score', 'cf_score']
     print(recommendations[selected_columns])
 
 
 # Run the async function
 asyncio.run(main())
+
+
+# Issue: Loading a pretrained model is not working because the number of items in places and users will always be different, so we get a torch mismatch
