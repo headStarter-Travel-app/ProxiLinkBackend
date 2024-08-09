@@ -65,6 +65,41 @@ class ProximityRecommendationRequest(BaseModel):
     locations: List[Location]
     interests: List[str]
 
+class ContentModel(nn.Module):
+    def __init__(self, input_dim):
+        super(ContentModel, self).__init__()
+        self.fc1 = nn.Linear(input_dim, 128)
+        self.fc2 = nn.Linear(128, 64)
+        self.fc4 = nn.Linear(64, 1)
+    
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))
+        x = torch.relu(self.fc2(x))
+        x = self.fc4(x)
+        return x
+
+class CollaborativeFilteringModel(nn.Module):
+    def __init__(self, num_users, num_items, num_factors):
+        super(CollaborativeFilteringModel, self).__init__()
+        self.user_factors = nn.Embedding(num_users, num_factors)
+        self.item_factors = nn.Embedding(num_items, num_factors)
+        # add biases later on
+    
+    def forward(self, user, item):
+        return (self.user_factors(user) * self.item_factors(item)).sum(1)
+
+class HybridModel(nn.Module):
+    def __init__(self, content_input_dim, num_users, num_items, num_factors):
+        super(HybridModel, self).__init__()
+        self.content_model = ContentModel(content_input_dim)
+        self.cf_model = CollaborativeFilteringModel(num_users, num_items, num_factors)
+        self.fc = nn.Linear(2, 1)  # Combine content and CF scores
+        
+    def forward(self, content_input, user, item):
+        content_score = self.content_model(content_input)
+        cf_score = self.cf_model(user, item)
+        combined = torch.cat((content_score, cf_score.unsqueeze(1)), dim=1)
+        return self.fc(combined)
 
 class AiModel:
     romantic_date = [
@@ -150,6 +185,50 @@ class AiModel:
         self.locationsList = None
         self.other = other
         self.theme = self.__class__.theme_categories[theme]
+        self.model = self.load_model()
+        self.places_df = None
+        self.user_tensor = None
+        self.places_tensor = None
+    
+    def load_model(self):
+        # Load the model
+        model = HybridModel(content_input_dim=12, num_users=10, num_items=10, num_factors=5)
+        model.load_state_dict(torch.load("model.pth"))
+        model.eval()
+        return model
+
+    def get_recommendations(self, user_idx):
+        self.model.eval()
+        with torch.no_grad():
+            current_user_tensor = self.user_tensor[user_idx].unsqueeze(0)
+            current_user_tensor_repeated = current_user_tensor.repeat(self.places_tensor.shape[0], 1)
+            user_place_tensor = torch.cat((current_user_tensor_repeated, self.places_tensor), dim=1)
+
+            user_indices = torch.full((self.places_tensor.shape[0],), user_idx, dtype=torch.long)
+            item_indices = torch.arange(self.places_tensor.shape[0], dtype=torch.long)
+
+            predictions = self.model(user_place_tensor, user_indices, item_indices)
+            predictions = predictions.numpy().flatten()
+        
+        recommendations = self.places_df.copy()
+        recommendations['hybrid_score'] = predictions
+
+        content_scores = self.model.content_model(user_place_tensor).detach().numpy().flatten()
+        cf_scores = self.model.cf_model(user_indices, item_indices).detach().numpy().flatten()
+
+        recommendations['content_score'] = content_scores
+        recommendations['cf_score'] = cf_scores
+
+        def normalize_score_hybrid(score):
+            return 10 * (score - score.min()) / (score.max() - score.min())
+
+        recommendations['hybrid_score'] = normalize_score_hybrid(recommendations['hybrid_score'])
+
+        # Sort recommendations by hybrid score
+        recommendations = recommendations.sort_values(by='hybrid_score', ascending=False)
+
+        return recommendations
+
 
     async def initialize(self):
         # 1. Get preferences
@@ -284,9 +363,6 @@ class AiModel:
                                (x['location']['lon'] - centroid['lon'])**2)**0.5
             )
 
-            # Limit to top N recommendations if needed
-            top_recommendations = sorted_recommendations
-
             return {"recommendations": sorted_recommendations}
         except Exception as e:
             raise HTTPException(
@@ -298,6 +374,7 @@ class AiModel:
         Data is the self.locationsList
         '''
         places_df = pd.DataFrame(data)
+        self.places_df = places_df
         user_profile = {
             "Group Name": name,
             "Theme": self.theme,
@@ -336,8 +413,9 @@ class AiModel:
             [places_df[['name_encoded', 'address_encoded', 'lat', 'lon']].values, places_encoded])
         user_features = np.hstack(
             [user_encoded, df_user_profile[['Budget']].values])
-        places_tensor = torch.tensor(places_features, dtype=torch.float32)
-        user_tensor = torch.tensor(user_features, dtype=torch.float32)
+        self.places_tensor = torch.tensor(places_features, dtype=torch.float32)
+        self.user_tensor = torch.tensor(user_features, dtype=torch.float32)
+        
         ratings_df = pd.DataFrame(ratingsData)
         user_encoder = LabelEncoder()
         item_encoder = LabelEncoder()
@@ -360,7 +438,7 @@ class AiModel:
         # Convert interaction matrix to tensor
         interaction_tensor = torch.tensor(
             interaction_matrix, dtype=torch.float32)
-        return places_tensor, user_tensor, interaction_tensor
+        return self.places_tensor, self.user_tensor, interaction_tensor
 
 
 async def main():
@@ -385,6 +463,12 @@ async def main():
     data2 = model.prepare_data(data, 'Group Name', 100)
     print(data2)
     '''
+
+    user_idx = 0
+    recommendations = model.get_recommendations(user_idx)
+
+    selected_columns = ['name', 'address', 'combined_category', 'hybrid_score', 'content_score', 'cf_score']
+    print(recommendations[selected_columns])
 
 
 # Run the async function
