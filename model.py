@@ -142,7 +142,7 @@ class AiModel:
         "food_and_drink": food_and_drink
     }
 
-    def __init__(self, users: List[str], location: List[Location], theme: str, other: List[str] = []):
+    def __init__(self, users: List[str], location: List[Location], theme: str, other: List[str] = [], budget: int = 100):
         self.users = users
         self.location = location
         self.preferences = None
@@ -165,6 +165,9 @@ class AiModel:
 
         # 5: Store recommendations as json
         self.locationsList = (locs['recommendations'])
+
+        # 6: Prepare data for model
+        self.prepare_data(self.locationsList, self.users, self.budget)
 
     @classmethod
     async def create(cls, users: List[str], location: List[Location], theme: str, other: List[str] = []):
@@ -335,6 +338,29 @@ class AiModel:
             [user_encoded, df_user_profile[['Budget']].values])
         places_tensor = torch.tensor(places_features, dtype=torch.float32)
         user_tensor = torch.tensor(user_features, dtype=torch.float32)
+        ratings_df = pd.DataFrame(ratingsData)
+        user_encoder = LabelEncoder()
+        item_encoder = LabelEncoder()
+
+        ratings_df['user_idx'] = user_encoder.fit_transform(ratings_df['User'])
+        ratings_df['item_idx'] = item_encoder.fit_transform(
+            ratings_df['Address'])
+
+        # Create the user-item interaction matrix
+        num_users = len(user_encoder.classes_)
+        num_items = len(places_df)
+        interaction_matrix = np.zeros((num_users, num_items))
+
+        for _, row in ratings_df.iterrows():
+            user_idx = row['user_idx']
+            item_idx = row['item_idx']
+            rating = row['Rating']
+            interaction_matrix[user_idx, item_idx] = rating
+
+        # Convert interaction matrix to tensor
+        interaction_tensor = torch.tensor(
+            interaction_matrix, dtype=torch.float32)
+        return places_tensor, user_tensor, interaction_tensor
 
 
 async def main():
