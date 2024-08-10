@@ -240,7 +240,6 @@ class AiModel:
         self.num_items = 0
         self.recs = None
 
-
     def load_model(self, input_dim):
         self.model = load_model(
             "model.pth", self.num_users, self.num_items, input_dim)
@@ -522,8 +521,8 @@ async def main():
     users = ["66996b7b0025b402922b", "66996d2e00314baa2a20"]
     locations = [Location(lat=38.98582939, lon=-76.937329584)]
 
-    model = await AiModel.create(users, locations, "shopping_spree", ["Japanese food"])
-    print(model.recs)
+#     model = await AiModel.create(users, locations, "shopping_spree", ["Japanese food"])
+#     print(model.recs)
 
 # Run the async function
 asyncio.run(main())
