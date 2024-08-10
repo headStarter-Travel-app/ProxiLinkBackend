@@ -1,4 +1,5 @@
 # app.py
+import random
 from dotenv import load_dotenv
 import os
 from enum import Enum
@@ -1185,17 +1186,42 @@ async def get_recommendations(request: getRecommendations):
             budget = request.budget
         )
 
-        recommendations = model.reacs.to_dict(orient='records')
+        recommendations_json = model.reacs.to_dict(orient='records')
+
+        top_recommendations = recommendations_json[:10]
+
+        wild_card_recommendations = random.sample(recommendations_json[10:], 5)
+
+        final_recommendations = top_recommendations + wild_card_recommendations
+        diversified_recommendations = diversify_recommendations(final_recommendations)
 
         return {
             "message": "Recommendations generated successfully",
-            "recommendations": recommendations
+            "recommendations": diversified_recommendations
         }
 
     except Exception as e:
         logger.error(f"Error getting recommendations: {str(e)}")
         raise HTTPException(
             status_code=500, detail=f"Error getting recommendations: {str(e)}")
+
+def diversify_recommendations(recommendations):
+    categories_seen = set()
+    diversified = []
+
+    for rec in recommendations:
+        if rec["category"] not in categories_seen:
+            diversified.append(rec)
+            categories_seen.add(rec["category"])
+    
+    while len(diversified) < len(recommendations):
+        remaining = [rec for rec in recommendations if rec["category"] not in categories_seen]
+        if not remaining:
+            break
+        diversified.append(remaining.pop(0))
+        categories_seen.add(diversified[-1]["category"])
+    
+    return diversified
 
 
 
