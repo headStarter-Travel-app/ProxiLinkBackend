@@ -237,8 +237,10 @@ class AiModel:
         self.recs = None
 
     def load_model(self, input_dim):
+        print("Loading model")
         self.model = load_model(
             "model.pth", self.num_users, self.num_items, input_dim)
+        print("Model loaded")
         return self.model
 
     def get_recommendations(self, user_idx):
@@ -283,6 +285,7 @@ class AiModel:
         return recommendations
 
     def train_model(self, epochs=1000):
+        print("Training model")
         criterion = nn.MSELoss()
         optimizer = optim.Adam(self.model.parameters(), lr=0.001)
 
@@ -317,7 +320,8 @@ class AiModel:
                 total_loss += loss.item()
 
             if (epoch+1) % 100 == 0:
-                print(f'Epoch {epoch+1}/{epochs}, Avg Loss: {total_loss/self.user_tensor.shape[0]:.4f}')
+                print(f'Epoch {
+                      epoch+1}/{epochs}, Avg Loss: {total_loss/self.user_tensor.shape[0]:.4f}')
 
     async def initialize(self):
         # 1. Get preferences
@@ -460,6 +464,7 @@ class AiModel:
                 status_code=500, detail=f"Error getting recommendations: {str(e)}")
 
     def prepare_data(self, data, name, budget, ratingsData=[]):
+        print("Preparing data")
         places_df = pd.DataFrame(data)
         self.places_df = places_df
         user_profile = [{
@@ -522,6 +527,7 @@ class AiModel:
         # Store encoded data for training
         self.user_encoded = user_encoded
         self.places_encoded = places_encoded
+        print("Data prepared")
 
         return self.places_tensor, self.user_tensor, interaction_tensor
 
