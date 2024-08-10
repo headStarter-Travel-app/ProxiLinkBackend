@@ -1,0 +1,95 @@
+{
+  "message": "Recommendations generated successfully",
+  "recommendations": [
+    {
+      "name": "Halter Ranch",
+      "address": "8910 Adelaida Rd, Paso Robles, CA  93446, United States",
+      "location": {
+        "lat": 35.6394847,
+        "lon": -120.8544213
+      },
+      "category": "Winery",
+      "category2": "outdoor",
+      "combined_category": ["Winery", "outdoor"],
+      "name_encoded": 18,
+      "address_encoded": 39,
+      "lat": 35.6394847,
+      "lon": -120.8544213,
+      "hybrid_score": 10.000000953674316,
+      "content_score": -0.3059409558773041,
+      "cf_score": -1.6821081638336182
+    },
+    {
+      "name": "El Sabroso Mexican Grill & Seafood",
+      "address": "44779 Lassen Ave, Huron, CA 93234, United States",
+      "location": {
+        "lat": 36.0750484,
+        "lon": -120.1034112
+      },
+      "category": "Restaurant",
+      "category2": "outdoor",
+      "combined_category": ["Restaurant", "outdoor"],
+      "name_encoded": 11,
+      "address_encoded": 22,
+      "lat": 36.0750484,
+      "lon": -120.1034112,
+      "hybrid_score": 9.999999046325684,
+      "content_score": -0.23631399869918823,
+      "cf_score": -1.3749343156814575
+    },
+    {
+      "name": "Firestone Walker Brewing Company",
+      "address": "1400 Ramada Dr, Paso Robles, CA 93446, United States",
+      "location": {
+        "lat": 35.595985,
+        "lon": -120.6946959
+      },
+      "category": "Brewery",
+      "category2": "outdoor",
+      "combined_category": ["Brewery", "outdoor"],
+      "name_encoded": 14,
+      "address_encoded": 5,
+      "lat": 35.595985,
+      "lon": -120.6946959,
+      "hybrid_score": 9.999999046325684,
+      "content_score": -0.1858690083026886,
+      "cf_score": -1.1523857116699219
+    },
+    {
+      "name": "Camp Roberts Historical Museum",
+      "address": "114 New Mexico Ave, Camp Roberts, CA 93451, United States",
+      "location": {
+        "lat": 35.7953044,
+        "lon": -120.7504148
+      },
+      "category": "Museum",
+      "category2": "Museums",
+      "combined_category": ["Museum", "Museums"],
+      "name_encoded": 8,
+      "address_encoded": 3,
+      "lat": 35.7953044,
+      "lon": -120.7504148,
+      "hybrid_score": 0.0,
+      "content_score": -0.33230578899383545,
+      "cf_score": 1.3443955183029175
+    },
+    {
+      "name": "British Food & Wine",
+      "address": "148 Boston Road, London, W7 2HJ, England",
+      "location": {
+        "lat": 51.5038442,
+        "lon": -0.3333557
+      },
+      "category": "FoodMarket",
+      "category2": "British food",
+      "combined_category": ["FoodMarket", "British food"],
+      "name_encoded": 3,
+      "address_encoded": 6,
+      "lat": 51.5038442,
+      "lon": -0.3333557,
+      "hybrid_score": 0.0,
+      "content_score": -0.6221706867218018,
+      "cf_score": 0.06559629738330841
+    }
+  ]
+}

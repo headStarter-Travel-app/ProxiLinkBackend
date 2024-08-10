@@ -1180,7 +1180,7 @@ async def get_recommendations(request: getRecommendations):
             budget=request.budget
         )
 
-        recommendations_json = model.reacs.to_dict(orient='records')
+        recommendations_json = model.recs.to_dict(orient='records')
 
         top_recommendations = recommendations_json[:10]
 
