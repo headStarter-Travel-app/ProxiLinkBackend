@@ -516,17 +516,16 @@ class AiModel:
 
         return self.places_tensor, self.user_tensor, interaction_tensor
 
-'''
+
 async def main():
     users = ["66996b7b0025b402922b", "66996d2e00314baa2a20"]
     locations = [Location(lat=38.98582939, lon=-76.937329584)]
 
-#     model = await AiModel.create(users, locations, "shopping_spree", ["Japanese food"])
-#     print(model.recs)
+    model = await AiModel.create(users, locations, "shopping_spree", ["Japanese food"])
+    print(model.recs)
 
 # Run the async function
 asyncio.run(main())
 
 
 # When calling API Requeast take in: userList, locationList as locaiton objects, theme, and comma separated list of "Other"
-'''
