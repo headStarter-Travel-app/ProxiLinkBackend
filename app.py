@@ -24,7 +24,7 @@ from appwrite.exception import AppwriteException
 import httpx
 import logging
 from fastapi.middleware.cors import CORSMiddleware
-
+from model import AiModel
 # Installed
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -1161,6 +1161,21 @@ async def submit_waitlist(entry: WaitListEntry):
         logger.error(f"Error submitting waitlist entry: {str(e)}")
         raise HTTPException(
             status_code=500, detail=f"Error submitting waitlist entry: {str(e)}")
+
+
+class getRecommendations(BaseModel):
+    users: List[str]
+    locations: List[Location]
+    theme: str
+    other: Optional[str] = None
+    budget: Optional[int] = None
+
+
+@app.get('/get-recommendations', summary="Get Recommendations")
+async def get_recommendations(req: getRecommendations):
+    '''
+    Get recommendations based on user preferences and location using the AI Model
+    '''
 
 
 class Notification(BaseModel):

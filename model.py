@@ -402,7 +402,7 @@ class AiModel:
 
         return {"lat": centroid_lat, "lon": centroid_lon}
 
-    def getTopInterests(self, preferences: Dict[str, int], top_n: int = 10) -> List[str]:
+    def getTopInterests(self, preferences: Dict[str, int], top_n: int = 7) -> List[str]:
         filtered_preferences = {k: v for k, v in preferences.items() if v > 2}
         sorted_preferences = sorted(
             filtered_preferences.items(), key=lambda item: item[1], reverse=True)
@@ -526,3 +526,6 @@ async def main():
 
 # Run the async function
 asyncio.run(main())
+
+
+# When calling API Requeast take in: userList, locationList as locaiton objects, theme, and comma separated list of "Other"
