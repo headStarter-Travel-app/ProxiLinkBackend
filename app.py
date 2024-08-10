@@ -1167,15 +1167,36 @@ class getRecommendations(BaseModel):
     users: List[str]
     locations: List[Location]
     theme: str
-    other: Optional[str] = None
-    budget: Optional[int] = None
+    other: Optional[str] = []
+    budget: Optional[int] = 100
 
 
-@app.get('/get-recommendations', summary="Get Recommendations")
-async def get_recommendations(req: getRecommendations):
+@app.get('/get-recommendationsAI', summary="Get Recommendations")
+async def get_recommendations(request: getRecommendations):
     '''
     Get recommendations based on user preferences and location using the AI Model
     '''
+    try:
+        model = await AiModel.create(
+            users = request.users,
+            locations = request.locations,
+            theme = request.theme,
+            other = request.other,
+            budget = request.budget
+        )
+
+        recommendations = model.reacs.to_dict(orient='records')
+
+        return {
+            "message": "Recommendations generated successfully",
+            "recommendations": recommendations
+        }
+
+    except Exception as e:
+        logger.error(f"Error getting recommendations: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error getting recommendations: {str(e)}")
+
 
 
 class Notification(BaseModel):
