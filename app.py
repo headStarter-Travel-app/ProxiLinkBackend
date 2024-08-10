@@ -156,6 +156,7 @@ class Location(BaseModel):
     lon: float
 
 
+
 class SocialInteraction(str, Enum):
     ENERGETIC = "ENERGETIC"
     RELAXED = "RELAXED"
@@ -1166,13 +1167,13 @@ async def submit_waitlist(entry: WaitListEntry):
 
 class getRecommendations(BaseModel):
     users: List[str]
-    locations: List[Location]
+    location: List[List[Location]]
     theme: str
-    other: Optional[str] = []
+    other: Optional[List[str]] = []
     budget: Optional[int] = 100
 
 
-@app.get('/get-recommendationsAI', summary="Get Recommendations")
+@app.post('/get-recommendationsAI', summary="Get Recommendations")
 async def get_recommendations(request: getRecommendations):
     '''
     Get recommendations based on user preferences and location using the AI Model
@@ -1180,7 +1181,7 @@ async def get_recommendations(request: getRecommendations):
     try:
         model = await AiModel.create(
             users = request.users,
-            locations = request.locations,
+            location = request.location,
             theme = request.theme,
             other = request.other,
             budget = request.budget
