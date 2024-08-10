@@ -401,7 +401,7 @@ class AiModel:
 
         return {"lat": centroid_lat, "lon": centroid_lon}
 
-    def getTopInterests(self, preferences: Dict[str, int], top_n: int = 7) -> List[str]:
+    def getTopInterests(self, preferences: Dict[str, int], top_n: int = 6) -> List[str]:
         filtered_preferences = {k: v for k, v in preferences.items() if v > 2}
         sorted_preferences = sorted(
             filtered_preferences.items(), key=lambda item: item[1], reverse=True)
@@ -436,6 +436,17 @@ class AiModel:
                     if not result['category']:
                         result['category'] = otherInterest
                     result['category2'] = otherInterest
+                all_recommendations.extend(results)
+            arr = self.theme
+            print(arr)
+            random_elements = random.sample(arr, min(3, len(arr)))
+            for randomInterest in random_elements:
+                results = await apple_maps_service.search(
+                    randomInterest, centroid['lat'], centroid['lon'])
+                for result in results:
+                    if not result['category']:
+                        result['category'] = randomInterest
+                    result['category2'] = randomInterest
                 all_recommendations.extend(results)
 
             sorted_recommendations = sorted(

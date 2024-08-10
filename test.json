@@ -2,94 +2,310 @@
   "message": "Recommendations generated successfully",
   "recommendations": [
     {
-      "name": "Halter Ranch",
-      "address": "8910 Adelaida Rd, Paso Robles, CA  93446, United States",
+      "name": "Zig Zag Café",
+      "address": "1501 Western Ave, Unit 202, Seattle, WA 98101, United States",
       "location": {
-        "lat": 35.6394847,
-        "lon": -120.8544213
+        "lat": 47.6083891,
+        "lon": -122.3415828
       },
-      "category": "Winery",
+      "category": "Nightlife",
       "category2": "outdoor",
-      "combined_category": ["Winery", "outdoor"],
-      "name_encoded": 18,
-      "address_encoded": 39,
-      "lat": 35.6394847,
-      "lon": -120.8544213,
-      "hybrid_score": 10.000000953674316,
-      "content_score": -0.3059409558773041,
-      "cf_score": -1.6821081638336182
+      "combined_category": ["Nightlife", "outdoor"],
+      "name_encoded": 86,
+      "address_encoded": 30,
+      "lat": 47.6083891,
+      "lon": -122.3415828,
+      "hybrid_score": 9.999999046325684,
+      "content_score": -0.09620890021324158,
+      "cf_score": -0.655383825302124
     },
     {
-      "name": "El Sabroso Mexican Grill & Seafood",
-      "address": "44779 Lassen Ave, Huron, CA 93234, United States",
+      "name": "Daawat Grill & Bar",
+      "address": "820 Pike St, Seattle, WA  98101, United States",
       "location": {
-        "lat": 36.0750484,
-        "lon": -120.1034112
+        "lat": 47.6126381,
+        "lon": -122.3314318
+      },
+      "category": "Restaurant",
+      "category2": "Indian food",
+      "combined_category": ["Restaurant", "Indian food"],
+      "name_encoded": 17,
+      "address_encoded": 79,
+      "lat": 47.6126381,
+      "lon": -122.3314318,
+      "hybrid_score": 4.999999523162842,
+      "content_score": -0.16813942790031433,
+      "cf_score": 0.4105144143104553
+    },
+    {
+      "name": "Moore Theatre",
+      "address": "1932 2nd Ave, Seattle, WA  98101, United States",
+      "location": {
+        "lat": 47.6117171,
+        "lon": -122.3414813
+      },
+      "category": "MusicVenue",
+      "category2": "MovieTheater",
+      "combined_category": ["MusicVenue", "MovieTheater"],
+      "name_encoded": 43,
+      "address_encoded": 42,
+      "lat": 47.6117171,
+      "lon": -122.3414813,
+      "hybrid_score": 9.999999046325684,
+      "content_score": -0.19861182570457458,
+      "cf_score": -1.0410213470458984
+    },
+    {
+      "name": "SIFF Cinema Uptown",
+      "address": "511 Queen Anne Ave N, Seattle, WA  98109, United States",
+      "location": {
+        "lat": 47.6236193,
+        "lon": -122.3570266
+      },
+      "category": "MovieTheater",
+      "category2": "MovieTheater",
+      "combined_category": ["MovieTheater", "MovieTheater"],
+      "name_encoded": 61,
+      "address_encoded": 70,
+      "lat": 47.6236193,
+      "lon": -122.3570266,
+      "hybrid_score": 7.0710673332214355,
+      "content_score": -0.3696995675563812,
+      "cf_score": -0.9022500514984131
+    },
+    {
+      "name": "Seattle Beer Co.",
+      "address": "1427 Western Ave, Seattle, WA  98101, United States",
+      "location": {
+        "lat": 47.6081819,
+        "lon": -122.3411911
+      },
+      "category": "Nightlife",
+      "category2": "Winery",
+      "combined_category": ["Nightlife", "Winery"],
+      "name_encoded": 63,
+      "address_encoded": 26,
+      "lat": 47.6081819,
+      "lon": -122.3411911,
+      "hybrid_score": 9.999999046325684,
+      "content_score": -0.20728656649589539,
+      "cf_score": -1.0736894607543945
+    },
+    {
+      "name": "The Tasting Room",
+      "address": "1924 Post Alley, Seattle, WA 98101, United States",
+      "location": {
+        "lat": 47.6104763,
+        "lon": -122.3424751
+      },
+      "category": "Nightlife",
+      "category2": "Winery",
+      "combined_category": ["Nightlife", "Winery"],
+      "name_encoded": 73,
+      "address_encoded": 41,
+      "lat": 47.6104763,
+      "lon": -122.3424751,
+      "hybrid_score": 9.999999046325684,
+      "content_score": -0.18042263388633728,
+      "cf_score": -0.9725229740142822
+    },
+    {
+      "name": "Xtadium Lounge",
+      "address": "315 2nd Ave S, Seattle, WA  98104, United States",
+      "location": {
+        "lat": 47.5995372,
+        "lon": -122.3319796
+      },
+      "category": "Nightlife",
+      "category2": "Nightlife",
+      "combined_category": ["Nightlife", "Nightlife"],
+      "name_encoded": 83,
+      "address_encoded": 60,
+      "lat": 47.5995372,
+      "lon": -122.3319796,
+      "hybrid_score": 7.0710673332214355,
+      "content_score": -0.30001088976860046,
+      "cf_score": -0.6398106217384338
+    },
+    {
+      "name": "The Nest",
+      "address": "110 Stewart St, Seattle, WA  98101, United States",
+      "location": {
+        "lat": 47.610588,
+        "lon": -122.3412636
+      },
+      "category": "Nightlife",
+      "category2": "outdoor",
+      "combined_category": ["Nightlife", "outdoor"],
+      "name_encoded": 69,
+      "address_encoded": 8,
+      "lat": 47.610588,
+      "lon": -122.3412636,
+      "hybrid_score": 9.999999046325684,
+      "content_score": -0.14864394068717957,
+      "cf_score": -0.8528481125831604
+    },
+    {
+      "name": "Golden Roosters",
+      "address": "115 Occidental Ave S, Seattle, WA  98104, United States",
+      "location": {
+        "lat": 47.6012289,
+        "lon": -122.3331325
+      },
+      "category": "Nightlife",
+      "category2": "outdoor",
+      "combined_category": ["Nightlife", "outdoor"],
+      "name_encoded": 24,
+      "address_encoded": 13,
+      "lat": 47.6012289,
+      "lon": -122.3331325,
+      "hybrid_score": 9.999998092651367,
+      "content_score": -0.25281330943107605,
+      "cf_score": -1.2451376914978027
+    },
+    {
+      "name": "Aluel Cellars",
+      "address": "801 E Thomas St, Seattle, WA  98102, United States",
+      "location": {
+        "lat": 47.6209743,
+        "lon": -122.321939
+      },
+      "category": "Nightlife",
+      "category2": "Winery",
+      "combined_category": ["Nightlife", "Winery"],
+      "name_encoded": 6,
+      "address_encoded": 76,
+      "lat": 47.6209743,
+      "lon": -122.321939,
+      "hybrid_score": 9.999999046325684,
+      "content_score": -0.27408602833747864,
+      "cf_score": -1.32524836063385
+    },
+    {
+      "name": "Mason's Famous Lobster Rolls",
+      "address": "1307 1st Ave, Seattle, WA  98101, United States",
+      "location": {
+        "lat": 47.6070497,
+        "lon": -122.3386499
       },
       "category": "Restaurant",
       "category2": "outdoor",
       "combined_category": ["Restaurant", "outdoor"],
+      "name_encoded": 38,
+      "address_encoded": 18,
+      "lat": 47.6070497,
+      "lon": -122.3386499,
+      "hybrid_score": 9.999999046325684,
+      "content_score": -0.19918903708457947,
+      "cf_score": -1.0431950092315674
+    },
+    {
+      "name": "Boeing IMAX Theater",
+      "address": "200 2nd Ave N, Seattle, WA 98109, United States",
+      "location": {
+        "lat": 47.6197316,
+        "lon": -122.3506808
+      },
+      "category": "MovieTheater",
+      "category2": "MovieTheater",
+      "combined_category": ["MovieTheater", "MovieTheater"],
       "name_encoded": 11,
-      "address_encoded": 22,
-      "lat": 36.0750484,
-      "lon": -120.1034112,
-      "hybrid_score": 9.999999046325684,
-      "content_score": -0.23631399869918823,
-      "cf_score": -1.3749343156814575
+      "address_encoded": 44,
+      "lat": 47.6197316,
+      "lon": -122.3506808,
+      "hybrid_score": 7.0710673332214355,
+      "content_score": -0.2697683274745941,
+      "cf_score": -0.5259207487106323
     },
     {
-      "name": "Firestone Walker Brewing Company",
-      "address": "1400 Ramada Dr, Paso Robles, CA 93446, United States",
+      "name": "The Crab Pot",
+      "address": "1301 Alaskan Way\nSeattle, WA 98101\nUnited States",
       "location": {
-        "lat": 35.595985,
-        "lon": -120.6946959
+        "lat": 47.6059677,
+        "lon": -122.3409551
       },
-      "category": "Brewery",
+      "category": "Restaurant",
       "category2": "outdoor",
-      "combined_category": ["Brewery", "outdoor"],
-      "name_encoded": 14,
-      "address_encoded": 5,
-      "lat": 35.595985,
-      "lon": -120.6946959,
+      "combined_category": ["Restaurant", "outdoor"],
+      "name_encoded": 67,
+      "address_encoded": 17,
+      "lat": 47.6059677,
+      "lon": -122.3409551,
       "hybrid_score": 9.999999046325684,
-      "content_score": -0.1858690083026886,
-      "cf_score": -1.1523857116699219
+      "content_score": -0.16958853602409363,
+      "cf_score": -0.9317229986190796
     },
     {
-      "name": "Camp Roberts Historical Museum",
-      "address": "114 New Mexico Ave, Camp Roberts, CA 93451, United States",
+      "name": "SIFF Cinema Egyptian",
+      "address": "805 E Pine St, Seattle, WA  98122, United States",
       "location": {
-        "lat": 35.7953044,
-        "lon": -120.7504148
+        "lat": 47.6149512,
+        "lon": -122.3217491
       },
-      "category": "Museum",
-      "category2": "Museums",
-      "combined_category": ["Museum", "Museums"],
-      "name_encoded": 8,
-      "address_encoded": 3,
-      "lat": 35.7953044,
-      "lon": -120.7504148,
-      "hybrid_score": 0.0,
-      "content_score": -0.33230578899383545,
-      "cf_score": 1.3443955183029175
+      "category": "MovieTheater",
+      "category2": "MovieTheater",
+      "combined_category": ["MovieTheater", "MovieTheater"],
+      "name_encoded": 60,
+      "address_encoded": 77,
+      "lat": 47.6149512,
+      "lon": -122.3217491,
+      "hybrid_score": 7.0710673332214355,
+      "content_score": -0.38613733649253845,
+      "cf_score": -0.9641527533531189
     },
     {
-      "name": "British Food & Wine",
-      "address": "148 Boston Road, London, W7 2HJ, England",
+      "name": "Nirmal's",
+      "address": "106 Occidental Ave S, Seattle, WA  98104, United States",
       "location": {
-        "lat": 51.5038442,
-        "lon": -0.3333557
+        "lat": 47.6014266,
+        "lon": -122.3326731
       },
-      "category": "FoodMarket",
-      "category2": "British food",
-      "combined_category": ["FoodMarket", "British food"],
-      "name_encoded": 3,
-      "address_encoded": 6,
-      "lat": 51.5038442,
-      "lon": -0.3333557,
-      "hybrid_score": 0.0,
-      "content_score": -0.6221706867218018,
-      "cf_score": 0.06559629738330841
+      "category": "Restaurant",
+      "category2": "Indian food",
+      "combined_category": ["Restaurant", "Indian food"],
+      "name_encoded": 47,
+      "address_encoded": 4,
+      "lat": 47.6014266,
+      "lon": -122.3326731,
+      "hybrid_score": 4.999999523162842,
+      "content_score": -0.18849334120750427,
+      "cf_score": 0.33386391401290894
+    },
+    {
+      "name": "Almquist Family",
+      "address": "198 Nickerson St, Seattle, WA  98109, United States",
+      "location": {
+        "lat": 47.6480162,
+        "lon": -122.3526742
+      },
+      "category": "Winery",
+      "category2": "Winery",
+      "combined_category": ["Winery", "Winery"],
+      "name_encoded": 5,
+      "address_encoded": 43,
+      "lat": 47.6480162,
+      "lon": -122.3526742,
+      "hybrid_score": 7.0710673332214355,
+      "content_score": -0.30419227480888367,
+      "cf_score": -0.6555573344230652
+    },
+    {
+      "name": "Regal Cinemas",
+      "address": "1501 7th Ave, Seattle, WA 98101, United States",
+      "location": {
+        "lat": 47.6117672,
+        "lon": -122.3337221
+      },
+      "category": "MovieTheater",
+      "category2": "MovieTheater",
+      "combined_category": ["MovieTheater", "MovieTheater"],
+      "name_encoded": 58,
+      "address_encoded": 28,
+      "lat": 47.6117672,
+      "lon": -122.3337221,
+      "hybrid_score": 7.0710673332214355,
+      "content_score": -0.19224593043327332,
+      "cf_score": -0.23398053646087646
     }
   ]
 }

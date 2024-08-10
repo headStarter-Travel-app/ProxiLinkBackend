@@ -1168,6 +1168,17 @@ class getRecommendations(BaseModel):
 async def get_recommendations(request: getRecommendations):
     '''
     Get recommendations based on user preferences and location using the AI Model
+    Example Usage:
+    {
+    "users": ["66996b7b0025b402922b", "66996d2e00314baa2a20"],
+    "location": [
+        {"lat": 37.7749, "lon": -122.4194},
+        {"lat": 34.0522, "lon": -118.2437}
+    ],
+    "theme": "night_out",
+    "other": ["family-friendly", "outdoor"],
+    "budget": 150
+}
     '''
     try:
         print(type(request.location[0]))
@@ -1182,17 +1193,30 @@ async def get_recommendations(request: getRecommendations):
 
         recommendations_json = model.recs.to_dict(orient='records')
 
-        top_recommendations = recommendations_json[:10]
+        # Ensure there are at least 20 elements for top recommendations
+        top_recommendations = recommendations_json[:20]
 
-        wild_card_recommendations = random.sample(recommendations_json[10:], 5)
+        # Ensure there are enough elements for wild card recommendations
+        if len(recommendations_json) > 20:
+            wild_card_recommendations = random.sample(
+                recommendations_json[20:], min(10, len(recommendations_json) - 20))
+        else:
+            wild_card_recommendations = []
 
         final_recommendations = top_recommendations + wild_card_recommendations
-        diversified_recommendations = diversify_recommendations(
-            final_recommendations)
 
+        # Determine a random sample size between 11 and 17
+        sample_size = random.randint(11, 17)
+
+        # Ensure there are enough elements to sample the final recommendations
+        if len(final_recommendations) >= sample_size:
+            final_recommendations = random.sample(
+                final_recommendations, sample_size)
+        else:
+            final_recommendations = final_recommendations[:sample_size]
         return {
             "message": "Recommendations generated successfully",
-            "recommendations": diversified_recommendations
+            "recommendations": final_recommendations
         }
 
     except Exception as e:
