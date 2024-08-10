@@ -1,823 +1,311 @@
 {
+  "message": "Recommendations generated successfully",
   "recommendations": [
     {
-      "name": "Potomac Pizza",
-      "address": "7777 Baltimore Ave, College Park, MD  20740, United States",
-      "location": {
-        "lat": 38.9873178,
-        "lon": -76.9356036
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "Potomac Pizza",
-      "address": "7777 Baltimore Ave, College Park, MD  20740, United States",
-      "location": {
-        "lat": 38.9873178,
-        "lon": -76.9356036
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "The Hall CP",
-      "address": "4656 Hotel Drive, College Park, MD 20742, United States",
-      "location": {
-        "lat": 38.9861878,
-        "lon": -76.9336134
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "Blaze Pizza",
-      "address": "7419 Baltimore Ave, College Park, MD  20740, United States",
-      "location": {
-        "lat": 38.9817562,
-        "lon": -76.9375892
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "Pizza Kingdom",
-      "address": "4439 Lehigh Rd, College Park, MD  20740, United States",
-      "location": {
-        "lat": 38.9817109,
-        "lon": -76.9383089
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "Dog Haus Biergarten",
-      "address": "7401 Baltimore Ave, Unit 1A, College Park, MD  20740, United States",
-      "location": {
-        "lat": 38.9812184,
-        "lon": -76.9375926
-      },
-      "category": "Nightlife"
-    },
-    {
-      "name": "Marathon Deli",
-      "address": "4429 Lehigh Rd, College Park, MD  20740, United States",
-      "location": {
-        "lat": 38.9811446,
-        "lon": -76.9380934
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "Terrapins Turf",
-      "address": "4410 Knox Rd, College Park, MD  20740, United States",
-      "location": {
-        "lat": 38.9810151,
-        "lon": -76.9384146
-      },
-      "category": "Nightlife"
-    },
-    {
-      "name": "The Cornerstone Grill & Loft",
-      "address": "7325 Baltimore Ave, College Park, MD  20740, United States",
-      "location": {
-        "lat": 38.9806529,
-        "lon": -76.9375442
-      },
-      "category": "Nightlife"
-    },
-    {
-      "name": "Ledo Pizza",
-      "address": "4509 Knox Rd, College Park, MD  20740, United States",
-      "location": {
-        "lat": 38.9805615,
-        "lon": -76.937126
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "College Park Shopping Center",
-      "address": "7370 Baltimore Ave, College Park, MD  20740, United States",
-      "location": {
-        "lat": 38.9806676,
-        "lon": -76.9390872
-      },
-      "category": "Store"
-    },
-    {
-      "name": "Looney's Pub",
-      "address": "8150 Baltimore Ave, College Park, MD  20740, United States",
-      "location": {
-        "lat": 38.9908073,
-        "lon": -76.9343843
-      },
-      "category": "Nightlife"
-    },
-    {
-      "name": "College Park Shopping Center",
-      "address": "7236 Baltimore Ave, College Park, MD  20740, United States",
-      "location": {
-        "lat": 38.9798026,
-        "lon": -76.9382319
-      },
-      "category": "Store"
-    },
-    {
-      "name": "&pizza",
-      "address": "7236 Baltimore Ave, College Park, MD  20740, United States",
-      "location": {
-        "lat": 38.9798026,
-        "lon": -76.9382319
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "Paisano's",
-      "address": "7201 Baltimore Ave, College Park, MD  20740, United States",
-      "location": {
-        "lat": 38.9779008,
-        "lon": -76.9374922
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "The Clarice Smith Performing Arts Center",
-      "address": "8270 Alumni Dr, Unit 3800, College Park, MD 20742, United States",
-      "location": {
-        "lat": 38.9911304,
-        "lon": -76.9502978
-      },
-      "category": "Theater"
-    },
-    {
-      "name": "MOD Pizza",
-      "address": "4401 Woodberry St, Riverdale, MD  20737, United States",
-      "location": {
-        "lat": 38.9705689,
-        "lon": -76.9370529
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "Pizza Hut",
-      "address": "9015 Baltimore Ave, College Park, MD  20740, United States",
-      "location": {
-        "lat": 38.9998521,
-        "lon": -76.9310388
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "CDepot",
-      "address": "9039 Baltimore Ave, College Park, MD  20740, United States",
-      "location": {
-        "lat": 39.00087,
-        "lon": -76.9303701
-      },
-      "category": "Store"
-    },
-    {
-      "name": "The Common",
-      "address": "3501 University Blvd E, Hyattsville, MD 20742, United States",
-      "location": {
-        "lat": 38.9861232,
-        "lon": -76.9539774
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "Krazi Kebob",
-      "address": "5110 Roanoke Pl, Unit 102, College Park, MD  20740, United States",
-      "location": {
-        "lat": 38.9947098,
-        "lon": -76.9225145
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "The Shed DMV",
-      "address": "5650 Rivertech Ct\nUnit K\nRiverdale, MD  20737\nUnited States",
-      "location": {
-        "lat": 38.9686602,
-        "lon": -76.9305718
-      },
-      "category": "Store"
-    },
-    {
-      "name": "Piano Man Superstore",
-      "address": "9520 Baltimore Ave, College Park, MD  20740, United States",
-      "location": {
-        "lat": 39.010097,
-        "lon": -76.9292895
-      },
-      "category": "Store"
-    },
-    {
-      "name": "The Shoppes At Metro Station",
-      "address": "6211 Belcrest Rd, Hyattsville, MD  20782, United States",
-      "location": {
-        "lat": 38.9655546,
-        "lon": -76.9532033
-      },
-      "category": "Store"
-    },
-    {
-      "name": "Riversdale House Museum",
-      "address": "4811 Riverdale Rd, Riverdale, MD  20737, United States",
-      "location": {
-        "lat": 38.9605855,
-        "lon": -76.9313344
-      },
-      "category": "Museum"
-    },
-    {
-      "name": "&pizza",
-      "address": "3500 East West Hwy, Hyattsville, MD 20782, United States",
-      "location": {
-        "lat": 38.9679937,
-        "lon": -76.9569482
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "National Archives archeological site",
-      "address": "8601 Adelphi Rd, College Park, MD  20742, United States",
-      "location": {
-        "lat": 39.000308,
-        "lon": -76.959666
-      },
-      "category": "Landmark"
-    },
-    {
-      "name": "Mall at Prince George's",
-      "address": "3500 East West Hwy, Hyattsville, MD 20782, United States",
-      "location": {
-        "lat": 38.9683307,
-        "lon": -76.9574207
-      },
-      "category": "Store"
-    },
-    {
-      "name": "Olive Garden Italian Restaurant",
-      "address": "3480 East-West Hwy, Hyattsville, MD  20782, United States",
-      "location": {
-        "lat": 38.967275,
-        "lon": -76.9585524
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "DeMatha Soccer Academy",
-      "address": "4313 Madison St, Hyattsville, MD  20781, United States",
-      "location": {
-        "lat": 38.9579289,
-        "lon": -76.942261
-      },
-      "category": "Soccer"
-    },
-    {
-      "name": "Spice 6 Modern Indian",
-      "address": "5501 Baltimore Ave, Unit 107, Hyattsville, MD 20781, United States",
-      "location": {
-        "lat": 38.955408,
-        "lon": -76.9393447
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "EZ Kabob",
-      "address": "6106 Greenbelt Rd, Greenbelt, MD  20770, United States",
-      "location": {
-        "lat": 38.9995341,
-        "lon": -76.9091138
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "Mamma Lucia",
-      "address": "4734 Cherry Hill Rd, College Park, MD  20740, United States",
-      "location": {
-        "lat": 39.016106,
-        "lon": -76.928265
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "Beltway Plaza Mall",
-      "address": "6000 Greenbelt Rd, Greenbelt, MD 20770, United States",
-      "location": {
-        "lat": 38.9994255,
-        "lon": -76.908567
-      },
-      "category": "Store"
-    },
-    {
-      "name": "Three Brothers Italian Restaurant",
-      "address": "6160 Greenbelt Rd, Greenbelt, MD  20770, United States",
-      "location": {
-        "lat": 38.9994867,
-        "lon": -76.9085112
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "Hollywood Shopping Center",
-      "address": "9801 Rhode Island Ave, College Park, MD  20740, United States",
-      "location": {
-        "lat": 39.0143196,
-        "lon": -76.9196925
-      },
-      "category": "Store"
-    },
-    {
-      "name": "Prime Restaurant",
-      "address": "5126 Baltimore Ave, Hyattsville, MD  20781, United States",
-      "location": {
-        "lat": 38.952251,
-        "lon": -76.940804
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "Base Lounge Restaurant",
-      "address": "5451 Annapolis Rd, Bladensburg, MD  20710, United States",
-      "location": {
-        "lat": 38.9385981,
-        "lon": -76.923466
-      },
-      "category": "Nightlife"
-    },
-    {
-      "name": "Jewel of India",
-      "address": "10151 New Hampshire Ave, Silver Spring, MD  20903, United States",
-      "location": {
-        "lat": 39.0218927,
-        "lon": -76.9762337
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "Hip Hop Fish & Chicken",
-      "address": "5609 Sargent Rd, Hyattsville, MD  20782, United States",
-      "location": {
-        "lat": 38.9584731,
-        "lon": -76.9854791
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "Hip Hop Fish & Chicken",
-      "address": "10961 Baltimore Ave, Beltsville, MD  20705, United States",
-      "location": {
-        "lat": 39.0335897,
-        "lon": -76.9084566
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "Atomic Music",
-      "address": "11011 Baltimore Ave, Unit 2, Beltsville, MD 20705, United States",
-      "location": {
-        "lat": 39.0333825,
-        "lon": -76.9068028
-      },
-      "category": "Store"
-    },
-    {
-      "name": "Sonidos Music & More",
-      "address": "11011 Baltimore Ave, Beltsville, MD  20705, United States",
-      "location": {
-        "lat": 39.0333825,
-        "lon": -76.9068028
-      },
-      "category": "Store"
-    },
-    {
-      "name": "Music & Arts",
-      "address": "7587 Greenbelt Rd, Greenbelt, MD  20770, United States",
-      "location": {
-        "lat": 38.9924711,
-        "lon": -76.8768478
-      },
-      "category": "Store"
-    },
-    {
-      "name": "Hip Hop Fish & Chicken",
-      "address": "7524 Annapolis Rd, Hyattsville, MD  20784, United States",
-      "location": {
-        "lat": 38.9509075,
-        "lon": -76.8867693
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "Quick Feet Soccer Training",
-      "address": "7600 Ora Glen Dr, Ste 1250, Greenbelt, MD  20770, United States",
-      "location": {
-        "lat": 38.9916217,
-        "lon": -76.8748616
-      },
-      "category": "Soccer"
-    },
-    {
-      "name": "United Elite Soccer Club",
-      "address": "7800 Good Luck Rd, Lanham, MD  20706, United States",
-      "location": {
-        "lat": 38.9806493,
-        "lon": -76.8707841
-      },
-      "category": "Soccer"
-    },
-    {
-      "name": "Echostage",
-      "address": "2135 Queens Chapel Rd NE, Washington, DC  20018, United States",
-      "location": {
-        "lat": 38.9199061,
-        "lon": -76.9724275
-      },
-      "category": "MusicVenue"
-    },
-    {
-      "name": "Curry Place",
-      "address": "11229 New Hampshire Ave, Silver Spring, MD  20904, United States",
-      "location": {
-        "lat": 39.0413545,
-        "lon": -76.9883808
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "Bay Street Restaurant & Lounge",
-      "address": "5910 Princess Garden Pkwy, Lanham, MD  20706, United States",
-      "location": {
-        "lat": 38.9619658,
-        "lon": -76.8654209
-      },
-      "category": "Nightlife"
-    },
-    {
-      "name": "Masala Story",
-      "address": "3301 12th St NE, Washington, DC  20017, United States",
-      "location": {
-        "lat": 38.9307604,
-        "lon": -76.9907479
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "Total Soccer Arena",
-      "address": "8400 Ardwick Ardmore Rd, Landover, MD 20785, United States",
-      "location": {
-        "lat": 38.942501,
-        "lon": -76.8634319
-      },
-      "category": "Soccer"
-    },
-    {
-      "name": "Hip Hop Fish & Chicken",
-      "address": "8000 Martin Luther King Jr Hwy, Lanham, MD  20706, United States",
-      "location": {
-        "lat": 38.9323073,
-        "lon": -76.86898
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "FourSoccer",
-      "address": "2118 Third St NE, Unit B, Washington, DC  20002, United States",
-      "location": {
-        "lat": 38.9187258,
-        "lon": -77.0022845
-      },
-      "category": "Soccer"
-    },
-    {
-      "name": "Songbyrd Music House",
-      "address": "540 Penn St NE, Washington, DC  20002, United States",
-      "location": {
-        "lat": 38.9102184,
-        "lon": -76.9964703
-      },
-      "category": "MusicVenue"
-    },
-    {
-      "name": "The Queen Vic British Pub",
-      "address": "1206 H St NE, Washington, DC  20002, United States",
-      "location": {
-        "lat": 38.9003214,
-        "lon": -76.9898719
-      },
-      "category": "Nightlife"
-    },
-    {
-      "name": "Indigo",
-      "address": "243 K St NE, Washington, DC  20002, United States",
-      "location": {
-        "lat": 38.9022762,
-        "lon": -77.0022404
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "The Artemis",
-      "address": "3605 14th St NW, Washington, DC 20016, United States",
-      "location": {
-        "lat": 38.93641,
-        "lon": -77.0325288
-      },
-      "category": "Nightlife"
-    },
-    {
-      "name": "Bell & Lincoln Soccer Field",
-      "address": "3201 Hiatt Pl NW, Washington, DC  20010, United States",
-      "location": {
-        "lat": 38.929824,
-        "lon": -77.034336
-      },
-      "category": "Soccer"
-    },
-    {
-      "name": "Caruso's Grocery",
-      "address": "914 14th St SE, Washington, DC  20003, United States",
-      "location": {
-        "lat": 38.879753,
-        "lon": -76.985214
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "RPM Italian",
-      "address": "650 K Street NW, Washington, DC 20001, United States",
-      "location": {
-        "lat": 38.9021968,
-        "lon": -77.0209301
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "Trattoria Alberto's Italian Cuisine",
-      "address": "506 Eighth St SE, Washington, DC  20003, United States",
-      "location": {
-        "lat": 38.8824747,
-        "lon": -76.994808
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "Spice 6 Modern Indian",
-      "address": "740 6th St NW, Washington, DC  20001, United States",
-      "location": {
-        "lat": 38.8994944,
-        "lon": -77.0200612
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "United States Capitol",
-      "address": "Washington, DC  20001, United States",
-      "location": {
-        "lat": 38.8894251,
-        "lon": -77.008616
-      },
-      "category": "Landmark"
-    },
-    {
-      "name": "CityCenterDC",
-      "address": "825 Tenth St NW, Washington, DC 20001, United States",
-      "location": {
-        "lat": 38.9004601,
-        "lon": -77.0255113
-      },
-      "category": "Store"
-    },
-    {
-      "name": "Rasika",
-      "address": "633 D St NW, Washington, DC  20004, United States",
-      "location": {
-        "lat": 38.8949492,
-        "lon": -77.0213002
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "The Mirror",
-      "address": "1413 K St NW, Washington, DC  20005, United States",
-      "location": {
-        "lat": 38.9029207,
-        "lon": -77.0327151
-      },
-      "category": "Nightlife"
-    },
-    {
-      "name": "Grazie Nonna",
-      "address": "1100 15th St NW, Washington, DC  20005, United States",
-      "location": {
-        "lat": 38.9042968,
-        "lon": -77.0352845
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "Chuck Levin's Washington Music Center",
-      "address": "11151 Veirs Mill Rd, Silver Spring, MD  20902, United States",
-      "location": {
-        "lat": 39.0391607,
-        "lon": -77.0533881
-      },
-      "category": "Music"
-    },
-    {
-      "name": "Elephant & Castle",
-      "address": "1201 Pennsylvania Ave NW, Washington, DC  20004, United States",
-      "location": {
-        "lat": 38.8954934,
-        "lon": -77.0282587
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "Westfield Wheaton",
-      "address": "11160 Veirs Mill Rd, Wheaton, MD 20902, United States",
-      "location": {
-        "lat": 39.0371255,
-        "lon": -77.0552752
-      },
-      "category": "Store"
-    },
-    {
-      "name": "Il Piatto",
-      "address": "900 Black Lives Matter Plaza NW, Washington, DC  20006, United States",
-      "location": {
-        "lat": 38.9018497,
-        "lon": -77.0370151
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "Across The Pond",
-      "address": "1732 Connecticut Ave NW, Washington, DC  20009, United States",
-      "location": {
-        "lat": 38.9136053,
-        "lon": -77.0460677
-      },
-      "category": "Nightlife"
-    },
-    {
-      "name": "The White House",
-      "address": "1600 Pennsylvania Ave NW, Washington, DC 20500-0003, United States",
-      "location": {
-        "lat": 38.8976817,
-        "lon": -77.036588
-      },
-      "category": "Landmark"
-    },
-    {
-      "name": "Rasika",
-      "address": "1190 New Hampshire Ave NW, Washington, DC  20037, United States",
-      "location": {
-        "lat": 38.9050889,
-        "lon": -77.0479623
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "Washington Monument",
-      "address": "2 15th St NW, Washington, DC  20024, United States",
-      "location": {
-        "lat": 38.88943,
-        "lon": -77.0353955
-      },
-      "category": "Landmark"
-    },
-    {
-      "name": "Gordon Ramsay Fish & Chips",
-      "address": "665 Wharf St SW, Ste 730, Washington, DC  20024, United States",
-      "location": {
-        "lat": 38.8775368,
-        "lon": -77.0228344
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "The Brighton SW1",
-      "address": "949 Wharf St SW, Washington, DC  20024, United States",
-      "location": {
-        "lat": 38.8801253,
-        "lon": -77.0260705
-      },
-      "category": "Nightlife"
-    },
-    {
-      "name": "World War II Memorial",
-      "address": "1750 Independence Ave SW, Washington, DC 20024, United States",
-      "location": {
-        "lat": 38.8893877,
-        "lon": -77.0405209
-      },
-      "category": "Landmark"
-    },
-    {
-      "name": "Thomas Jefferson Memorial",
-      "address": "16 E Basin Dr SW, Washington, DC 20024, United States",
-      "location": {
-        "lat": 38.8813621,
-        "lon": -77.0365351
-      },
-      "category": "Landmark"
-    },
-    {
-      "name": "Vietnam Veterans Memorial",
-      "address": "5 Henry Bacon Dr NW, Washington, DC 20002, United States",
-      "location": {
-        "lat": 38.8912541,
-        "lon": -77.0477146
-      },
-      "category": "Landmark"
-    },
-    {
-      "name": "Martin Luther King, Jr. Memorial",
-      "address": "1850 W Basin Dr SW, Washington, DC  20024, United States",
-      "location": {
-        "lat": 38.8862185,
-        "lon": -77.0442197
-      },
-      "category": "Landmark"
-    },
-    {
-      "name": "Lincoln Memorial",
-      "address": "2 Lincoln Memorial Cir NW, Washington, DC  20037, United States",
-      "location": {
-        "lat": 38.889218,
-        "lon": -77.050178
-      },
-      "category": "Landmark"
-    },
-    {
-      "name": "Filomena Ristorante",
-      "address": "1063 Wisconsin Ave NW, Washington, DC  20007, United States",
-      "location": {
-        "lat": 38.9044418,
-        "lon": -77.0626614
-      },
-      "category": "Restaurant"
-    },
-    {
-      "name": "Westfield Montgomery",
-      "address": "7101 Democracy Blvd, Bethesda, MD 20817, United States",
-      "location": {
-        "lat": 39.0245751,
-        "lon": -77.146273
-      },
-      "category": "Store"
-    },
-    {
-      "name": "Rockville Soccer Supplies",
-      "address": "837-F Rockville Pike, Rockville, MD 20852, United States",
-      "location": {
-        "lat": 39.0744938,
-        "lon": -77.1382928
-      },
-      "category": "Store"
-    },
-    {
-      "name": "Soccer Post",
-      "address": "6019 Wilson Blvd, Arlington, VA  22205, United States",
-      "location": {
-        "lat": 38.8739749,
-        "lon": -77.1399118
-      },
-      "category": "Store"
-    },
-    {
-      "name": "Soccer Dome",
-      "address": "7330 Montevideo Rd, Jessup, MD  20794, United States",
-      "location": {
-        "lat": 39.1687137,
-        "lon": -76.7749284
-      },
-      "category": "Soccer"
-    },
-    {
-      "name": "Arundel Mills",
-      "address": "7000 Arundel Mills Cir, Hanover, MD  21076, United States",
-      "location": {
-        "lat": 39.1578188,
-        "lon": -76.7247068
-      },
-      "category": "Store"
-    },
-    {
-      "name": "Maryland Soccer Foundation",
-      "address": "18031 Central Park Cir, Boyds, MD 20841, United States",
-      "location": {
-        "lat": 39.1527383,
-        "lon": -77.3114627
-      },
-      "category": "Soccer"
-    },
-    {
-      "name": "Lake Clarke Shores",
-      "address": "Lake Clarke Shores, FL, United States",
-      "location": {
-        "lat": 26.649811,
-        "lon": -80.076944
-      },
-      "category": "Live Sports"
+      "name": "Zig Zag Café",
+      "address": "1501 Western Ave, Unit 202, Seattle, WA 98101, United States",
+      "location": {
+        "lat": 47.6083891,
+        "lon": -122.3415828
+      },
+      "category": "Nightlife",
+      "category2": "outdoor",
+      "combined_category": ["Nightlife", "outdoor"],
+      "name_encoded": 86,
+      "address_encoded": 30,
+      "lat": 47.6083891,
+      "lon": -122.3415828,
+      "hybrid_score": 9.999999046325684,
+      "content_score": -0.09620890021324158,
+      "cf_score": -0.655383825302124
+    },
+    {
+      "name": "Daawat Grill & Bar",
+      "address": "820 Pike St, Seattle, WA  98101, United States",
+      "location": {
+        "lat": 47.6126381,
+        "lon": -122.3314318
+      },
+      "category": "Restaurant",
+      "category2": "Indian food",
+      "combined_category": ["Restaurant", "Indian food"],
+      "name_encoded": 17,
+      "address_encoded": 79,
+      "lat": 47.6126381,
+      "lon": -122.3314318,
+      "hybrid_score": 4.999999523162842,
+      "content_score": -0.16813942790031433,
+      "cf_score": 0.4105144143104553
+    },
+    {
+      "name": "Moore Theatre",
+      "address": "1932 2nd Ave, Seattle, WA  98101, United States",
+      "location": {
+        "lat": 47.6117171,
+        "lon": -122.3414813
+      },
+      "category": "MusicVenue",
+      "category2": "MovieTheater",
+      "combined_category": ["MusicVenue", "MovieTheater"],
+      "name_encoded": 43,
+      "address_encoded": 42,
+      "lat": 47.6117171,
+      "lon": -122.3414813,
+      "hybrid_score": 9.999999046325684,
+      "content_score": -0.19861182570457458,
+      "cf_score": -1.0410213470458984
+    },
+    {
+      "name": "SIFF Cinema Uptown",
+      "address": "511 Queen Anne Ave N, Seattle, WA  98109, United States",
+      "location": {
+        "lat": 47.6236193,
+        "lon": -122.3570266
+      },
+      "category": "MovieTheater",
+      "category2": "MovieTheater",
+      "combined_category": ["MovieTheater", "MovieTheater"],
+      "name_encoded": 61,
+      "address_encoded": 70,
+      "lat": 47.6236193,
+      "lon": -122.3570266,
+      "hybrid_score": 7.0710673332214355,
+      "content_score": -0.3696995675563812,
+      "cf_score": -0.9022500514984131
+    },
+    {
+      "name": "Seattle Beer Co.",
+      "address": "1427 Western Ave, Seattle, WA  98101, United States",
+      "location": {
+        "lat": 47.6081819,
+        "lon": -122.3411911
+      },
+      "category": "Nightlife",
+      "category2": "Winery",
+      "combined_category": ["Nightlife", "Winery"],
+      "name_encoded": 63,
+      "address_encoded": 26,
+      "lat": 47.6081819,
+      "lon": -122.3411911,
+      "hybrid_score": 9.999999046325684,
+      "content_score": -0.20728656649589539,
+      "cf_score": -1.0736894607543945
+    },
+    {
+      "name": "The Tasting Room",
+      "address": "1924 Post Alley, Seattle, WA 98101, United States",
+      "location": {
+        "lat": 47.6104763,
+        "lon": -122.3424751
+      },
+      "category": "Nightlife",
+      "category2": "Winery",
+      "combined_category": ["Nightlife", "Winery"],
+      "name_encoded": 73,
+      "address_encoded": 41,
+      "lat": 47.6104763,
+      "lon": -122.3424751,
+      "hybrid_score": 9.999999046325684,
+      "content_score": -0.18042263388633728,
+      "cf_score": -0.9725229740142822
+    },
+    {
+      "name": "Xtadium Lounge",
+      "address": "315 2nd Ave S, Seattle, WA  98104, United States",
+      "location": {
+        "lat": 47.5995372,
+        "lon": -122.3319796
+      },
+      "category": "Nightlife",
+      "category2": "Nightlife",
+      "combined_category": ["Nightlife", "Nightlife"],
+      "name_encoded": 83,
+      "address_encoded": 60,
+      "lat": 47.5995372,
+      "lon": -122.3319796,
+      "hybrid_score": 7.0710673332214355,
+      "content_score": -0.30001088976860046,
+      "cf_score": -0.6398106217384338
+    },
+    {
+      "name": "The Nest",
+      "address": "110 Stewart St, Seattle, WA  98101, United States",
+      "location": {
+        "lat": 47.610588,
+        "lon": -122.3412636
+      },
+      "category": "Nightlife",
+      "category2": "outdoor",
+      "combined_category": ["Nightlife", "outdoor"],
+      "name_encoded": 69,
+      "address_encoded": 8,
+      "lat": 47.610588,
+      "lon": -122.3412636,
+      "hybrid_score": 9.999999046325684,
+      "content_score": -0.14864394068717957,
+      "cf_score": -0.8528481125831604
+    },
+    {
+      "name": "Golden Roosters",
+      "address": "115 Occidental Ave S, Seattle, WA  98104, United States",
+      "location": {
+        "lat": 47.6012289,
+        "lon": -122.3331325
+      },
+      "category": "Nightlife",
+      "category2": "outdoor",
+      "combined_category": ["Nightlife", "outdoor"],
+      "name_encoded": 24,
+      "address_encoded": 13,
+      "lat": 47.6012289,
+      "lon": -122.3331325,
+      "hybrid_score": 9.999998092651367,
+      "content_score": -0.25281330943107605,
+      "cf_score": -1.2451376914978027
+    },
+    {
+      "name": "Aluel Cellars",
+      "address": "801 E Thomas St, Seattle, WA  98102, United States",
+      "location": {
+        "lat": 47.6209743,
+        "lon": -122.321939
+      },
+      "category": "Nightlife",
+      "category2": "Winery",
+      "combined_category": ["Nightlife", "Winery"],
+      "name_encoded": 6,
+      "address_encoded": 76,
+      "lat": 47.6209743,
+      "lon": -122.321939,
+      "hybrid_score": 9.999999046325684,
+      "content_score": -0.27408602833747864,
+      "cf_score": -1.32524836063385
+    },
+    {
+      "name": "Mason's Famous Lobster Rolls",
+      "address": "1307 1st Ave, Seattle, WA  98101, United States",
+      "location": {
+        "lat": 47.6070497,
+        "lon": -122.3386499
+      },
+      "category": "Restaurant",
+      "category2": "outdoor",
+      "combined_category": ["Restaurant", "outdoor"],
+      "name_encoded": 38,
+      "address_encoded": 18,
+      "lat": 47.6070497,
+      "lon": -122.3386499,
+      "hybrid_score": 9.999999046325684,
+      "content_score": -0.19918903708457947,
+      "cf_score": -1.0431950092315674
+    },
+    {
+      "name": "Boeing IMAX Theater",
+      "address": "200 2nd Ave N, Seattle, WA 98109, United States",
+      "location": {
+        "lat": 47.6197316,
+        "lon": -122.3506808
+      },
+      "category": "MovieTheater",
+      "category2": "MovieTheater",
+      "combined_category": ["MovieTheater", "MovieTheater"],
+      "name_encoded": 11,
+      "address_encoded": 44,
+      "lat": 47.6197316,
+      "lon": -122.3506808,
+      "hybrid_score": 7.0710673332214355,
+      "content_score": -0.2697683274745941,
+      "cf_score": -0.5259207487106323
+    },
+    {
+      "name": "The Crab Pot",
+      "address": "1301 Alaskan Way\nSeattle, WA 98101\nUnited States",
+      "location": {
+        "lat": 47.6059677,
+        "lon": -122.3409551
+      },
+      "category": "Restaurant",
+      "category2": "outdoor",
+      "combined_category": ["Restaurant", "outdoor"],
+      "name_encoded": 67,
+      "address_encoded": 17,
+      "lat": 47.6059677,
+      "lon": -122.3409551,
+      "hybrid_score": 9.999999046325684,
+      "content_score": -0.16958853602409363,
+      "cf_score": -0.9317229986190796
+    },
+    {
+      "name": "SIFF Cinema Egyptian",
+      "address": "805 E Pine St, Seattle, WA  98122, United States",
+      "location": {
+        "lat": 47.6149512,
+        "lon": -122.3217491
+      },
+      "category": "MovieTheater",
+      "category2": "MovieTheater",
+      "combined_category": ["MovieTheater", "MovieTheater"],
+      "name_encoded": 60,
+      "address_encoded": 77,
+      "lat": 47.6149512,
+      "lon": -122.3217491,
+      "hybrid_score": 7.0710673332214355,
+      "content_score": -0.38613733649253845,
+      "cf_score": -0.9641527533531189
+    },
+    {
+      "name": "Nirmal's",
+      "address": "106 Occidental Ave S, Seattle, WA  98104, United States",
+      "location": {
+        "lat": 47.6014266,
+        "lon": -122.3326731
+      },
+      "category": "Restaurant",
+      "category2": "Indian food",
+      "combined_category": ["Restaurant", "Indian food"],
+      "name_encoded": 47,
+      "address_encoded": 4,
+      "lat": 47.6014266,
+      "lon": -122.3326731,
+      "hybrid_score": 4.999999523162842,
+      "content_score": -0.18849334120750427,
+      "cf_score": 0.33386391401290894
+    },
+    {
+      "name": "Almquist Family",
+      "address": "198 Nickerson St, Seattle, WA  98109, United States",
+      "location": {
+        "lat": 47.6480162,
+        "lon": -122.3526742
+      },
+      "category": "Winery",
+      "category2": "Winery",
+      "combined_category": ["Winery", "Winery"],
+      "name_encoded": 5,
+      "address_encoded": 43,
+      "lat": 47.6480162,
+      "lon": -122.3526742,
+      "hybrid_score": 7.0710673332214355,
+      "content_score": -0.30419227480888367,
+      "cf_score": -0.6555573344230652
+    },
+    {
+      "name": "Regal Cinemas",
+      "address": "1501 7th Ave, Seattle, WA 98101, United States",
+      "location": {
+        "lat": 47.6117672,
+        "lon": -122.3337221
+      },
+      "category": "MovieTheater",
+      "category2": "MovieTheater",
+      "combined_category": ["MovieTheater", "MovieTheater"],
+      "name_encoded": 58,
+      "address_encoded": 28,
+      "lat": 47.6117672,
+      "lon": -122.3337221,
+      "hybrid_score": 7.0710673332214355,
+      "content_score": -0.19224593043327332,
+      "cf_score": -0.23398053646087646
     }
   ]
 }
