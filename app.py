@@ -26,6 +26,8 @@ import httpx
 import logging
 from fastapi.middleware.cors import CORSMiddleware
 from model import AiModel
+from typeDefs import Location
+
 # Installed
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -149,12 +151,6 @@ users = Users(client)
 
 # Initialize Google Maps client
 # gmaps = googlemaps.Client(key=os.getenv('GOOGLE_MAPS_API1'))
-
-
-class Location(BaseModel):
-    lat: float
-    lon: float
-
 
 
 class SocialInteraction(str, Enum):
@@ -530,11 +526,6 @@ async def get_recommendations(location: Location):
     #     raise HTTPException(status_code=500, detail=f"Request error: {str(e)}")
 
     return {"recommendations": dummy_recommendations}
-
-
-class Location(BaseModel):
-    lat: float
-    lon: float
 
 
 class ProximityRecommendationRequest(BaseModel):
@@ -1167,7 +1158,7 @@ async def submit_waitlist(entry: WaitListEntry):
 
 class getRecommendations(BaseModel):
     users: List[str]
-    location: List[List[Location]]
+    location: List[Location]
     theme: str
     other: Optional[List[str]] = []
     budget: Optional[int] = 100
@@ -1179,12 +1170,14 @@ async def get_recommendations(request: getRecommendations):
     Get recommendations based on user preferences and location using the AI Model
     '''
     try:
+        print(type(request.location[0]))
+
         model = await AiModel.create(
-            users = request.users,
-            location = request.location,
-            theme = request.theme,
-            other = request.other,
-            budget = request.budget
+            users=request.users,
+            location=request.location,
+            theme=request.theme,
+            other=request.other,
+            budget=request.budget
         )
 
         recommendations_json = model.reacs.to_dict(orient='records')
@@ -1194,7 +1187,8 @@ async def get_recommendations(request: getRecommendations):
         wild_card_recommendations = random.sample(recommendations_json[10:], 5)
 
         final_recommendations = top_recommendations + wild_card_recommendations
-        diversified_recommendations = diversify_recommendations(final_recommendations)
+        diversified_recommendations = diversify_recommendations(
+            final_recommendations)
 
         return {
             "message": "Recommendations generated successfully",
@@ -1206,6 +1200,7 @@ async def get_recommendations(request: getRecommendations):
         raise HTTPException(
             status_code=500, detail=f"Error getting recommendations: {str(e)}")
 
+
 def diversify_recommendations(recommendations):
     categories_seen = set()
     diversified = []
@@ -1214,16 +1209,16 @@ def diversify_recommendations(recommendations):
         if rec["category"] not in categories_seen:
             diversified.append(rec)
             categories_seen.add(rec["category"])
-    
+
     while len(diversified) < len(recommendations):
-        remaining = [rec for rec in recommendations if rec["category"] not in categories_seen]
+        remaining = [
+            rec for rec in recommendations if rec["category"] not in categories_seen]
         if not remaining:
             break
         diversified.append(remaining.pop(0))
         categories_seen.add(diversified[-1]["category"])
-    
-    return diversified
 
+    return diversified
 
 
 class Notification(BaseModel):
@@ -1256,12 +1251,7 @@ async def send_notification(req: Notification):
 
 # uvicorn app:app --reload
 
-if (os.getenv('DEV')):
-    if __name__ == "__main__":
-        # For development use only
-        import uvicorn
-else:
     # Production use
-    if __name__ == "__main__":
-        update_apple_token()
-        import uvicorn
+if __name__ == "__main__":
+    update_apple_token()
+    import uvicorn

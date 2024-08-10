@@ -30,6 +30,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 from sklearn.preprocessing import MultiLabelBinarizer
 from fastapi import HTTPException
+from typeDefs import Location
 
 
 def load_model(file_path, num_users, num_items, new_input_dim):
@@ -96,11 +97,6 @@ appwrite_config = {
 
 database = Databases(client)
 users = Users(client)
-
-
-class Location(BaseModel):
-    lat: float
-    lon: float
 
 
 class ProximityRecommendationRequest(BaseModel):
@@ -330,6 +326,9 @@ class AiModel:
 
         # 2 & 3: Get Top interests
         self.top_interests = self.getTopInterests(self.preferences)
+        print("Model")
+        print(type(self.location))
+        print(type(self.location[0]))
 
         # 4: Get recommendations
         requestRec = ProximityRecommendationRequest(
@@ -366,7 +365,7 @@ class AiModel:
         await instance.initialize()
         return instance
 
-    def getPreferences(self, users: List[str]) -> Dict[str, Any]:
+    def getPreferences(self, users: List[str]):
         res = defaultdict(int)
         for user in users:
             preferences = database.get_document(
@@ -517,15 +516,15 @@ class AiModel:
         return self.places_tensor, self.user_tensor, interaction_tensor
 
 
-async def main():
-    users = ["66996b7b0025b402922b", "66996d2e00314baa2a20"]
-    locations = [Location(lat=38.98582939, lon=-76.937329584)]
+# async def main():
+#     users = ["66996b7b0025b402922b", "66996d2e00314baa2a20"]
+#     locations = [Location(lat=38.98582939, lon=-76.937329584)]
 
-    model = await AiModel.create(users, locations, "shopping_spree", ["Japanese food"])
-    print(model.recs)
+#     model = await AiModel.create(users, locations, "shopping_spree", ["Japanese food"])
+#     print(model.recs)
 
-# Run the async function
-asyncio.run(main())
+# # Run the async function
+# asyncio.run(main())
 
 
 # When calling API Requeast take in: userList, locationList as locaiton objects, theme, and comma separated list of "Other"
