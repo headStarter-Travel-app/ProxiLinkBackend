@@ -23,6 +23,7 @@ from pprint import pprint
 import pandas as pd
 import torch
 import torch.nn as nn
+import torch.optim as optim
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.metrics.pairwise import cosine_similarity
@@ -285,6 +286,44 @@ class AiModel:
 
         return recommendations
 
+    def train_model(self, epochs=1000):
+        criterion = nn.MSELoss()
+        optimizer = optim.Adam(self.model.parameters(), lr=0.001)
+
+        for epoch in range(epochs):
+            total_loss = 0
+            for user_idx in range(self.user_tensor.shape[0]):
+                current_user_tensor = self.user_tensor[user_idx].unsqueeze(0)
+                current_user_tensor_repeated = current_user_tensor.repeat(
+                    self.places_tensor.shape[0], 1)
+                user_place_tensor = torch.cat(
+                    (current_user_tensor_repeated, self.places_tensor), dim=1)
+
+                current_user_pref_tensor = torch.tensor(
+                    self.user_encoded[user_idx], dtype=torch.float32).unsqueeze(0)
+                place_pref_tensor = torch.tensor(
+                    self.places_encoded, dtype=torch.float32)
+                similarity = torch.tensor(cosine_similarity(
+                    current_user_pref_tensor, place_pref_tensor).reshape(-1, 1), dtype=torch.float32)
+
+                optimizer.zero_grad()
+                user_indices = torch.full(
+                    (self.places_tensor.shape[0],), user_idx, dtype=torch.long)
+                item_indices = torch.arange(
+                    self.places_tensor.shape[0], dtype=torch.long)
+                output = self.model(user_place_tensor,
+                                    user_indices, item_indices)
+                loss = criterion(output, similarity)
+
+                loss.backward()
+                optimizer.step()
+
+                total_loss += loss.item()
+
+            if (epoch+1) % 100 == 0:
+                print(f'Epoch {
+                      epoch+1}/{epochs}, Avg Loss: {total_loss/self.user_tensor.shape[0]:.4f}')
+
     async def initialize(self):
         # 1. Get preferences
         self.preferences = self.getPreferences(self.users)
@@ -301,7 +340,7 @@ class AiModel:
         self.locationsList = (locs['recommendations'])
 
         # 6: Prepare data for model
-        # TODO THIS IS JSUT FOR TESTING
+        # TODO THIS IS JUST FOR TESTING
         ratings_data_default = {
             "User": ["User1", "User1", "User2", "User3", "User4", "User4", "User3", "User2"],
             "Address": ["Potomac Pizza", "SeoulSpice", "Mamma Lucia", "National Archives archeological site", "Pebbles Wellness Spa", "Looney's Pub", "University of Maryland Golf Course", "The Cornerstone Grill & Loft"],
@@ -311,12 +350,14 @@ class AiModel:
         self.prepare_data(self.locationsList, self.users,
                           self.budget, ratings_data_default)
 
-        # Loading model --- Create mdoel, then train
+        # Loading model --- Create model, then train
         input_dim = self.places_tensor.shape[1] + self.user_tensor.shape[1]
         self.model = self.load_model(input_dim)
-        # 7: Get recommendations and return it
 
-        #
+        # Train the model
+        self.train_model()
+
+        # 7: Get recommendations and return it
         self.recs = self.get_recommendations(0)
 
     @classmethod
@@ -326,15 +367,6 @@ class AiModel:
         return instance
 
     def getPreferences(self, users: List[str]) -> Dict[str, Any]:
-        '''
-        # Example usage
-        preferences = getPreferences(["66996b7b0025b402922b", "66996d2e00314baa2a20", "669b45980030c00f3b8c", "669c735c001355ea24a7"])
-        print(preferences)
-        returns:
-        defaultdict(<class 'int'>, {'Japanese food': 1, 'Italian food': 2, 'Arcade': 2, 'Parks': 2, 'shopping': 4, 'Culture': 2, 'Golf': 2, 'Indian food': 1, 'British food': 1, 'Eating': 1, 'Beach': 2, 'Museums': 1, 'Football': 1, 'Korean food': 1, 'Spas': 2, 'Go Kart': 2, 'Mexican food': 1, 'Belgian food': 1, 'Pizza food': 1, 'Cinemas': 1, 'Bars': 1, 'Music': 1, 'Theme Parks': 1, 'Nightlife': 1, 'Club': 1, 'Historical Sites': 1, 'Soccer': 1, 'Aquatic Sports': 1, 'Live Sports': 1})
-
-
-        '''
         res = defaultdict(int)
         for user in users:
             preferences = database.get_document(
@@ -362,10 +394,6 @@ class AiModel:
         return res
 
     def calculate_centroid(self, locations: List[Location]) -> Dict[str, float]:
-        """
-        Calculate the centroid of given locations.
-        returns: [Location(lat=38.98582939, lon=-76.937329584)]
-        """
         latitudes = [loc.lat for loc in locations]
         longitudes = [loc.lon for loc in locations]
 
@@ -375,21 +403,12 @@ class AiModel:
         return {"lat": centroid_lat, "lon": centroid_lon}
 
     def getTopInterests(self, preferences: Dict[str, int], top_n: int = 10) -> List[str]:
-        '''
-        Using the preferences from "get preferences" function, get the top N interests
-        Example usage:
-        interestsPassin = getTopInterests(preferences)
-        returns: ['shopping', 'Go Kart', 'Arcade', 'Theme Parks', 'Aquatic Sports', 'Japanese food', 'Museums', 'Football', 'Culture', 'Music']
-        '''
-        # Filter preferences with values greater than 2
         filtered_preferences = {k: v for k, v in preferences.items() if v > 2}
-
         sorted_preferences = sorted(
             filtered_preferences.items(), key=lambda item: item[1], reverse=True)
 
         top_interests = [k for k, v in sorted_preferences[:top_n]]
 
-        # If there are fewer than N keys, randomly select additional keys from the remaining preferences
         if len(top_interests) < top_n:
             remaining_preferences = {
                 k: v for k, v in preferences.items() if k not in top_interests}
@@ -400,13 +419,6 @@ class AiModel:
         return top_interests
 
     async def get_proximity_recommendations(self, request: ProximityRecommendationRequest, other: List[str] = []):
-        '''
-        Get recommendations based on the user's preferences and location.
-        Example usage:
-        recommendations = get_proximity_recommendations(ProximityRecommendationRequest(locations=[Location(lat=38.98582939, lon=-76.937329584)], interests=['shopping', 'Go Kart', 'Arcade', 'Theme Parks', 'Aquatic Sports', 'Japanese food', 'Museums', 'Football', 'Culture', 'Music']))
-        {'recommendations': [{'name': 'Potomac Pizza', 'address': '7777 Baltimore Ave, College Park, MD  20740, United States', 'location': {'lat': 38.9873178, 'lon': -76.9356036}, 'category': 'Restaurant', 'category2': 'Italian food'}, {'name': 'The Spa at The Hotel at the University of Maryland', 'address': '7777 Baltimore Ave, FL 4, College Park, MD  20740, United States', 
-
-        '''
         centroid = self.calculate_centroid(request.locations)
         try:
             all_recommendations = []
@@ -427,7 +439,6 @@ class AiModel:
                     result['category2'] = otherInterest
                 all_recommendations.extend(results)
 
-            # Sort recommendations by distance from centroid (if needed)
             sorted_recommendations = sorted(
                 all_recommendations,
                 key=lambda x: ((x['location']['lat'] - centroid['lat'])**2 +
@@ -440,10 +451,6 @@ class AiModel:
                 status_code=500, detail=f"Error getting recommendations: {str(e)}")
 
     def prepare_data(self, data, name, budget, ratingsData=[]):
-        '''
-        Prepare the data for the model
-        Data is the self.locationsList
-        '''
         places_df = pd.DataFrame(data)
         self.places_df = places_df
         user_profile = [{
@@ -461,25 +468,20 @@ class AiModel:
         le_name = LabelEncoder()
         le_address = LabelEncoder()
 
-        # Fit the MultiLabelBinarizer on both places and user preferences
         all_categories = list(places_df['combined_category'].explode().unique(
         )) + list(df_user_profile['combined_preferences'].explode().unique())
         mlb.fit([all_categories])
 
-        # Transform the combined categories
         places_encoded = mlb.transform(places_df['combined_category'])
         user_encoded = mlb.transform(df_user_profile['combined_preferences'])
 
-        # Encode the name and address columns
         places_df['name_encoded'] = le_name.fit_transform(places_df['name'])
         places_df['address_encoded'] = le_address.fit_transform(
             places_df['address'])
 
-        # Extract latitude and longitude
         places_df['lat'] = places_df['location'].apply(lambda x: x['lat'])
         places_df['lon'] = places_df['location'].apply(lambda x: x['lon'])
 
-        # Create the final places feature matrix
         places_features = np.hstack(
             [places_df[['name_encoded', 'address_encoded', 'lat', 'lon']].values, places_encoded])
         user_features = np.hstack(
@@ -495,7 +497,6 @@ class AiModel:
         ratings_df['item_idx'] = item_encoder.fit_transform(
             ratings_df['Address'])
 
-        # Create the user-item interaction matrix
         self.num_users = len(user_encoder.classes_)
         self.num_items = len(places_df)
         interaction_matrix = np.zeros((self.num_users, self.num_items))
@@ -506,9 +507,13 @@ class AiModel:
             rating = row['Rating']
             interaction_matrix[user_idx, item_idx] = rating
 
-        # Convert interaction matrix to tensor
         interaction_tensor = torch.tensor(
             interaction_matrix, dtype=torch.float32)
+
+        # Store encoded data for training
+        self.user_encoded = user_encoded
+        self.places_encoded = places_encoded
+
         return self.places_tensor, self.user_tensor, interaction_tensor
 
 
@@ -518,31 +523,6 @@ async def main():
 
     model = await AiModel.create(users, locations, "shopping_spree", ["Japanese food"])
     print(model.recs)
-    ratings_data = {
-        "User": ["User1", "User1", "User2", "User3", "User4", "User4", "User3", "User2"],
-        "Address": ["Potomac Pizza", "SeoulSpice", "Mamma Lucia", "National Archives archeological site", "Pebbles Wellness Spa", "Looney's Pub", "University of Maryland Golf Course", "The Cornerstone Grill & Loft"],
-        "Rating": [5, 2, 1, 2, 2, 3, 2, 2]
-    }
-
-    '''
-    Example Usage:
-        model = await AiModel.create(users, locations, "shopping_spree", ["Night Clubs"])
-    data = (model.locationsList)
-    print(data)
-    data2 = model.prepare_data(data, 'Group Name', 100)
-    print(data2)
-    '''
-
-    # user_idx = 0
-    # recommendations = model.get_recommendations(user_idx)
-
-    # selected_columns = ['name', 'address', 'combined_category',
-    #                     'hybrid_score', 'content_score', 'cf_score']
-    # print(recommendations[selected_columns])
-
 
 # Run the async function
 asyncio.run(main())
-
-
-# Issue: Loading a pretrained model is not working because the number of items in places and users will always be different, so we get a torch mismatch
