@@ -1190,8 +1190,9 @@ async def get_recommendations(request: getRecommendations):
             other=request.other,
             budget=request.budget
         )
-
+        # FIx this logic tmr
         recommendations_json = model.recs.to_dict(orient='records')
+        print(recommendations_json)
 
         # Ensure there are at least 20 elements for top recommendations
         top_recommendations = recommendations_json[:20]

@@ -2,256 +2,40 @@
   "message": "Recommendations generated successfully",
   "recommendations": [
     {
-      "name": "Zig Zag Café",
-      "address": "1501 Western Ave, Unit 202, Seattle, WA 98101, United States",
+      "name": "Alki Beach Park",
+      "address": "2665 Alki Ave SW, Seattle, WA 98116, United States",
       "location": {
-        "lat": 47.6083891,
-        "lon": -122.3415828
+        "lat": 47.5802602,
+        "lon": -122.4083912
       },
-      "category": "Nightlife",
-      "category2": "outdoor",
-      "combined_category": ["Nightlife", "outdoor"],
-      "name_encoded": 86,
-      "address_encoded": 30,
-      "lat": 47.6083891,
-      "lon": -122.3415828,
-      "hybrid_score": 9.999999046325684,
-      "content_score": -0.09620890021324158,
-      "cf_score": -0.655383825302124
+      "category": "Park",
+      "category2": "Beach",
+      "combined_category": ["Park", "Beach"],
+      "name_encoded": 1,
+      "address_encoded": 39,
+      "lat": 47.5802602,
+      "lon": -122.4083912,
+      "hybrid_score": 10.0,
+      "content_score": -0.22960269451141357,
+      "cf_score": -0.8680375218391418
     },
     {
-      "name": "Daawat Grill & Bar",
-      "address": "820 Pike St, Seattle, WA  98101, United States",
+      "name": "Matthews Beach Park",
+      "address": "5100 NE 93rd St, Seattle, WA 98115, United States",
       "location": {
-        "lat": 47.6126381,
-        "lon": -122.3314318
+        "lat": 47.6957109,
+        "lon": -122.2726393
       },
-      "category": "Restaurant",
-      "category2": "Indian food",
-      "combined_category": ["Restaurant", "Indian food"],
-      "name_encoded": 17,
-      "address_encoded": 79,
-      "lat": 47.6126381,
-      "lon": -122.3314318,
-      "hybrid_score": 4.999999523162842,
-      "content_score": -0.16813942790031433,
-      "cf_score": 0.4105144143104553
-    },
-    {
-      "name": "Moore Theatre",
-      "address": "1932 2nd Ave, Seattle, WA  98101, United States",
-      "location": {
-        "lat": 47.6117171,
-        "lon": -122.3414813
-      },
-      "category": "MusicVenue",
-      "category2": "MovieTheater",
-      "combined_category": ["MusicVenue", "MovieTheater"],
-      "name_encoded": 43,
-      "address_encoded": 42,
-      "lat": 47.6117171,
-      "lon": -122.3414813,
-      "hybrid_score": 9.999999046325684,
-      "content_score": -0.19861182570457458,
-      "cf_score": -1.0410213470458984
-    },
-    {
-      "name": "SIFF Cinema Uptown",
-      "address": "511 Queen Anne Ave N, Seattle, WA  98109, United States",
-      "location": {
-        "lat": 47.6236193,
-        "lon": -122.3570266
-      },
-      "category": "MovieTheater",
-      "category2": "MovieTheater",
-      "combined_category": ["MovieTheater", "MovieTheater"],
-      "name_encoded": 61,
-      "address_encoded": 70,
-      "lat": 47.6236193,
-      "lon": -122.3570266,
-      "hybrid_score": 7.0710673332214355,
-      "content_score": -0.3696995675563812,
-      "cf_score": -0.9022500514984131
-    },
-    {
-      "name": "Seattle Beer Co.",
-      "address": "1427 Western Ave, Seattle, WA  98101, United States",
-      "location": {
-        "lat": 47.6081819,
-        "lon": -122.3411911
-      },
-      "category": "Nightlife",
-      "category2": "Winery",
-      "combined_category": ["Nightlife", "Winery"],
-      "name_encoded": 63,
-      "address_encoded": 26,
-      "lat": 47.6081819,
-      "lon": -122.3411911,
-      "hybrid_score": 9.999999046325684,
-      "content_score": -0.20728656649589539,
-      "cf_score": -1.0736894607543945
-    },
-    {
-      "name": "The Tasting Room",
-      "address": "1924 Post Alley, Seattle, WA 98101, United States",
-      "location": {
-        "lat": 47.6104763,
-        "lon": -122.3424751
-      },
-      "category": "Nightlife",
-      "category2": "Winery",
-      "combined_category": ["Nightlife", "Winery"],
-      "name_encoded": 73,
-      "address_encoded": 41,
-      "lat": 47.6104763,
-      "lon": -122.3424751,
-      "hybrid_score": 9.999999046325684,
-      "content_score": -0.18042263388633728,
-      "cf_score": -0.9725229740142822
-    },
-    {
-      "name": "Xtadium Lounge",
-      "address": "315 2nd Ave S, Seattle, WA  98104, United States",
-      "location": {
-        "lat": 47.5995372,
-        "lon": -122.3319796
-      },
-      "category": "Nightlife",
-      "category2": "Nightlife",
-      "combined_category": ["Nightlife", "Nightlife"],
-      "name_encoded": 83,
-      "address_encoded": 60,
-      "lat": 47.5995372,
-      "lon": -122.3319796,
-      "hybrid_score": 7.0710673332214355,
-      "content_score": -0.30001088976860046,
-      "cf_score": -0.6398106217384338
-    },
-    {
-      "name": "The Nest",
-      "address": "110 Stewart St, Seattle, WA  98101, United States",
-      "location": {
-        "lat": 47.610588,
-        "lon": -122.3412636
-      },
-      "category": "Nightlife",
-      "category2": "outdoor",
-      "combined_category": ["Nightlife", "outdoor"],
-      "name_encoded": 69,
-      "address_encoded": 8,
-      "lat": 47.610588,
-      "lon": -122.3412636,
-      "hybrid_score": 9.999999046325684,
-      "content_score": -0.14864394068717957,
-      "cf_score": -0.8528481125831604
-    },
-    {
-      "name": "Golden Roosters",
-      "address": "115 Occidental Ave S, Seattle, WA  98104, United States",
-      "location": {
-        "lat": 47.6012289,
-        "lon": -122.3331325
-      },
-      "category": "Nightlife",
-      "category2": "outdoor",
-      "combined_category": ["Nightlife", "outdoor"],
-      "name_encoded": 24,
-      "address_encoded": 13,
-      "lat": 47.6012289,
-      "lon": -122.3331325,
-      "hybrid_score": 9.999998092651367,
-      "content_score": -0.25281330943107605,
-      "cf_score": -1.2451376914978027
-    },
-    {
-      "name": "Aluel Cellars",
-      "address": "801 E Thomas St, Seattle, WA  98102, United States",
-      "location": {
-        "lat": 47.6209743,
-        "lon": -122.321939
-      },
-      "category": "Nightlife",
-      "category2": "Winery",
-      "combined_category": ["Nightlife", "Winery"],
-      "name_encoded": 6,
-      "address_encoded": 76,
-      "lat": 47.6209743,
-      "lon": -122.321939,
-      "hybrid_score": 9.999999046325684,
-      "content_score": -0.27408602833747864,
-      "cf_score": -1.32524836063385
-    },
-    {
-      "name": "Mason's Famous Lobster Rolls",
-      "address": "1307 1st Ave, Seattle, WA  98101, United States",
-      "location": {
-        "lat": 47.6070497,
-        "lon": -122.3386499
-      },
-      "category": "Restaurant",
-      "category2": "outdoor",
-      "combined_category": ["Restaurant", "outdoor"],
-      "name_encoded": 38,
-      "address_encoded": 18,
-      "lat": 47.6070497,
-      "lon": -122.3386499,
-      "hybrid_score": 9.999999046325684,
-      "content_score": -0.19918903708457947,
-      "cf_score": -1.0431950092315674
-    },
-    {
-      "name": "Boeing IMAX Theater",
-      "address": "200 2nd Ave N, Seattle, WA 98109, United States",
-      "location": {
-        "lat": 47.6197316,
-        "lon": -122.3506808
-      },
-      "category": "MovieTheater",
-      "category2": "MovieTheater",
-      "combined_category": ["MovieTheater", "MovieTheater"],
-      "name_encoded": 11,
-      "address_encoded": 44,
-      "lat": 47.6197316,
-      "lon": -122.3506808,
-      "hybrid_score": 7.0710673332214355,
-      "content_score": -0.2697683274745941,
-      "cf_score": -0.5259207487106323
-    },
-    {
-      "name": "The Crab Pot",
-      "address": "1301 Alaskan Way\nSeattle, WA 98101\nUnited States",
-      "location": {
-        "lat": 47.6059677,
-        "lon": -122.3409551
-      },
-      "category": "Restaurant",
-      "category2": "outdoor",
-      "combined_category": ["Restaurant", "outdoor"],
-      "name_encoded": 67,
-      "address_encoded": 17,
-      "lat": 47.6059677,
-      "lon": -122.3409551,
-      "hybrid_score": 9.999999046325684,
-      "content_score": -0.16958853602409363,
-      "cf_score": -0.9317229986190796
-    },
-    {
-      "name": "SIFF Cinema Egyptian",
-      "address": "805 E Pine St, Seattle, WA  98122, United States",
-      "location": {
-        "lat": 47.6149512,
-        "lon": -122.3217491
-      },
-      "category": "MovieTheater",
-      "category2": "MovieTheater",
-      "combined_category": ["MovieTheater", "MovieTheater"],
-      "name_encoded": 60,
-      "address_encoded": 77,
-      "lat": 47.6149512,
-      "lon": -122.3217491,
-      "hybrid_score": 7.0710673332214355,
-      "content_score": -0.38613733649253845,
-      "cf_score": -0.9641527533531189
+      "category": "Park",
+      "category2": "Beach",
+      "combined_category": ["Park", "Beach"],
+      "name_encoded": 29,
+      "address_encoded": 52,
+      "lat": 47.6957109,
+      "lon": -122.2726393,
+      "hybrid_score": 10.0,
+      "content_score": -0.211706280708313,
+      "cf_score": -0.7868124842643738
     },
     {
       "name": "Nirmal's",
@@ -261,51 +45,195 @@
         "lon": -122.3326731
       },
       "category": "Restaurant",
-      "category2": "Indian food",
-      "combined_category": ["Restaurant", "Indian food"],
-      "name_encoded": 47,
-      "address_encoded": 4,
+      "category2": "Indian Food",
+      "combined_category": ["Restaurant", "Indian Food"],
+      "name_encoded": 41,
+      "address_encoded": 3,
       "lat": 47.6014266,
       "lon": -122.3326731,
-      "hybrid_score": 4.999999523162842,
-      "content_score": -0.18849334120750427,
-      "cf_score": 0.33386391401290894
+      "hybrid_score": 10.0,
+      "content_score": -0.2620217800140381,
+      "cf_score": -1.0151753425598145
     },
     {
-      "name": "Almquist Family",
-      "address": "198 Nickerson St, Seattle, WA  98109, United States",
+      "name": "South Lake Union",
+      "address": "333 Boren Ave N, Seattle, WA  98109, United States",
       "location": {
-        "lat": 47.6480162,
-        "lon": -122.3526742
+        "lat": 47.621203,
+        "lon": -122.3362319
       },
-      "category": "Winery",
-      "category2": "Winery",
-      "combined_category": ["Winery", "Winery"],
-      "name_encoded": 5,
-      "address_encoded": 43,
-      "lat": 47.6480162,
-      "lon": -122.3526742,
-      "hybrid_score": 7.0710673332214355,
-      "content_score": -0.30419227480888367,
-      "cf_score": -0.6555573344230652
+      "category": "Store",
+      "category2": "Mall",
+      "combined_category": ["Store", "Mall"],
+      "name_encoded": 53,
+      "address_encoded": 45,
+      "lat": 47.621203,
+      "lon": -122.3362319,
+      "hybrid_score": 10.0,
+      "content_score": -0.27184629440307617,
+      "cf_score": -1.0597648620605469
     },
     {
-      "name": "Regal Cinemas",
-      "address": "1501 7th Ave, Seattle, WA 98101, United States",
+      "name": "Alki Beach Park",
+      "address": "2665 Alki Ave SW, Seattle, WA 98116, United States",
       "location": {
-        "lat": 47.6117672,
-        "lon": -122.3337221
+        "lat": 47.5802602,
+        "lon": -122.4083912
       },
-      "category": "MovieTheater",
-      "category2": "MovieTheater",
-      "combined_category": ["MovieTheater", "MovieTheater"],
-      "name_encoded": 58,
-      "address_encoded": 28,
-      "lat": 47.6117672,
-      "lon": -122.3337221,
-      "hybrid_score": 7.0710673332214355,
-      "content_score": -0.19224593043327332,
-      "cf_score": -0.23398053646087646
+      "category": "Park",
+      "category2": "Beach",
+      "combined_category": ["Park", "Beach"],
+      "name_encoded": 1,
+      "address_encoded": 39,
+      "lat": 47.5802602,
+      "lon": -122.4083912,
+      "hybrid_score": 10.0,
+      "content_score": -0.22960269451141357,
+      "cf_score": -0.8680373430252075
+    },
+    {
+      "name": "Nordstrom Rack",
+      "address": "400 Pine St, Seattle, WA  98101, United States",
+      "location": {
+        "lat": 47.6118329,
+        "lon": -122.3373005
+      },
+      "category": "Store",
+      "category2": "Mall",
+      "combined_category": ["Store", "Mall"],
+      "name_encoded": 42,
+      "address_encoded": 46,
+      "lat": 47.6118329,
+      "lon": -122.3373005,
+      "hybrid_score": 10.0,
+      "content_score": -0.2812381982803345,
+      "cf_score": -1.1023911237716675
+    },
+    {
+      "name": "Harvard Market",
+      "address": "1401 Broadway, Seattle, WA  98122, United States",
+      "location": {
+        "lat": 47.6133245,
+        "lon": -122.3210338
+      },
+      "category": "Store",
+      "category2": "Mall",
+      "combined_category": ["Store", "Mall"],
+      "name_encoded": 19,
+      "address_encoded": 16,
+      "lat": 47.6133245,
+      "lon": -122.3210338,
+      "hybrid_score": 10.0,
+      "content_score": -0.2596374750137329,
+      "cf_score": -1.004353642463684
+    },
+    {
+      "name": "Westlake Center",
+      "address": "400 Pine St, Seattle, WA  98101, United States",
+      "location": {
+        "lat": 47.6119182,
+        "lon": -122.3373191
+      },
+      "category": "Store",
+      "category2": "shopping",
+      "combined_category": ["Store", "shopping"],
+      "name_encoded": 69,
+      "address_encoded": 46,
+      "lat": 47.6119182,
+      "lon": -122.3373191,
+      "hybrid_score": 5.0,
+      "content_score": -0.1413189172744751,
+      "cf_score": 0.8899536728858948
+    },
+    {
+      "name": "Spice Bliss",
+      "address": "1520 Broadway, Seattle, WA  98122, United States",
+      "location": {
+        "lat": 47.6145606,
+        "lon": -122.3204041
+      },
+      "category": "Restaurant",
+      "category2": "Indian Food",
+      "combined_category": ["Restaurant", "Indian Food"],
+      "name_encoded": 54,
+      "address_encoded": 22,
+      "lat": 47.6145606,
+      "lon": -122.3204041,
+      "hybrid_score": 10.0,
+      "content_score": -0.25468671321868896,
+      "cf_score": -0.981884241104126
+    },
+    {
+      "name": "Retro Coffee",
+      "address": "920 5th Ave, Unit 150, Seattle, WA  98104, United States",
+      "location": {
+        "lat": 47.6063799,
+        "lon": -122.3313108
+      },
+      "category": "Cafe",
+      "category2": "Cafe",
+      "combined_category": ["Cafe", "Cafe"],
+      "name_encoded": 51,
+      "address_encoded": 67,
+      "lat": 47.6063799,
+      "lon": -122.3313108,
+      "hybrid_score": 7.071067810058594,
+      "content_score": -0.3015357255935669,
+      "cf_score": -0.39942267537117004
+    },
+    {
+      "name": "Zaika",
+      "address": "1100 Pike St, Seattle, WA  98101, United States",
+      "location": {
+        "lat": 47.613672,
+        "lon": -122.3288103
+      },
+      "category": "Restaurant",
+      "category2": "Indian Food",
+      "combined_category": ["Restaurant", "Indian Food"],
+      "name_encoded": 73,
+      "address_encoded": 6,
+      "lat": 47.613672,
+      "lon": -122.3288103,
+      "hybrid_score": 10.0,
+      "content_score": -0.2831193208694458,
+      "cf_score": -1.1109286546707153
+    },
+    {
+      "name": "Daawat Grill & Bar",
+      "address": "820 Pike St, Seattle, WA  98101, United States",
+      "location": {
+        "lat": 47.6126381,
+        "lon": -122.3314318
+      },
+      "category": "Restaurant",
+      "category2": "Indian Food",
+      "combined_category": ["Restaurant", "Indian Food"],
+      "name_encoded": 12,
+      "address_encoded": 60,
+      "lat": 47.6126381,
+      "lon": -122.3314318,
+      "hybrid_score": 10.0,
+      "content_score": -0.289361834526062,
+      "cf_score": -1.13926100730896
+    },
+    {
+      "name": "Original Selfie Museum",
+      "address": "92 Union St, Seattle, WA 98101, United States",
+      "location": {
+        "lat": 47.607788,
+        "lon": -122.339699
+      },
+      "category": "Museum",
+      "category2": "Museums",
+      "combined_category": ["Museum", "Museums"],
+      "name_encoded": 45,
+      "address_encoded": 66,
+      "lat": 47.607788,
+      "lon": -122.339699,
+      "hybrid_score": 0.0,
+      "content_score": -0.43003642559051514,
+      "cf_score": 0.9368813633918762
     }
   ]
 }

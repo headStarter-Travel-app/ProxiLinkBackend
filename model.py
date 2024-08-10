@@ -153,7 +153,7 @@ def cosine_similarity(tensor1, tensor2):
 
 class AiModel:
     romantic_date = [
-        "Cafe", "Restaurant", "Bakery", "AmusementPark", "Beach", "Winery",
+        "Cafe", "Restaurant", "Bakery", "AmusementPark", "Winery",
         "Theater", "MovieTheater", "Park", "Zoo", "Aquarium", "Store",
         "MiniGolf", "Bowling", "MusicVenue", "Store", "Mall"
     ]
@@ -327,7 +327,7 @@ class AiModel:
                 total_loss += loss.item()
 
             if (epoch+1) % 100 == 0:
-                print(f'Epoch { epoch+1}/{epochs}, Avg Loss: {total_loss/self.user_tensor.shape[0]:.4f}')
+                print(f'Epoch {epoch+1}/{epochs}, Avg Loss: {total_loss/self.user_tensor.shape[0]:.4f}')
 
     async def initialize(self):
         # 1. Get preferences
