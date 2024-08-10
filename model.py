@@ -324,48 +324,6 @@ class AiModel:
                 print(f'Epoch {
                       epoch+1}/{epochs}, Avg Loss: {total_loss/self.user_tensor.shape[0]:.4f}')
 
-    async def initialize(self):
-        # 1. Get preferences
-        self.preferences = self.getPreferences(self.users)
-
-        # 2 & 3: Get Top interests
-        self.top_interests = self.getTopInterests(self.preferences)
-
-        # 4: Get recommendations
-        requestRec = ProximityRecommendationRequest(
-            locations=self.location, interests=self.top_interests)
-        locs = await self.get_proximity_recommendations(requestRec, self.other)
-
-        # 5: Store recommendations as json
-        self.locationsList = (locs['recommendations'])
-
-        # 6: Prepare data for model
-        # TODO THIS IS JUST FOR TESTING
-        ratings_data_default = {
-            "User": ["User1", "User1", "User2", "User3", "User4", "User4", "User3", "User2"],
-            "Address": ["Potomac Pizza", "SeoulSpice", "Mamma Lucia", "National Archives archeological site", "Pebbles Wellness Spa", "Looney's Pub", "University of Maryland Golf Course", "The Cornerstone Grill & Loft"],
-            "Rating": [5, 2, 1, 2, 2, 3, 2, 2]
-        }
-
-        self.prepare_data(self.locationsList, self.users,
-                          self.budget, ratings_data_default)
-
-        # Loading model --- Create model, then train
-        input_dim = self.places_tensor.shape[1] + self.user_tensor.shape[1]
-        self.model = self.load_model(input_dim)
-
-        # Train the model
-        self.train_model()
-
-        # 7: Get recommendations and return it
-        self.recs = self.get_recommendations(0)
-
-    @classmethod
-    async def create(cls, users: List[str], location: List[Location], theme: str, other: List[str] = [], budget: int = 100):
-        instance = cls(users, location, theme, other, budget)
-        await instance.initialize()
-        return instance
-
     def getPreferences(self, users: List[str]) -> Dict[str, Any]:
         res = defaultdict(int)
         for user in users:
@@ -517,15 +475,16 @@ class AiModel:
         return self.places_tensor, self.user_tensor, interaction_tensor
 
 
-# async def main():
-#     users = ["66996b7b0025b402922b", "66996d2e00314baa2a20"]
-#     locations = [Location(lat=38.98582939, lon=-76.937329584)]
+'''async def main():
+    users = ["66996b7b0025b402922b", "66996d2e00314baa2a20"]
+    locations = [Location(lat=38.98582939, lon=-76.937329584)]
 
 #     model = await AiModel.create(users, locations, "shopping_spree", ["Japanese food"])
 #     print(model.recs)
 
-# # Run the async function
-# asyncio.run(main())
-
+# Run the async function
+asyncio.run(main())
+'''
 
 # When calling API Requeast take in: userList, locationList as locaiton objects, theme, and comma separated list of "Other"
+'''
