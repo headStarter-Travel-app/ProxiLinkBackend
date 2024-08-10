@@ -34,42 +34,42 @@ from typeDefs import Location
 
 
 def load_model(file_path, num_users, num_items, new_input_dim):
-    # model_info = torch.load(file_path)
-    # old_input_dim = model_info['content_input_dim']
-    # num_factors = model_info['num_factors']
+    model_info = torch.load(file_path)
+    old_input_dim = model_info['content_input_dim']
+    num_factors = model_info['num_factors']
 
     # Create a new model with the current input dimension
     new_model = HybridModel(
         content_input_dim=new_input_dim,
         num_users=num_users,
         num_items=num_items,
-        num_factors=20
+        num_factors=num_factors
     )
 
-    # # Load the saved state dict
-    # old_state_dict = model_info['state_dict']
+    # Load the saved state dict
+    old_state_dict = model_info['state_dict']
 
-    # # Create a new state dict, copying over compatible parts
-    # new_state_dict = {}
+    # Create a new state dict, copying over compatible parts
+    new_state_dict = {}
 
-    # # Handle the content model weights
-    # new_state_dict['content_model.fc1.weight'] = torch.nn.init.xavier_uniform_(
-    #     torch.empty(128, new_input_dim))
-    # new_state_dict['content_model.fc1.bias'] = old_state_dict['content_model.fc1.bias']
+    # Handle the content model weights
+    new_state_dict['content_model.fc1.weight'] = torch.nn.init.xavier_uniform_(
+        torch.empty(128, new_input_dim))
+    new_state_dict['content_model.fc1.bias'] = old_state_dict['content_model.fc1.bias']
 
-    # # Copy over the rest of the layers
-    # for k, v in old_state_dict.items():
-    #     if k not in ['content_model.fc1.weight', 'cf_model.user_factors.weight', 'cf_model.item_factors.weight']:
-    #         new_state_dict[k] = v
+    # Copy over the rest of the layers
+    for k, v in old_state_dict.items():
+        if k not in ['content_model.fc1.weight', 'cf_model.user_factors.weight', 'cf_model.item_factors.weight']:
+            new_state_dict[k] = v
 
-    # # Initialize new embeddings for users and items
-    # new_state_dict['cf_model.user_factors.weight'] = torch.nn.init.xavier_uniform_(
-    #     torch.empty(num_users, num_factors))
-    # new_state_dict['cf_model.item_factors.weight'] = torch.nn.init.xavier_uniform_(
-    #     torch.empty(num_items, num_factors))
+    # Initialize new embeddings for users and items
+    new_state_dict['cf_model.user_factors.weight'] = torch.nn.init.xavier_uniform_(
+        torch.empty(num_users, num_factors))
+    new_state_dict['cf_model.item_factors.weight'] = torch.nn.init.xavier_uniform_(
+        torch.empty(num_items, num_factors))
 
-    # # Load the new state dict
-    # new_model.load_state_dict(new_state_dict)
+    # Load the new state dict
+    new_model.load_state_dict(new_state_dict)
 
     return new_model
 
@@ -327,7 +327,7 @@ class AiModel:
                 total_loss += loss.item()
 
             if (epoch+1) % 100 == 0:
-                print(f'Epoch {epoch+1}/{epochs}, Avg Loss: {total_loss/self.user_tensor.shape[0]:.4f}')
+                print(f'Epoch { epoch+1}/{epochs}, Avg Loss: {total_loss/self.user_tensor.shape[0]:.4f}')
 
     async def initialize(self):
         # 1. Get preferences
