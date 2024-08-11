@@ -467,6 +467,7 @@ async def check_preferences(request: UserPreferencesRequest):
     users = request.users
     # Your logic here
     missing_users = []
+    missing_usernames = []
     try:
         for user_id in users:
             try:
@@ -478,9 +479,16 @@ async def check_preferences(request: UserPreferencesRequest):
             except AppwriteException as e:
                 if e.code == 404:
                     missing_users.append(user_id)
+                    # Fetch the user's first name from the user collection
+                    user_doc = database.get_document(
+                        database_id=appwrite_config['database_id'],
+                        collection_id=appwrite_config['user_collection_id'],
+                        document_id=user_id
+                    )
+                    missing_usernames.append(user_doc.get('firstName', ''))
 
         if missing_users:
-            return {"missing": True, "users": missing_users}
+            return {"missing": True, "users": missing_users, "usernames": missing_usernames}
         else:
             return {"missing": False}
 
