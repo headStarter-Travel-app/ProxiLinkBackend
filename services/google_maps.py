@@ -60,8 +60,7 @@ class GoogleMapsService:
                     photo_urls = []
                     for photo in place['photos'][:5]:  # Limit to first 5 photos
                         if 'name' in photo:
-                            photo_url = f"https://places.googleapis.com/v1/{
-                                photo['name']}/media?key={api_key}&maxHeightPx=400&maxWidthPx=400"
+                            photo_url = f"https://places.googleapis.com/v1/{photo['name']}/media?key={api_key}&maxHeightPx=400&maxWidthPx=400"
                             photo_urls.append(photo_url)
                     place['photo_urls'] = photo_urls
 
@@ -71,7 +70,7 @@ load_dotenv()  # Load environment variables from .env file
 google_maps_service = GoogleMapsService()
 
 
-for _ in range(8):
-    res = google_maps_service.find_place(
-        "1881 Post St, San Francisco, CA  94115, United States AMC Kabuki ")
-    print(res)
+# for _ in range(8):
+#     res = google_maps_service.find_place(
+#         "1881 Post St, San Francisco, CA  94115, United States AMC Kabuki ")
+#     print(res)
