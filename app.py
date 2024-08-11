@@ -1181,7 +1181,7 @@ async def get_recommendations(request: getRecommendations):
 }
     '''
     try:
-        print(type(request.location[0]))
+        print(request)
 
         model = await AiModel.create(
             users=request.users,
