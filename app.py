@@ -455,11 +455,13 @@ async def get_preferences(user_id: str):
         raise HTTPException(
             status_code=500, detail=f"Error getting preferences: {str(e)}")
 
-@app.get("/check-preferences", summary="Check if preferences exist for users")
-async def check_preferences(users: List[str]):
-    """
-    Check if preferences exist for a list of users.
-    """
+class UserPreferencesRequest(BaseModel):
+    users: List[str]
+
+@app.post("/check-preferences", summary="Check if preferences exist for users")
+async def check_preferences(request: UserPreferencesRequest):
+    users = request.users
+    # Your logic here
     missing_users = []
     try:
         for user_id in users:
