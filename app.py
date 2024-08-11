@@ -453,6 +453,33 @@ async def get_preferences(user_id: str):
         raise HTTPException(
             status_code=500, detail=f"Error getting preferences: {str(e)}")
 
+@app.get("/check-preferences", summary="Check if preferences exist for users")
+async def check_preferences(users: List[str]):
+    """
+    Check if preferences exist for a list of users.
+    """
+    missing_users = []
+    try:
+        for user_id in users:
+            try:
+                result = database.get_document(
+                    database_id=appwrite_config['database_id'],
+                    collection_id=appwrite_config['preferences_collection_id'],
+                    document_id=user_id
+                )
+            except AppwriteException as e:
+                if e.code == 404:
+                    missing_users.append(user_id)
+
+        if missing_users:
+            return {"missing": True, "users": missing_users}
+        else:
+            return {"missing": False}
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, detail=f"Error checking preferences: {str(e)}")
+
 
 @app.post("/submit-preferences", summary="Submit User Preferences")
 async def submit_preferences(preferences: Preferences):
