@@ -263,8 +263,7 @@ async def get_batch_place_details(request: batchAddressInput):
                 else:
                     logger.warning(f"No place details found for {input}")
         except Exception as e:
-            logger.error(f"Error processing place details for {
-                         input}: {str(e)}")
+            print("Error")
 
     if not res:
         raise HTTPException(
