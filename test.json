@@ -1,239 +1,136 @@
 {
-  "message": "Recommendations generated successfully",
-  "recommendations": [
+  "id": "ChIJmf0AV7iAhYARylK9tmGaQvM",
+  "formattedAddress": "1881 Post St, San Francisco, CA 94115, USA",
+  "rating": 4.1,
+  "websiteUri": "https://www.amctheatres.com/movie-theatres/san-francisco/amc-kabuki-8?utm_medium=organic&utm_source=google&utm_campaign=local",
+  "displayName": { "text": "AMC Kabuki 8", "languageCode": "en" },
+  "photos": [
     {
-      "name": "Alki Beach Park",
-      "address": "2665 Alki Ave SW, Seattle, WA 98116, United States",
-      "location": {
-        "lat": 47.5802602,
-        "lon": -122.4083912
-      },
-      "category": "Park",
-      "category2": "Beach",
-      "combined_category": ["Park", "Beach"],
-      "name_encoded": 1,
-      "address_encoded": 39,
-      "lat": 47.5802602,
-      "lon": -122.4083912,
-      "hybrid_score": 10.0,
-      "content_score": -0.22960269451141357,
-      "cf_score": -0.8680375218391418
+      "name": "places/ChIJmf0AV7iAhYARylK9tmGaQvM/photos/AelY_Cu6IKA8mMS4g4M3oaPWX8mhzhLVEJmcWNdknGa9OmNNid6iz_qCBIYhKrY8B6dexo46apVvNU7cbQBXeXa1w34XHAUSftPS3vlo64ab0cqvZMDrSMOZ4AOq1qEnHV41TXPA0nP-pc0-nJ8OalNxV7cVJ1SsDhh5SuPJ",
+      "widthPx": 4032,
+      "heightPx": 3024,
+      "authorAttributions": [
+        {
+          "displayName": "Debprotim Seal",
+          "uri": "//maps.google.com/maps/contrib/113223495473395726804",
+          "photoUri": "//lh3.googleusercontent.com/a-/ALV-UjXbtrL_T3iG0DJOc87NMYikc0k5a-gJzZAWJArBVa2I2D0zYi3z=s100-p-k-no-mo"
+        }
+      ]
     },
     {
-      "name": "Matthews Beach Park",
-      "address": "5100 NE 93rd St, Seattle, WA 98115, United States",
-      "location": {
-        "lat": 47.6957109,
-        "lon": -122.2726393
-      },
-      "category": "Park",
-      "category2": "Beach",
-      "combined_category": ["Park", "Beach"],
-      "name_encoded": 29,
-      "address_encoded": 52,
-      "lat": 47.6957109,
-      "lon": -122.2726393,
-      "hybrid_score": 10.0,
-      "content_score": -0.211706280708313,
-      "cf_score": -0.7868124842643738
+      "name": "places/ChIJmf0AV7iAhYARylK9tmGaQvM/photos/AelY_Cs01M4ESCt2wacMyPtWnnHjws9r3q20ZHb_lqmYE7bFPqpRg-D4zyf8eBS5kKYvl9l3bKqgP_BjWtiyoCnrKx1F8X25mEN9bzTBrw58nQxMFWUgJgBcLYl5k4aXN5ly6jmiRxWqy9y8WjIA81uDfAdCbxMdDQDN41eB",
+      "widthPx": 4000,
+      "heightPx": 2252,
+      "authorAttributions": [
+        {
+          "displayName": "David",
+          "uri": "//maps.google.com/maps/contrib/116092137586851619486",
+          "photoUri": "//lh3.googleusercontent.com/a-/ALV-UjWLafaMHjoIUEtI-nr7t3Of_rcVxqhNzo9ltpvF2tmoN930hRqB=s100-p-k-no-mo"
+        }
+      ]
     },
     {
-      "name": "Nirmal's",
-      "address": "106 Occidental Ave S, Seattle, WA  98104, United States",
-      "location": {
-        "lat": 47.6014266,
-        "lon": -122.3326731
-      },
-      "category": "Restaurant",
-      "category2": "Indian Food",
-      "combined_category": ["Restaurant", "Indian Food"],
-      "name_encoded": 41,
-      "address_encoded": 3,
-      "lat": 47.6014266,
-      "lon": -122.3326731,
-      "hybrid_score": 10.0,
-      "content_score": -0.2620217800140381,
-      "cf_score": -1.0151753425598145
+      "name": "places/ChIJmf0AV7iAhYARylK9tmGaQvM/photos/AelY_CuE82Jm9XTOKLUmSpUzBJGsNsxxxXbAq2wIJloFpufd_2kE0flwOy6EDuef75LLN7XhsZt_lx7kuSN3572Ll7koJqsLkXlJXml2FnCeV8v0M0HjFNUGek-qTJyF4rvHEUt671zpocVuYhxfpN5B3EOHCn_zbv_j0UzZ",
+      "widthPx": 2700,
+      "heightPx": 4800,
+      "authorAttributions": [
+        {
+          "displayName": "Vincent Raerek (vær-κ)",
+          "uri": "//maps.google.com/maps/contrib/106970798861574367542",
+          "photoUri": "//lh3.googleusercontent.com/a-/ALV-UjVtgGzQ0EPcIP_S2E1GS9DdEHEqjc-27PTuN8Qjnm-ksdDTLQ5SnA=s100-p-k-no-mo"
+        }
+      ]
     },
     {
-      "name": "South Lake Union",
-      "address": "333 Boren Ave N, Seattle, WA  98109, United States",
-      "location": {
-        "lat": 47.621203,
-        "lon": -122.3362319
-      },
-      "category": "Store",
-      "category2": "Mall",
-      "combined_category": ["Store", "Mall"],
-      "name_encoded": 53,
-      "address_encoded": 45,
-      "lat": 47.621203,
-      "lon": -122.3362319,
-      "hybrid_score": 10.0,
-      "content_score": -0.27184629440307617,
-      "cf_score": -1.0597648620605469
+      "name": "places/ChIJmf0AV7iAhYARylK9tmGaQvM/photos/AelY_CvD7ElyrkgmqTr_pIVJn7WdPmRTkPJraFfOO5XLu1X2SyIX6g3AQy8BpdUKhZBI7G-a8WC5OKjNrzj0m7p6x46Y7ilHOWOGb-vuETp7AMW5s3UMcZt-pY46g8lBXcLiy94JJQBjA2QDfvOSi2FhQYYcD04kAgSsgxU2",
+      "widthPx": 4032,
+      "heightPx": 2268,
+      "authorAttributions": [
+        {
+          "displayName": "Bert Bräutigam",
+          "uri": "//maps.google.com/maps/contrib/114331831145864172176",
+          "photoUri": "//lh3.googleusercontent.com/a-/ALV-UjXnYlx6kf5On5K9frjVA6GI_z_4RbhMiTx6dTjNN2AM_XaoZg8=s100-p-k-no-mo"
+        }
+      ]
     },
     {
-      "name": "Alki Beach Park",
-      "address": "2665 Alki Ave SW, Seattle, WA 98116, United States",
-      "location": {
-        "lat": 47.5802602,
-        "lon": -122.4083912
-      },
-      "category": "Park",
-      "category2": "Beach",
-      "combined_category": ["Park", "Beach"],
-      "name_encoded": 1,
-      "address_encoded": 39,
-      "lat": 47.5802602,
-      "lon": -122.4083912,
-      "hybrid_score": 10.0,
-      "content_score": -0.22960269451141357,
-      "cf_score": -0.8680373430252075
+      "name": "places/ChIJmf0AV7iAhYARylK9tmGaQvM/photos/AelY_CsTW6y73XqCBbmcT08JGPa4Q5yIEw2-hPPYSpzrNfogQwpNF0Y5ajz8reWtcyWqoa1a8mTFgle44Vm3udDxBnUYEwLHXr7QhQNgsliSYzOOybJZNsiW1mBPzTnaSoLtdDt5hhn_xTe1xzyLY9RxMKLrRhGHG0E_jxje",
+      "widthPx": 4032,
+      "heightPx": 3024,
+      "authorAttributions": [
+        {
+          "displayName": "July Monday",
+          "uri": "//maps.google.com/maps/contrib/111798061461969143647",
+          "photoUri": "//lh3.googleusercontent.com/a-/ALV-UjUxhL1oURZxhW0LhKtul5SnhhZlWmEqspPaZaeOROq4Ci5f2Zy1=s100-p-k-no-mo"
+        }
+      ]
     },
     {
-      "name": "Nordstrom Rack",
-      "address": "400 Pine St, Seattle, WA  98101, United States",
-      "location": {
-        "lat": 47.6118329,
-        "lon": -122.3373005
-      },
-      "category": "Store",
-      "category2": "Mall",
-      "combined_category": ["Store", "Mall"],
-      "name_encoded": 42,
-      "address_encoded": 46,
-      "lat": 47.6118329,
-      "lon": -122.3373005,
-      "hybrid_score": 10.0,
-      "content_score": -0.2812381982803345,
-      "cf_score": -1.1023911237716675
+      "name": "places/ChIJmf0AV7iAhYARylK9tmGaQvM/photos/AelY_CvJp9XjOjX2rOlren0Zy65fAjf53t5IITxMsEQ_pyAf477LXl0TQ_2AB7FrmEgpIRT5kvQ00eMNZhjQESomWj_aUXKKr7WLFZphOeQWikbnhgrWEqU028HlKatOweLTji2C8mfQHWGVfH5Qa2GXnrWpKkWPyciby6ck",
+      "widthPx": 4800,
+      "heightPx": 3600,
+      "authorAttributions": [
+        {
+          "displayName": "Matty B",
+          "uri": "//maps.google.com/maps/contrib/104641095422852249098",
+          "photoUri": "//lh3.googleusercontent.com/a-/ALV-UjWk8qO_qslrJAsU8AckTpNvL7ovyWJ4Xz7cMzI6Oabnbet38tAQSw=s100-p-k-no-mo"
+        }
+      ]
     },
     {
-      "name": "Harvard Market",
-      "address": "1401 Broadway, Seattle, WA  98122, United States",
-      "location": {
-        "lat": 47.6133245,
-        "lon": -122.3210338
-      },
-      "category": "Store",
-      "category2": "Mall",
-      "combined_category": ["Store", "Mall"],
-      "name_encoded": 19,
-      "address_encoded": 16,
-      "lat": 47.6133245,
-      "lon": -122.3210338,
-      "hybrid_score": 10.0,
-      "content_score": -0.2596374750137329,
-      "cf_score": -1.004353642463684
+      "name": "places/ChIJmf0AV7iAhYARylK9tmGaQvM/photos/AelY_Cun3HP_hzlZU2fx4KYycnbFNTvH8spQBtXadxwjcdjotEFRjIXSklhxI9WNsvwBKGCRAX2KfM52DBXf2EHSo5ALnh4foeYBOedn8j7jXL1moUHiNPpSgyJYM5tulXpOY6Ny9JpxBoVziiEeX45EsowMBFJpYeGFUdSo",
+      "widthPx": 4032,
+      "heightPx": 3024,
+      "authorAttributions": [
+        {
+          "displayName": "Food “Food Shutterbug” Shutterbug",
+          "uri": "//maps.google.com/maps/contrib/118021245040993268654",
+          "photoUri": "//lh3.googleusercontent.com/a-/ALV-UjURyQk9Gn2Gccrt2AzCmGQEuojOxjVSjUgMzAh2d4F23kYYk5U=s100-p-k-no-mo"
+        }
+      ]
     },
     {
-      "name": "Westlake Center",
-      "address": "400 Pine St, Seattle, WA  98101, United States",
-      "location": {
-        "lat": 47.6119182,
-        "lon": -122.3373191
-      },
-      "category": "Store",
-      "category2": "shopping",
-      "combined_category": ["Store", "shopping"],
-      "name_encoded": 69,
-      "address_encoded": 46,
-      "lat": 47.6119182,
-      "lon": -122.3373191,
-      "hybrid_score": 5.0,
-      "content_score": -0.1413189172744751,
-      "cf_score": 0.8899536728858948
+      "name": "places/ChIJmf0AV7iAhYARylK9tmGaQvM/photos/AelY_Ct2yGrjCmbFzWf3oqQggnXMTYLN6bzsBDqxV68llxZ6GWCOYiAaZXzBJm62M_PfqeRdUfv-Xx1VWHDiP2yqDRFAMFhiav2CBtXps9liOCghX-oyGZqwjL7AItBxr7yry48T7AI1CIn4l_Th4zQMyQaT5J0500gn3hD5",
+      "widthPx": 4032,
+      "heightPx": 3024,
+      "authorAttributions": [
+        {
+          "displayName": "Scott Breuds",
+          "uri": "//maps.google.com/maps/contrib/102562174917228010627",
+          "photoUri": "//lh3.googleusercontent.com/a-/ALV-UjXRTtYXPhzQwO6LySCQKiqLZIj2XuTYMMVSHSUZADsv2PT230PCdw=s100-p-k-no-mo"
+        }
+      ]
     },
     {
-      "name": "Spice Bliss",
-      "address": "1520 Broadway, Seattle, WA  98122, United States",
-      "location": {
-        "lat": 47.6145606,
-        "lon": -122.3204041
-      },
-      "category": "Restaurant",
-      "category2": "Indian Food",
-      "combined_category": ["Restaurant", "Indian Food"],
-      "name_encoded": 54,
-      "address_encoded": 22,
-      "lat": 47.6145606,
-      "lon": -122.3204041,
-      "hybrid_score": 10.0,
-      "content_score": -0.25468671321868896,
-      "cf_score": -0.981884241104126
+      "name": "places/ChIJmf0AV7iAhYARylK9tmGaQvM/photos/AelY_CvEaoI1fKMDEHcftoswGQBVhH898wNJJwYkPMo7DZSwpjI_TGBZxVpQGOaLo8pRPbBH0JSk79YjG-gtZMGabelB95uapl8at1gD3UqN2IMQ1w0IUaBMkLmjg-hZOE_0Jiyru-o2cTMIXvCqiRotTpZDKDkQ1k4mGJAf",
+      "widthPx": 2700,
+      "heightPx": 4800,
+      "authorAttributions": [
+        {
+          "displayName": "Thomas San Francisco",
+          "uri": "//maps.google.com/maps/contrib/101257645491187781028",
+          "photoUri": "//lh3.googleusercontent.com/a-/ALV-UjXcD6SZEI34EslNbL3OXYIqYTu5njxbRH9U17doEKAbI8byDET2Zg=s100-p-k-no-mo"
+        }
+      ]
     },
     {
-      "name": "Retro Coffee",
-      "address": "920 5th Ave, Unit 150, Seattle, WA  98104, United States",
-      "location": {
-        "lat": 47.6063799,
-        "lon": -122.3313108
-      },
-      "category": "Cafe",
-      "category2": "Cafe",
-      "combined_category": ["Cafe", "Cafe"],
-      "name_encoded": 51,
-      "address_encoded": 67,
-      "lat": 47.6063799,
-      "lon": -122.3313108,
-      "hybrid_score": 7.071067810058594,
-      "content_score": -0.3015357255935669,
-      "cf_score": -0.39942267537117004
-    },
-    {
-      "name": "Zaika",
-      "address": "1100 Pike St, Seattle, WA  98101, United States",
-      "location": {
-        "lat": 47.613672,
-        "lon": -122.3288103
-      },
-      "category": "Restaurant",
-      "category2": "Indian Food",
-      "combined_category": ["Restaurant", "Indian Food"],
-      "name_encoded": 73,
-      "address_encoded": 6,
-      "lat": 47.613672,
-      "lon": -122.3288103,
-      "hybrid_score": 10.0,
-      "content_score": -0.2831193208694458,
-      "cf_score": -1.1109286546707153
-    },
-    {
-      "name": "Daawat Grill & Bar",
-      "address": "820 Pike St, Seattle, WA  98101, United States",
-      "location": {
-        "lat": 47.6126381,
-        "lon": -122.3314318
-      },
-      "category": "Restaurant",
-      "category2": "Indian Food",
-      "combined_category": ["Restaurant", "Indian Food"],
-      "name_encoded": 12,
-      "address_encoded": 60,
-      "lat": 47.6126381,
-      "lon": -122.3314318,
-      "hybrid_score": 10.0,
-      "content_score": -0.289361834526062,
-      "cf_score": -1.13926100730896
-    },
-    {
-      "name": "Original Selfie Museum",
-      "address": "92 Union St, Seattle, WA 98101, United States",
-      "location": {
-        "lat": 47.607788,
-        "lon": -122.339699
-      },
-      "category": "Museum",
-      "category2": "Museums",
-      "combined_category": ["Museum", "Museums"],
-      "name_encoded": 45,
-      "address_encoded": 66,
-      "lat": 47.607788,
-      "lon": -122.339699,
-      "hybrid_score": 0.0,
-      "content_score": -0.43003642559051514,
-      "cf_score": 0.9368813633918762
+      "name": "places/ChIJmf0AV7iAhYARylK9tmGaQvM/photos/AelY_CtsNvVsQqqR5TX-_sAwFuB-8jUko1_BEONQafwtUc6-BZjRqGRN4c5jYeoJI5xRwBMhQao_RXSY2vro1MJwFtzvsbSwlsjA906Tjkdg4Qw4uv2sCHnPJYJ5FdCIecP15BIERv1ugG6sBBvCRBRthFn9EB3KL1gxWeAW",
+      "widthPx": 4032,
+      "heightPx": 3024,
+      "authorAttributions": [
+        {
+          "displayName": "Eric Mar",
+          "uri": "//maps.google.com/maps/contrib/112106597735999520984",
+          "photoUri": "//lh3.googleusercontent.com/a-/ALV-UjVZ3Svlb9k0sV8wPhfAcLftGUMcrf_bmoHhwLgOxxLa81RU0JiZ7Q=s100-p-k-no-mo"
+        }
+      ]
     }
+  ],
+  "photo_urls": [
+    "https://places.googleapis.com/v1/places/ChIJmf0AV7iAhYARylK9tmGaQvM/photos/AelY_Cu6IKA8mMS4g4M3oaPWX8mhzhLVEJmcWNdknGa9OmNNid6iz_qCBIYhKrY8B6dexo46apVvNU7cbQBXeXa1w34XHAUSftPS3vlo64ab0cqvZMDrSMOZ4AOq1qEnHV41TXPA0nP-pc0-nJ8OalNxV7cVJ1SsDhh5SuPJ/media?key=AIzaSyAt9Am71D7ye3d4xA3G0hKiDmr0bR_8-v4&maxHeightPx=400&maxWidthPx=400",
+    "https://places.googleapis.com/v1/places/ChIJmf0AV7iAhYARylK9tmGaQvM/photos/AelY_Cs01M4ESCt2wacMyPtWnnHjws9r3q20ZHb_lqmYE7bFPqpRg-D4zyf8eBS5kKYvl9l3bKqgP_BjWtiyoCnrKx1F8X25mEN9bzTBrw58nQxMFWUgJgBcLYl5k4aXN5ly6jmiRxWqy9y8WjIA81uDfAdCbxMdDQDN41eB/media?key=AIzaSyAt9Am71D7ye3d4xA3G0hKiDmr0bR_8-v4&maxHeightPx=400&maxWidthPx=400",
+    "https://places.googleapis.com/v1/places/ChIJmf0AV7iAhYARylK9tmGaQvM/photos/AelY_CuE82Jm9XTOKLUmSpUzBJGsNsxxxXbAq2wIJloFpufd_2kE0flwOy6EDuef75LLN7XhsZt_lx7kuSN3572Ll7koJqsLkXlJXml2FnCeV8v0M0HjFNUGek-qTJyF4rvHEUt671zpocVuYhxfpN5B3EOHCn_zbv_j0UzZ/media?key=AIzaSyAt9Am71D7ye3d4xA3G0hKiDmr0bR_8-v4&maxHeightPx=400&maxWidthPx=400",
+    "https://places.googleapis.com/v1/places/ChIJmf0AV7iAhYARylK9tmGaQvM/photos/AelY_CvD7ElyrkgmqTr_pIVJn7WdPmRTkPJraFfOO5XLu1X2SyIX6g3AQy8BpdUKhZBI7G-a8WC5OKjNrzj0m7p6x46Y7ilHOWOGb-vuETp7AMW5s3UMcZt-pY46g8lBXcLiy94JJQBjA2QDfvOSi2FhQYYcD04kAgSsgxU2/media?key=AIzaSyAt9Am71D7ye3d4xA3G0hKiDmr0bR_8-v4&maxHeightPx=400&maxWidthPx=400",
+    "https://places.googleapis.com/v1/places/ChIJmf0AV7iAhYARylK9tmGaQvM/photos/AelY_CsTW6y73XqCBbmcT08JGPa4Q5yIEw2-hPPYSpzrNfogQwpNF0Y5ajz8reWtcyWqoa1a8mTFgle44Vm3udDxBnUYEwLHXr7QhQNgsliSYzOOybJZNsiW1mBPzTnaSoLtdDt5hhn_xTe1xzyLY9RxMKLrRhGHG0E_jxje/media?key=AIzaSyAt9Am71D7ye3d4xA3G0hKiDmr0bR_8-v4&maxHeightPx=400&maxWidthPx=400"
   ]
 }

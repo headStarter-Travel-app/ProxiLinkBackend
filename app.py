@@ -235,8 +235,10 @@ async def get_batch_place_details(request: batchAddressInput):
                     "Details not found in database, fetching from Google Maps")
                 input = f"{name}, {address}"
                 details = google_maps_service.find_place(input)
+                print(details)
                 if 'places' in details and len(details['places']) > 0:
                     place = details['places'][0]
+                    print(place)
                     place_details = PlaceDetails(
                         address=address,
                         ID=place.get('id', '0'),

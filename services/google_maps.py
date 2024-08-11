@@ -10,7 +10,7 @@ class GoogleMapsService:
         # self.api_key2 = os.getenv("GOOGLE_MAPS_API2")
         # self.current_key_index = 0
         self.api_keys = []
-        for i in range(1, 6):  # Adjuast number basedon API keys
+        for i in range(1, 8):  # Adjuast number basedon API keys
             key = os.getenv(f"GOOGLE_MAPS_API{i}")
             if key:
                 self.api_keys.append(key)
@@ -30,6 +30,7 @@ class GoogleMapsService:
 
     def find_place(self, input_text):
         api_key = self.get_next_api_key()
+        print(api_key)
         # Print the API key being used COMMENT OUT
 
         base_url = "https://places.googleapis.com/v1/places:searchText"
@@ -67,3 +68,9 @@ class GoogleMapsService:
 # Usage example
 load_dotenv()  # Load environment variables from .env file
 google_maps_service = GoogleMapsService()
+
+
+# for _ in range(8):
+#     res = google_maps_service.find_place(
+#         "1881 Post St, San Francisco, CA  94115, United States AMC Kabuki ")
+#     print(res)
