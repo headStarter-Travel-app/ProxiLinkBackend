@@ -214,56 +214,57 @@ class batchAddressInput(BaseModel):
 
 @app.post("/get_batch_place_details", summary="Get Place Details from the Database or Google maps")
 async def get_batch_place_details(request: batchAddressInput):
-    '''
-    Get place details from the database or Google Maps.
-    payload: {"addresses": ["123 Main St, City, State"], "names": ["Place Name"]}
-    '''
     try:
         res = []
         for address, name in zip(request.addresses, request.names):
-            # Check if the place details are already stored in the database
-            result = database.list_documents(
-                database_id=appwrite_config['database_id'],
-                collection_id=appwrite_config['locations_collection_id'],
-                queries=[Query.equal('address', [address])]
-            )
-            if result['total'] > 0:
-                logger.info("Details found in database")
-                res.append(PlaceDetails(**result['documents'][0]))
-            else:
-                logger.info(
-                    "Details not found in database, fetching from Google Maps")
-                input = f"{name}, {address}"
-                details = google_maps_service.find_place(input)
-                if 'places' in details and len(details['places']) > 0:
-                    place = details['places'][0]
-                    place_details = PlaceDetails(
-                        address=address,
-                        ID=place.get('id', '0'),
-                        rating=place.get('rating', 0),
-                        name=place.get('displayName', {}).get(
-                            'text', 'Default Name'),
-                        hours=place.get('currentOpeningHours', {}).get(
-                            'weekdayDescriptions', []),
-                        url=place.get('websiteUri', ''),
-                        photos=place.get('photo_urls', [])
-                    )
-
-                    logger.info("Storing new details in database")
-                    update = database.create_document(
-                        database_id=appwrite_config['database_id'],
-                        collection_id=appwrite_config['locations_collection_id'],
-                        document_id=ID.unique(),
-                        data=place_details.model_dump()
-                    )
-                    res.append(place_details)
+            try:
+                # Check if the place details are already stored in the database
+                result = database.list_documents(
+                    database_id=appwrite_config['database_id'],
+                    collection_id=appwrite_config['locations_collection_id'],
+                    queries=[Query.equal('address', [address])]
+                )
+                if result['total'] > 0:
+                    logger.info("Details found in database")
+                    res.append(PlaceDetails(**result['documents'][0]))
                 else:
-                    logger.warning("No place details found")
-                    raise HTTPException(
-                        status_code=404, detail="No place details found")
+                    logger.info(
+                        "Details not found in database, fetching from Google Maps")
+
+                    input = f"{name}, {address}"
+                    print(input)
+                    details = google_maps_service.find_place(input)
+                    if 'places' in details and len(details['places']) > 0:
+                        place = details['places'][0]
+                        place_details = PlaceDetails(
+                            address=address,
+                            ID=place.get('id', '0'),
+                            rating=place.get('rating', 0),
+                            name=place.get('displayName', {}).get(
+                                'text', name),
+                            hours=place.get('currentOpeningHours', {}).get(
+                                'weekdayDescriptions', []),
+                            url=place.get('websiteUri', ''),
+                            photos=place.get('photos', [])
+                        )
+
+                        logger.info("Storing new details in database")
+                        update = database.create_document(
+                            database_id=appwrite_config['database_id'],
+                            collection_id=appwrite_config['locations_collection_id'],
+                            document_id=ID.unique(),
+                            data=place_details.model_dump()
+                        )
+                        res.append(place_details)
+                    else:
+                        logger.warning(f"No place details found for {input}")
+                        res.append(PlaceDetails(address=address, name=name))
+            except Exception as e:
+                res.append(PlaceDetails(address=address, name=name))
+
         return res
     except Exception as e:
-        logger.error(f"Error getting place details: {str(e)}")
+        logger.error(f"Error in batch place details: {str(e)}")
         raise HTTPException(
             status_code=500, detail=f"Error getting place details: {str(e)}")
 
