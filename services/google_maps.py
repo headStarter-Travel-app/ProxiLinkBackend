@@ -30,7 +30,7 @@ class GoogleMapsService:
 
     def find_place(self, input_text):
         api_key = self.get_next_api_key()
-        print(api_key)
+        # print(api_key)
         # Print the API key being used COMMENT OUT
 
         base_url = "https://places.googleapis.com/v1/places:searchText"
@@ -60,7 +60,8 @@ class GoogleMapsService:
                     photo_urls = []
                     for photo in place['photos'][:5]:  # Limit to first 5 photos
                         if 'name' in photo:
-                            photo_url = f"https://places.googleapis.com/v1/{photo['name']}/media?key={api_key}&maxHeightPx=400&maxWidthPx=400"
+                            photo_url = f"https://places.googleapis.com/v1/{
+                                photo['name']}/media?key={api_key}&maxHeightPx=400&maxWidthPx=400"
                             photo_urls.append(photo_url)
                     place['photo_urls'] = photo_urls
 
