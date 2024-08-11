@@ -377,27 +377,35 @@ class AiModel:
     def getPreferences(self, users: List[str]):
         res = defaultdict(int)
         for user in users:
-            preferences = database.get_document(
-                database_id=appwrite_config['database_id'],
-                collection_id=appwrite_config['preferences_collection_id'],
-                document_id=user
-            )
-            for key, value in preferences.items():
-                if key == 'cuisine':
-                    for cuisine in value:
-                        res[f"{cuisine} food"] += 1
-                elif key == 'entertainment':
-                    for entertainment in value:
-                        res[f"{entertainment}"] += 1
-                elif key == 'shopping':
-                    if value == 'YES':
-                        res['shopping'] += 1
-                elif key == 'learning':
-                    for learning in value:
-                        res[f"{learning}"] += 1
-                elif key == 'sports':
-                    for sport in value:
-                        res[f"{sport}"] += 1
+            try:
+                preferences = database.get_document(
+                    database_id=appwrite_config['database_id'],
+                    collection_id=appwrite_config['preferences_collection_id'],
+                    document_id=user
+                )
+                # If the document is found, process the preferences
+                for key, value in preferences.items():
+                    if key == 'cuisine':
+                        for cuisine in value:
+                            res[f"{cuisine} food"] += 1
+                    elif key == 'entertainment':
+                        for entertainment in value:
+                            res[f"{entertainment}"] += 1
+                    elif key == 'shopping':
+                        if value == 'YES':
+                            res['shopping'] += 1
+                    elif key == 'learning':
+                        for learning in value:
+                            res[f"{learning}"] += 1
+                    elif key == 'sports':
+                        for sport in value:
+                            res[f"{sport}"] += 1
+            except Exception as e:
+                # If no document is found, assign random preferences based on the selected theme
+                print(f"Document for user {user} not found: {str(e)}")
+                default_prefs = random.sample(self.theme, 2)
+                for pref in default_prefs:
+                    res[pref] += 1
 
         return res
 
@@ -539,7 +547,7 @@ class AiModel:
 
 
 # async def main():
-#     users = ["66996b7b0025b402922b", "66996d2e00314baa2a20"]
+#     users = ["66b18b05002b647b10e0", "66996d2e00314baa2a20"]
 #     locations = [Location(lat=38.98582939, lon=-76.937329584)]
 
 #     model = await AiModel.create(users, locations, "shopping_spree", ["Japanese food"])
