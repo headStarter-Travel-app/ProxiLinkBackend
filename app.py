@@ -218,9 +218,9 @@ async def get_batch_place_details(request: batchAddressInput):
     Get place details from the database or Google Maps.
     payload: {"addresses": ["123 Main St, City, State"], "names": ["Place Name"]}
     '''
-    try:
-        res = []
-        for address, name in zip(request.addresses, request.names):
+    res = []
+    for address, name in zip(request.addresses, request.names):
+        try:
             # Check if the place details are already stored in the database
             result = database.list_documents(
                 database_id=appwrite_config['database_id'],
@@ -234,6 +234,7 @@ async def get_batch_place_details(request: batchAddressInput):
                 logger.info(
                     "Details not found in database, fetching from Google Maps")
                 input = f"{name}, {address}"
+                print(input)
                 details = google_maps_service.find_place(input)
                 print(details)
                 if 'places' in details and len(details['places']) > 0:
@@ -260,14 +261,16 @@ async def get_batch_place_details(request: batchAddressInput):
                     )
                     res.append(place_details)
                 else:
-                    logger.warning("No place details found")
-                    raise HTTPException(
-                        status_code=404, detail="No place details found")
-        return res
-    except Exception as e:
-        logger.error(f"Error getting place details: {str(e)}")
+                    logger.warning(f"No place details found for {input}")
+        except Exception as e:
+            logger.error(f"Error processing place details for {
+                         input}: {str(e)}")
+
+    if not res:
         raise HTTPException(
-            status_code=500, detail=f"Error getting place details: {str(e)}")
+            status_code=404, detail="No place details found for any of the provided addresses")
+
+    return res
 
 
 @app.post("/get_place_details", summary="Get Place Details from the Database or Google maps")
@@ -454,6 +457,7 @@ async def get_preferences(user_id: str):
     except Exception as e:
         raise HTTPException(
             status_code=500, detail=f"Error getting preferences: {str(e)}")
+
 
 @app.get("/check-preferences", summary="Check if preferences exist for users")
 async def check_preferences(users: List[str]):
