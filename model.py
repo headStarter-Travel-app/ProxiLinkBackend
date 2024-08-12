@@ -279,15 +279,37 @@ class AiModel:
         recommendations['content_score'] = content_scores
         recommendations['cf_score'] = cf_scores
 
-        def normalize_score_hybrid(score):
-            return 10 * (score - score.min()) / (score.max() - score.min())
-
-        recommendations['hybrid_score'] = normalize_score_hybrid(
-            recommendations['hybrid_score'])
-
-        # Sort recommendations by hybrid score
+        # Sort recommendations by hybrid score (descending order)
         recommendations = recommendations.sort_values(
             by='hybrid_score', ascending=False)
+
+        # Assign new scores based on ranking
+        num_recommendations = len(recommendations)
+        new_scores = np.zeros(num_recommendations)
+
+        # Calculate how many recommendations for each score
+        num_10s = int(num_recommendations * 0.20)  # 20% 10s
+        num_9s = int(num_recommendations * 0.20)   # 20% 9s
+        num_8s = int(num_recommendations * 0.15)   # 15% 8s
+        num_7s = int(num_recommendations * 0.15)   # 15% 7s
+        num_6s = int(num_recommendations * 0.15)   # 15% 6s
+
+        # Calculate remaining recommendations for the lowest scores (5s)
+        remaining = num_recommendations - (num_10s + num_9s + num_8s + num_7s + num_6s)
+
+        # Assign scores
+        new_scores[:num_10s] = 10
+        new_scores[num_10s:num_10s + num_9s] = 9
+        new_scores[num_10s + num_9s:num_10s + num_9s + num_8s] = 8
+        new_scores[num_10s + num_9s + num_8s:num_10s + num_9s + num_8s + num_7s] = 7
+        new_scores[num_10s + num_9s + num_8s + num_7s:num_10s + num_9s + num_8s + num_7s + num_6s] = 6
+
+        # Assign remaining scores to be between 6 and 5, with the lowest being 5
+        if remaining > 0:
+            new_scores[-remaining:] = np.linspace(6, 5, remaining)
+
+        # Update recommendations with the new scores
+        recommendations['hybrid_score'] = new_scores
 
         return recommendations
 
