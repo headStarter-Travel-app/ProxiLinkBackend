@@ -327,7 +327,8 @@ class AiModel:
                 total_loss += loss.item()
 
             if (epoch+1) % 100 == 0:
-                print(f'Epoch {epoch+1}/{epochs}, Avg Loss: {total_loss/self.user_tensor.shape[0]:.4f}')
+                print(f'Epoch {
+                      epoch+1}/{epochs}, Avg Loss: {total_loss/self.user_tensor.shape[0]:.4f}')
 
     async def initialize(self):
         # 1. Get preferences
@@ -383,6 +384,7 @@ class AiModel:
                     collection_id=appwrite_config['preferences_collection_id'],
                     document_id=user
                 )
+                print(preferences)
                 # If the document is found, process the preferences
                 for key, value in preferences.items():
                     if key == 'cuisine':
@@ -424,12 +426,20 @@ class AiModel:
             filtered_preferences.items(), key=lambda item: item[1], reverse=True)
 
         top_interests = [k for k, v in sorted_preferences[:top_n]]
+        print(top_interests)
 
         if len(top_interests) < top_n:
             remaining_preferences = {
                 k: v for k, v in preferences.items() if k not in top_interests}
-            additional_interests = random.sample(
-                list(remaining_preferences.keys()), top_n - len(top_interests))
+            print(f"Remaining preferences: {remaining_preferences}")
+
+            remaining_count = top_n - len(top_interests)
+            if len(remaining_preferences) >= remaining_count:
+                additional_interests = random.sample(
+                    list(remaining_preferences.keys()), remaining_count)
+            else:
+                additional_interests = list(remaining_preferences.keys())
+
             top_interests.extend(additional_interests)
 
         return top_interests
@@ -456,7 +466,7 @@ class AiModel:
                 all_recommendations.extend(results)
             arr = self.theme
             print(arr)
-            random_elements = random.sample(arr, min(3, len(arr)))
+            random_elements = random.sample(arr, min(1, len(arr)))
             for randomInterest in random_elements:
                 results = await apple_maps_service.search(
                     randomInterest, centroid['lat'], centroid['lon'])
