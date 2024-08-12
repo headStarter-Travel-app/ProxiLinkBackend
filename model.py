@@ -426,7 +426,7 @@ class AiModel:
             except Exception as e:
                 # If no document is found, assign random preferences based on the selected theme
                 print(f"Document for user {user} not found: {str(e)}")
-                default_prefs = random.sample(self.theme, 2)
+                default_prefs = random.sample(self.theme, 4)
                 for pref in default_prefs:
                     res[pref] += 1
 
