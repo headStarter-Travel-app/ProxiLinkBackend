@@ -1378,6 +1378,113 @@ async def send_notification(req: Notification):
         raise HTTPException(
             status_code=500, detail=f"Error sending notifications: {str(e)}")
 
+class SavePreferencesRequest(BaseModel):
+    uid: str
+    groupMembers: List[str]
+    date: datetime
+    address: str
+    latitude: str
+    longitude: str
+
+@app.post("/save-preferences", summary="Save Preferences")
+async def save_preferences(request: SavePreferencesRequest):
+    """
+    Save a new preference entry to the database.
+    """
+    try:
+        # Prepare the data to be saved
+        preference_data = {
+            "uid": request.uid,
+            "groupMembers": request.groupMembers,
+            "date": request.date.isoformat(),
+            "rating": 0.0,
+            "address": request.address,
+            "latitude": request.latitude,
+            "longitude": request.longitude,
+        }
+
+        # Save the data to the Appwrite collection
+        result = database.create_document(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['savedPreferences'],
+            document_id=ID.unique(),
+            data=preference_data
+        )
+
+        return {"message": "Preferences saved successfully", "document_id": result['$id']}
+    except Exception as e:
+        logger.error(f"Error saving preferences: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error saving preferences: {str(e)}"
+        )
+
+
+class EditPreferencesRequest(BaseModel):
+    document_id: str
+    date: Optional[datetime] = None
+    rating: Optional[float] = None
+
+
+
+
+@app.post("/edit-preferences", summary="Edit Preferences")
+async def edit_preferences(request: EditPreferencesRequest):
+    """
+    Edit the date and/or rating of an existing preference entry.
+    """
+    try:
+        update_data = {}
+        if request.data is not None:
+            update_data["date"] = request.date.isoformat()
+        if request.rating is not None:
+            update_data["rating"] = request.rating
+
+        if not update_data:
+            raise HTTPException(
+                status_code=400, detail="No fields to update were provided."
+            )
+
+
+        result = database.update_document(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['savedPreferences'],
+            document_id=request.document_id,
+            data=update_data
+        )
+
+        return {"message": "Preferences updated successfully", "document_id": result['$id']}
+    except Exception as e:
+        logger.error(f"Error updating preferences: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error updating preferences: {str(e)}"
+        )
+
+
+class DeletePreferencesRequest(BaseModel):
+    document_id: str
+
+
+@app.delete("/delete-preferences", summary="Delete Preferences")
+async def delete_preferences(request: DeletePreferencesRequest):
+    """
+    Delete a preference entry from the database.
+    """
+    try:
+        result = database.delete_document(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['savedPreferences'],
+            document_id=request.document_id
+        )
+
+        return {"message": "Preferences deleted successfully"}
+    except Exception as e:
+        logger.error(f"Error deleting preferences: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error deleting preferences: {str(e)}"
+        )
+
+
+
 # uvicorn app:app --reload
 
     # Production use
