@@ -50,6 +50,7 @@ appwrite_config = {
     "groups_collection_id": "Groups",
     "contact_id": "66a419bb000fa8674a7e",
     "notifications": "66abd65b0027a6d279bc",
+    "savedPreferences": "savedPreferences"
 
 
 
@@ -1378,13 +1379,15 @@ async def send_notification(req: Notification):
         raise HTTPException(
             status_code=500, detail=f"Error sending notifications: {str(e)}")
 
+
 class SavePreferencesRequest(BaseModel):
     uid: str
     groupMembers: List[str]
     date: datetime
     address: str
-    latitude: str
-    longitude: str
+    latitude: float
+    longitude: float
+
 
 @app.post("/save-preferences", summary="Save Preferences")
 async def save_preferences(request: SavePreferencesRequest):
@@ -1425,8 +1428,6 @@ class EditPreferencesRequest(BaseModel):
     rating: Optional[float] = None
 
 
-
-
 @app.post("/edit-preferences", summary="Edit Preferences")
 async def edit_preferences(request: EditPreferencesRequest):
     """
@@ -1434,7 +1435,7 @@ async def edit_preferences(request: EditPreferencesRequest):
     """
     try:
         update_data = {}
-        if request.data is not None:
+        if request.date is not None:
             update_data["date"] = request.date.isoformat()
         if request.rating is not None:
             update_data["rating"] = request.rating
@@ -1443,7 +1444,6 @@ async def edit_preferences(request: EditPreferencesRequest):
             raise HTTPException(
                 status_code=400, detail="No fields to update were provided."
             )
-
 
         result = database.update_document(
             database_id=appwrite_config['database_id'],
@@ -1482,7 +1482,6 @@ async def delete_preferences(request: DeletePreferencesRequest):
         raise HTTPException(
             status_code=500, detail=f"Error deleting preferences: {str(e)}"
         )
-
 
 
 # uvicorn app:app --reload
