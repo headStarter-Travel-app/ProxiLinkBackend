@@ -1528,6 +1528,31 @@ async def delete_preferences(request: DeletePreferencesRequest):
         )
 
 
+class GetPreferencesRequest(BaseModel):
+    user_id: str
+
+
+@app.get("/get-savedHangouts", summary="Get Saved Hangouts")
+async def get_saved_hangouts(request: GetPreferencesRequest):
+    """
+    Get all saved hangouts where the user ID is in the groupMembers array.
+    """
+    try:
+        # Query the database to find all saved hangouts where the user ID is in the groupMembers array
+        saved_hangouts = database.list_documents(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['savedPreferences'],
+            queries=[
+                Query.search('groupMembers', request.user_id)
+            ]
+        )
+
+        return {"saved_hangouts": saved_hangouts['documents']}
+    except Exception as e:
+        logger.error(f"Error getting saved hangouts: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error getting saved hangouts: {str(e)}"
+        )
 # uvicorn app:app --reload
 
     # Production use
