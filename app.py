@@ -1387,6 +1387,7 @@ class SavePreferencesRequest(BaseModel):
     address: str
     latitude: float
     longitude: float
+    name: str
 
 
 @app.post("/save-preferences", summary="Save Preferences")
@@ -1404,6 +1405,7 @@ async def save_preferences(request: SavePreferencesRequest):
             "address": request.address,
             "latitude": request.latitude,
             "longitude": request.longitude,
+            "name": request.name
         }
 
         # Save the data to the Appwrite collection
