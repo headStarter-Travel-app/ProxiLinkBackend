@@ -56,6 +56,41 @@ class AppleMapsService:
             raise HTTPException(status_code=e.response.status_code,
                                 detail=f"Error getting access token: {str(e)}")
 
+    async def geoCode(self, query: str) -> Dict:
+        try:
+            access_token = await self.get_access_token()
+            async with httpx.AsyncClient() as client:
+                response = await client.get(
+                    f"{SERVER_ENDPOINT}/v1/geocode",
+                    params={
+                        "q": query,
+                    },
+                    headers={
+                        "Authorization": f"Bearer {access_token}"
+                    }
+                )
+                response.raise_for_status()
+                results = response.json()
+
+                location = {
+                    "name": results.get("name"),
+                    "address": ", ".join(results.get("formattedAddressLines", [])),
+                    "location": {
+                        "lat": results.get("coordinate", {}).get("latitude"),
+                        "lon": results.get("coordinate", {}).get("longitude")
+                    },
+                    "category": results.get("poiCategory")
+                }
+
+                return results
+
+        except httpx.HTTPStatusError as e:
+            raise HTTPException(status_code=e.response.status_code,
+                                detail=f"Apple Maps API error: {str(e)}")
+        except httpx.RequestError as e:
+            raise HTTPException(
+                status_code=500, detail=f"Request error: {str(e)}")
+
     async def search(self, query: str, lat: float, lon: float) -> List[Dict]:
         try:
             access_token = await self.get_access_token()

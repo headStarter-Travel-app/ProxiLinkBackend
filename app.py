@@ -680,6 +680,32 @@ async def get_proximity_recommendations(request: ProximityRecommendationRequest)
             status_code=500, detail=f"Error getting recommendations: {str(e)}")
 
 
+class GeoCodeRequest(BaseModel):
+    query: str
+
+
+@app.post('/geoCode', summary="Get GeoCode")
+async def geoCode(request: GeoCodeRequest):
+    """
+    Get GeoCode from Apple Maps API
+    """
+    try:
+        result = await apple_maps_service.geoCode(request.query)
+        # Extract coordinates from the result
+        coordinates = [
+            {
+                "latitude": res["coordinate"]["latitude"],
+                "longitude": res["coordinate"]["longitude"]
+            }
+            for res in result.get("results", [])
+        ]
+        print(coordinates)
+        return coordinates
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, detail=f"Error getting GeoCode: {str(e)}")
+
+
 class FriendRequest(BaseModel):
     sender_id: str
     receiver_id: str
@@ -1383,10 +1409,8 @@ async def send_notification(req: Notification):
 class SavePreferencesRequest(BaseModel):
     uid: str
     groupMembers: List[str]
-    date: datetime
+    date: str
     address: str
-    latitude: float
-    longitude: float
     name: str
 
 
@@ -1396,16 +1420,34 @@ async def save_preferences(request: SavePreferencesRequest):
     Save a new preference entry to the database.
     """
     try:
+        date_obj = datetime.fromisoformat(request.date)
+        result = await apple_maps_service.geoCode(request.address)
+        # Extract coordinates from the result
+        coordinates = [
+            {
+                "latitude": res["coordinate"]["latitude"],
+                "longitude": res["coordinate"]["longitude"]
+            }
+            for res in result.get("results", [])
+        ]
+        print(coordinates)
+        if coordinates:
+            latitude = coordinates[0]["latitude"]
+            longitude = coordinates[0]["longitude"]
+        else:
+            latitude = None
+            longitude = None
+
         # Prepare the data to be saved
         preference_data = {
             "uid": request.uid,
             "groupMembers": request.groupMembers,
-            "date": request.date.isoformat(),
+            "date": date_obj.isoformat(),
             "rating": 0.0,
             "address": request.address,
-            "latitude": request.latitude,
-            "longitude": request.longitude,
-            "name": request.name
+            "name": request.name,
+            "latitude": latitude,
+            "longitude": longitude
         }
 
         # Save the data to the Appwrite collection
