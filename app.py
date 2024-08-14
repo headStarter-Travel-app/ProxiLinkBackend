@@ -1528,12 +1528,8 @@ async def delete_preferences(request: DeletePreferencesRequest):
         )
 
 
-class GetPreferencesRequest(BaseModel):
-    user_id: str
-
-
 @app.get("/get-savedHangouts", summary="Get Saved Hangouts")
-async def get_saved_hangouts(request: GetPreferencesRequest):
+async def get_saved_hangouts(user_id: str):
     """
     Get all saved hangouts where the user ID is in the groupMembers array.
     """
@@ -1543,7 +1539,7 @@ async def get_saved_hangouts(request: GetPreferencesRequest):
             database_id=appwrite_config['database_id'],
             collection_id=appwrite_config['savedPreferences'],
             queries=[
-                Query.search('groupMembers', request.user_id)
+                Query.search('groupMembers', user_id)
             ]
         )
 
