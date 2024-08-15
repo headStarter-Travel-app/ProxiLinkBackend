@@ -1557,7 +1557,7 @@ async def delete_account(user_id: str):
     Delete a user account from the database.
     """
     try:
-        result = users.update_status(user_id=user_id, status="false")
+        result = users.delete(user_id=user_id)
 
         return {"message": "Account deleted successfully"}
     except Exception as e:
