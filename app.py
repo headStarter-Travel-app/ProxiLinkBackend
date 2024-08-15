@@ -1549,6 +1549,22 @@ async def get_saved_hangouts(user_id: str):
         raise HTTPException(
             status_code=500, detail=f"Error getting saved hangouts: {str(e)}"
         )
+
+
+@app.delete("/deleteAccount", summary="Delete Account")
+async def delete_account(user_id: str):
+    """
+    Delete a user account from the database.
+    """
+    try:
+        result = users.update_status(user_id=user_id, status="false")
+
+        return {"message": "Account deleted successfully"}
+    except Exception as e:
+        logger.error(f"Error deleting account: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error deleting account: {str(e)}"
+        )
 # uvicorn app:app --reload
 
     # Production use
