@@ -279,11 +279,9 @@ class AiModel:
         recommendations['content_score'] = content_scores
         recommendations['cf_score'] = cf_scores
 
-        # Sort recommendations by hybrid score (descending order)
         recommendations = recommendations.sort_values(
             by='hybrid_score', ascending=False)
 
-        # Assign new scores based on ranking
         num_recommendations = len(recommendations)
         new_scores = np.zeros(num_recommendations)
 
@@ -294,22 +292,24 @@ class AiModel:
         num_7s = int(num_recommendations * 0.15)   # 15% 7s
         num_6s = int(num_recommendations * 0.15)   # 15% 6s
 
-        # Calculate remaining recommendations for the lowest scores (5s)
-        remaining = num_recommendations - (num_10s + num_9s + num_8s + num_7s + num_6s)
+        remaining = num_recommendations - \
+            (num_10s + num_9s + num_8s + num_7s + num_6s)
 
         # Assign scores
         new_scores[:num_10s] = 10
         new_scores[num_10s:num_10s + num_9s] = 9
         new_scores[num_10s + num_9s:num_10s + num_9s + num_8s] = 8
-        new_scores[num_10s + num_9s + num_8s:num_10s + num_9s + num_8s + num_7s] = 7
-        new_scores[num_10s + num_9s + num_8s + num_7s:num_10s + num_9s + num_8s + num_7s + num_6s] = 6
+        new_scores[num_10s + num_9s + num_8s:num_10s +
+                   num_9s + num_8s + num_7s] = 7
+        new_scores[num_10s + num_9s + num_8s + num_7s:num_10s +
+                   num_9s + num_8s + num_7s + num_6s] = 6
 
-        # Assign remaining scores to be between 6 and 5, with the lowest being 5
         if remaining > 0:
-            new_scores[-remaining:] = np.linspace(6, 5, remaining)
+            new_scores[-remaining:] = np.linspace(6, 4, remaining)
 
         # Update recommendations with the new scores
         recommendations['hybrid_score'] = new_scores
+        recommendations = recommendations.head(27)
 
         return recommendations
 
@@ -577,15 +577,15 @@ class AiModel:
         return self.places_tensor, self.user_tensor, interaction_tensor
 
 
-# async def main():
-#     users = ["66b18b05002b647b10e0", "66996d2e00314baa2a20"]
-#     locations = [Location(lat=38.98582939, lon=-76.937329584)]
+async def main():
+    users = ["66b18b05002b647b10e0", "66996d2e00314baa2a20"]
+    locations = [Location(lat=38.98582939, lon=-76.937329584)]
 
-#     model = await AiModel.create(users, locations, "shopping_spree", ["Japanese food"])
-#     print(model.recs)
+    model = await AiModel.create(users, locations, "shopping_spree", ["Japanese food"])
+    print(model.recs)
 
-# # Run the async function
-# asyncio.run(main())
+# Run the async function
+asyncio.run(main())
 
 
 # When calling API Requeast take in: userList, locationList as locaiton objects, theme, and comma separated list of "Other"
