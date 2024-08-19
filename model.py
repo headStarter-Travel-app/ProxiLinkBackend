@@ -349,7 +349,8 @@ class AiModel:
                 total_loss += loss.item()
 
             if (epoch+1) % 100 == 0:
-                print(f'Epoch {epoch+1}/{epochs}, Avg Loss: {total_loss/self.user_tensor.shape[0]:.4f}')
+                print(f'Epoch {
+                      epoch+1}/{epochs}, Avg Loss: {total_loss/self.user_tensor.shape[0]:.4f}')
 
     async def initialize(self):
         # 1. Get preferences
@@ -577,15 +578,15 @@ class AiModel:
         return self.places_tensor, self.user_tensor, interaction_tensor
 
 
-async def main():
-    users = ["66b18b05002b647b10e0", "66996d2e00314baa2a20"]
-    locations = [Location(lat=38.98582939, lon=-76.937329584)]
+# async def main():
+#     users = ["66b18b05002b647b10e0", "66996d2e00314baa2a20"]
+#     locations = [Location(lat=38.98582939, lon=-76.937329584)]
 
-    model = await AiModel.create(users, locations, "shopping_spree", ["Japanese food"])
-    print(model.recs)
+#     model = await AiModel.create(users, locations, "shopping_spree", ["Japanese food"])
+#     print(model.recs)
 
-# Run the async function
-asyncio.run(main())
+# # Run the async function
+# asyncio.run(main())
 
 
 # When calling API Requeast take in: userList, locationList as locaiton objects, theme, and comma separated list of "Other"
