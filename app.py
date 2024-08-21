@@ -235,12 +235,9 @@ async def get_batch_place_details(request: batchAddressInput):
                 logger.info(
                     "Details not found in database, fetching from Google Maps")
                 input = f"{name}, {address}"
-                print(input)
                 details = google_maps_service.find_place(input)
-                print(details)
                 if 'places' in details and len(details['places']) > 0:
                     place = details['places'][0]
-                    print(place)
                     place_details = PlaceDetails(
                         address=address,
                         ID=place.get('id', '0'),
@@ -1338,7 +1335,7 @@ async def get_recommendations(request: getRecommendations):
         final_recommendations = top_recommendations + wild_card_recommendations
 
         # Determine a random sample size between 11 and 17
-        sample_size = random.randint(11, 17)
+        sample_size = random.randint(15, 22)
 
         # Ensure there are enough elements to sample the final recommendations
         if len(final_recommendations) >= sample_size:
