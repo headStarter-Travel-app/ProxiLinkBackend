@@ -1564,7 +1564,43 @@ async def delete_account(user_id: str):
         )
 # uvicorn app:app --reload
 
+
+@app.post("/set-premium", summary="Set User Premium")
+async def set_user_premium(user_id: str):
+    """
+    Set a user as premium
+    """
+    try:
+        result = users.update_labels(
+            user_id=user_id, labels=["premium"]
+        )
+
+        return {"message": "User is now premium"}
+    except Exception as e:
+        logger.error(f"Error setting user as premium: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error setting user as premium: {str(e)}"
+        )
+
+
+@app.post("/cancel-premium", summary="Set User Not Premium")
+async def set_user_not_premium(user_id: str):
+    """
+    Set a user as not premium
+    """
+    try:
+        result = users.update_labels(
+            user_id=user_id, labels=[]
+        )
+
+        return {"message": "User is now not premium"}
+    except Exception as e:
+        logger.error(f"Error setting user as not premium: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error setting user as not premium: {str(e)}"
+        )
     # Production use
+#uvicorn app:app --reload
 if __name__ == "__main__":
     update_apple_token()
     import uvicorn
