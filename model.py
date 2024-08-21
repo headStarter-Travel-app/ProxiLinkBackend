@@ -155,61 +155,103 @@ class AiModel:
     romantic_date = [
         "Cafe", "Restaurant", "Bakery", "AmusementPark", "Winery",
         "Theater", "MovieTheater", "Park", "Zoo", "Aquarium", "Store",
-        "MiniGolf", "Bowling", "MusicVenue", "Store", "Mall"
+        "MiniGolf", "Bowling", "MusicVenue", "Mall", "BotanicalGarden",
+        "Beach", "RooftopBar", "ArtGallery", "FineDining", "BoatRide",
+        "HotAirBalloonRide", "SunsetViewpoint", "SpaRetreat"
     ]
 
     family_outing = [
         "AmusementPark", "Zoo", "Aquarium", "Park", "Playground", "MovieTheater",
-        "Museum", "NationalPark", "Beach", "Campground", "FoodMarket"
+        "Museum", "NationalPark", "Beach", "Campground", "FoodMarket",
+        "Children'sMuseum", "FarmVisit", "IceCreamParlor", "BoatTour",
+        "PettingZoo", "EscapeRoom", "TrampolinePark", "GoKartTrack",
+        "InteractiveScienceCenter", "PicnicSpot", "IndoorPlayArea"
     ]
 
     outdoor_adventure = [
         "NationalPark", "Park", "Beach", "Hiking", "Kayaking", "Fishing",
         "Golf", "MiniGolf", "RockClimbing", "RVPark", "SkatePark", "Skating",
-        "Skiing", "Surfing", "Swimming", "Tennis", "Volleyball"
+        "Skiing", "Surfing", "Swimming", "Tennis", "Volleyball",
+        "Camping", "MountainBiking", "ZipLining", "Rafting", "HorsebackRiding",
+        "Canoeing", "Snowboarding", "Caving", "ScubaDiving", "Paragliding",
+        "WildlifeSafari"
     ]
 
     educational_trip = [
         "Museum", "Library", "Aquarium", "NationalPark", "Planetarium", "Zoo",
-        "University", "Landmark", "NationalMonument", "ReligiousSite"
+        "University", "Landmark", "NationalMonument", "ReligiousSite",
+        "HistoricalVillage", "ArchaeologicalSite", "ArtExhibit",
+        "ScienceMuseum", "Observatory", "CulturalHeritageSite",
+        "BotanicalGarden", "FactoryTour", "NaturalHistoryMuseum",
+        "EcoPark", "InnovationLab", "HistoricalSociety"
     ]
 
     night_out = [
         "Nightlife", "Brewery", "Restaurant", "MovieTheater", "Theater",
-        "MusicVenue", "Casino", "Bar", "Store", "Winery"
+        "MusicVenue", "Casino", "Bar", "Store", "Winery",
+        "RooftopBar", "JazzClub", "KaraokeBar", "LiveComedyShow",
+        "DanceClub", "LateNightCafe", "BowlingAlley", "LateNightFoodMarket",
+        "Speakeasy", "OpenMicNight", "Lounge"
     ]
 
     relaxation_and_wellness = [
-        "Beach", "Spa", "FitnessCenter", "Park", "Yoga", "MeditationCenter"
+        "Beach", "Spa", "FitnessCenter", "Park", "Yoga", "MeditationCenter",
+        "HotSprings", "MassageParlor", "Sauna", "WellnessRetreat",
+        "NatureWalk", "HealingCenter", "FloatingSpa", "HolisticHealingCenter",
+        "OrganicFarmVisit", "PrivateCabinGetaway", "SaltCaveTherapy"
     ]
 
     sports_and_fitness = [
         "Stadium", "FitnessCenter", "Golf", "Tennis", "Basketball", "Soccer",
         "Baseball", "Swimming", "Volleyball", "Bowling", "RockClimbing",
-        "Hiking", "Kayaking", "Surfing", "Skating", "Skiing", "SkatePark"
+        "Hiking", "Kayaking", "Surfing", "Skating", "Skiing", "SkatePark",
+        "CrossFitGym", "BoxingGym", "RunningTrack", "CyclingTrail",
+        "ObstacleCourse", "MarathonEvent", "FitnessBootCamp",
+        "MountainBiking", "WaterSportsCenter", "Paddleboarding", "Badminton",
+        "Fencing"
     ]
 
     shopping_spree = [
-        "Store", "FoodMarket", "Mall", "Pharmacy"
+        "Store", "FoodMarket", "Mall", "Bakery", "Cafe", "Brewery", "Winery",
+        "FarmersMarket", "Boutique", "HandmadeGoodsStore", "AntiqueShop",
+        "FashionDistrict", "OutletMall", "LuxuryBrandStore", "CraftMarket",
+        "ArtisanMarket", "PopUpShop", "ShoppingFestival", "BookStore",
+        "GourmetFoodStore", "JewelryStore", "VintageShop"
     ]
 
     kids_fun_day = [
         "AmusementPark", "Zoo", "Aquarium", "Park", "Playground", "MovieTheater",
-        "MiniGolf", "Bowling", "Fairground", "GoKart"
+        "MiniGolf", "Bowling", "Fairground", "GoKart",
+        "IndoorPlayground", "TrampolinePark", "ScienceCenter", "Arcade",
+        "IceCreamParlor", "PettingZoo", "ToyStore", "CraftWorkshop",
+        "StoryTimeEvent", "Kid-FriendlyMuseum", "InteractiveExhibit",
+        "ThemePark", "Children'sTheater", "AnimalSanctuary",
+        "AdventurePark"
     ]
 
     historical_and_cultural_exploration = [
         "Museum", "Castle", "Fortress", "Landmark", "NationalMonument",
-        "ReligiousSite", "Planetarium", "Fairground", "ConventionCenter"
+        "ReligiousSite", "Planetarium", "Fairground", "ConventionCenter",
+        "HistoricalSite", "HeritageMuseum", "ArtGallery", "CulturalFestival",
+        "AncientRuins", "Theater", "WarMemorial", "HistoricalWalkingTour",
+        "TraditionalVillage", "CulturalCenter", "WorldHeritageSite",
+        "HistoricalReenactment", "FolkDanceShow", "OperaHouse"
     ]
 
     vacation = [
         "Hotel", "Beach", "NationalPark", "Park", "Winery", "Campground",
-        "Marina", "Skiing", "RVPark", "Store"
+        "Marina", "Skiing", "RVPark", "Store",
+        "Resort", "MountainRetreat", "BeachHouse", "Villa", "IslandGetaway",
+        "EcoResort", "YachtCharter", "PrivateCabin", "LuxuryCamping",
+        "TropicalResort", "MountainLodge", "CityBreak", "SpaResort"
     ]
 
     food_and_drink = [
-        "Restaurant", "Cafe", "Bakery", "Brewery", "Winery", "FoodMarket"
+        "Restaurant", "Cafe", "Bakery", "Brewery", "Winery", "FoodMarket",
+        "StreetFoodMarket", "GourmetRestaurant", "FoodTruck",
+        "Farm-to-TableRestaurant", "CookingClass", "FoodFestival",
+        "CoffeeRoastery", "DessertParlor", "FineDining", "BarbecueJoint",
+        "LocalFarm", "VineyardTour", "CulinaryTour", "TeaHouse"
     ]
 
     theme_categories = {
@@ -224,7 +266,7 @@ class AiModel:
         "kids_fun_day": kids_fun_day,
         "historical_and_cultural_exploration": historical_and_cultural_exploration,
         "vacation": vacation,
-        "food_and_drink": food_and_drink
+        "food_and_drink": food_and_drink,
     }
 
     def __init__(self, users: List[str], location: List[Location], theme: str, other: List[str] = [], budget: int = 100):
@@ -486,8 +528,7 @@ class AiModel:
                     result['category2'] = otherInterest
                 all_recommendations.extend(results)
             arr = self.theme
-            print(arr)
-            random_elements = random.sample(arr, min(1, len(arr)))
+            random_elements = random.sample(arr, min(7, len(arr)))
             for randomInterest in random_elements:
                 results = await apple_maps_service.search(
                     randomInterest, centroid['lat'], centroid['lon'])
@@ -576,12 +617,11 @@ class AiModel:
 
         return self.places_tensor, self.user_tensor, interaction_tensor
 
-
 # async def main():
 #     users = ["66b18b05002b647b10e0", "66996d2e00314baa2a20"]
 #     locations = [Location(lat=38.98582939, lon=-76.937329584)]
 
-#     model = await AiModel.create(users, locations, "shopping_spree", ["Japanese food"])
+#     model = await AiModel.create(users, locations, "shopping_spree", ["Luxury Stores", "Mall"])
 #     print(model.recs)
 
 # # Run the async function

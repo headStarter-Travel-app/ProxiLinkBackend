@@ -1328,7 +1328,7 @@ async def get_recommendations(request: getRecommendations):
         # Ensure there are enough elements for wild card recommendations
         if len(recommendations_json) > 20:
             wild_card_recommendations = random.sample(
-                recommendations_json[20:], min(10, len(recommendations_json) - 20))
+                recommendations_json[20:], min(15, len(recommendations_json) - 20))
         else:
             wild_card_recommendations = []
 
