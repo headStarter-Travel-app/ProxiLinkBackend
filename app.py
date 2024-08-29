@@ -1629,7 +1629,16 @@ async def get_latest_hangout(user_id: str):
                      Query.order_desc('date')],
         )
         print(result)
-        return get_next_upcoming_hangout(result)
+        hangouts = get_next_upcoming_hangout(result)
+        if hangouts:
+            group_member_names = []
+            for member in hangouts['groupMembers']:
+                user = users.get(user_id=member)
+                print(user)
+                group_member_names.append(user['name'])
+
+            hangouts['groupMemberNames'] = group_member_names
+        return hangouts
     except Exception as e:
         logger.error(f"Error getting latest hangout: {str(e)}")
         raise HTTPException(
