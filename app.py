@@ -19,7 +19,7 @@ from appwrite.id import ID
 from apscheduler.schedulers.background import BackgroundScheduler
 from featureFunctions import get_search_region
 from apscheduler.triggers.interval import IntervalTrigger
-from datetime import datetime
+from datetime import datetime, timezone
 import googlemaps
 from appwrite.exception import AppwriteException
 import httpx
@@ -27,6 +27,7 @@ import logging
 from fastapi.middleware.cors import CORSMiddleware
 from model import AiModel
 from typeDefs import Location
+import pytz
 
 # Installed
 logging.basicConfig(level=logging.INFO)
@@ -1599,8 +1600,42 @@ async def set_user_not_premium(user_id: str):
         raise HTTPException(
             status_code=500, detail=f"Error setting user as not premium: {str(e)}"
         )
-    # Production use
-#uvicorn app:app --reload
+
+
+def get_next_upcoming_hangout(result):
+    current_date = datetime.now(timezone.utc)
+    upcoming_hangout = None
+
+    for hangout in result.get('documents', []):
+        hangout_date = datetime.fromisoformat(
+            hangout['date'].replace('Z', '+00:00'))
+        if hangout_date > current_date:
+            if upcoming_hangout is None or hangout_date < datetime.fromisoformat(upcoming_hangout['date'].replace('Z', '+00:00')):
+                upcoming_hangout = hangout
+
+    return upcoming_hangout if upcoming_hangout else {}
+
+
+@app.get("/get-latest-hangout", summary="Gets the latest hangout by the userID")
+async def get_latest_hangout(user_id: str):
+    '''
+    Get the latest hangout by the user ID
+    '''
+    try:
+        result = database.list_documents(
+            database_id=appwrite_config['database_id'],
+            collection_id=appwrite_config['savedPreferences'],
+            queries=[Query.contains('groupMembers', user_id),
+                     Query.order_desc('date')],
+        )
+        print(result)
+        return get_next_upcoming_hangout(result)
+    except Exception as e:
+        logger.error(f"Error getting latest hangout: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error getting latest hangout: {str(e)}"
+        )
+# uvicorn app:app --reload
 if __name__ == "__main__":
     update_apple_token()
     import uvicorn
